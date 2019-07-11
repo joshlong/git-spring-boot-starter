@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,23 +35,29 @@ public class MustacheServiceTest {
 	@AllArgsConstructor
 	@NoArgsConstructor
 	public static class Link {
+
 		private String href, description;
+
 	}
 
 	@Test
-	public void convertToHtml() throws Exception {
+	public void convertToHtml() {
 
-		var formatter = DateTimeFormatter
-			.ISO_LOCAL_DATE
-			.withLocale(Locale.US)
-			.withZone(ZoneId.of(ZoneId.SHORT_IDS.get("PST")));
+		var formatter = DateTimeFormatter.ISO_LOCAL_DATE.withLocale(Locale.US)
+				.withZone(ZoneId.of(ZoneId.SHORT_IDS.get("PST")));
 
-		var context = Map.of(
-			"date", formatter.format(Instant.now()),
-			"links", List.of(new Link("http://cnn.com", "A link to CNN"), new Link("http://microsoft.com", "a link to Microsoft")));
+		Instant now = Instant.ofEpochSecond(1562812157);
+		var context = Map.of("date", formatter.format(now), "links",
+				List.of(new Link("http://cnn.com", "A link to CNN"),
+						new Link("http://microsoft.com", "a link to Microsoft")));
 
 		var html = this.service.convertMustacheTemplateToHtml(this.sample, context);
 		log.info("html: " + html);
+
+		Assert.assertTrue(html.contains("href=\"http://cnn.com\""));
+		Assert.assertTrue(html.contains("href=\"http://microsoft.com\""));
+		Assert.assertTrue(html.contains("2019-07-10"));
+
 	}
 
 }

@@ -36,11 +36,11 @@ public class GitTemplateAutoConfiguration {
 		@Bean
 		@ConditionalOnMissingBean
 		TransportConfigCallback transportConfigCallback(
-			SshSessionFactory sshSessionFactory) {
+				SshSessionFactory sshSessionFactory) {
 			return transport -> {
 				Assert.isTrue(transport instanceof SshTransport,
-					"the " + Transport.class.getName() + " must be an instance of "
-						+ SshTransport.class.getName());
+						"the " + Transport.class.getName() + " must be an instance of "
+								+ SshTransport.class.getName());
 				SshTransport ssh = SshTransport.class.cast(transport);
 				ssh.setSshSessionFactory(sshSessionFactory);
 			};
@@ -95,18 +95,18 @@ public class GitTemplateAutoConfiguration {
 		@Bean
 		@ConditionalOnMissingBean
 		Git git(GitTemplateConfigurationProperties gsp,
-										TransportConfigCallback transportConfigCallback) throws GitAPIException {
+				TransportConfigCallback transportConfigCallback) throws GitAPIException {
 			return Git.cloneRepository()
-				.setTransportConfigCallback(transportConfigCallback)
-				.setURI(gsp.getUri()).setDirectory(gsp.getLocalCloneDirectory())
-				.call();
+					.setTransportConfigCallback(transportConfigCallback)
+					.setURI(gsp.getUri()).setDirectory(gsp.getLocalCloneDirectory())
+					.call();
 		}
 
 		@Bean
 		PushCommandCreator commandCreator(
-			TransportConfigCallback transportConfigCallback) {
+				TransportConfigCallback transportConfigCallback) {
 			return git -> git.push().setRemote("origin")
-				.setTransportConfigCallback(transportConfigCallback);
+					.setTransportConfigCallback(transportConfigCallback);
 		}
 
 	}
@@ -123,29 +123,29 @@ public class GitTemplateAutoConfiguration {
 
 			if (log.isDebugEnabled()) {
 				log.debug("going to clone the GIT repo " + gsp.getUri()
-					+ " into directory " + gsp.getLocalCloneDirectory() + ".");
+						+ " into directory " + gsp.getLocalCloneDirectory() + ".");
 			}
 
 			Assert.isTrue(
-				!cloneDirectory.exists()
-					|| FileSystemUtils.deleteRecursively(cloneDirectory),
-				"the directory " + cloneDirectory.getAbsolutePath()
-					+ " already exists and couldn't be deleted");
+					!cloneDirectory.exists()
+							|| FileSystemUtils.deleteRecursively(cloneDirectory),
+					"the directory " + cloneDirectory.getAbsolutePath()
+							+ " already exists and couldn't be deleted");
 			return Git.cloneRepository().setURI(gsp.getUri()).setDirectory(cloneDirectory)
-				.call();
+					.call();
 		}
 
 		@Bean
 		@ConditionalOnMissingBean
 		PushCommandCreator httpPushCommandCreator(
-			GitTemplateConfigurationProperties gsp) {
+				GitTemplateConfigurationProperties gsp) {
 			String user = gsp.getHttp().getUsername();
 			String pw = gsp.getHttp().getPassword();
 			Assert.notNull(user, "http.username can't be null");
 			Assert.notNull(pw, "http.password can't be null");
 			return git -> git.push().setRemote("origin").setCredentialsProvider(
-				new UsernamePasswordCredentialsProvider(gsp.getHttp().getUsername(),
-					gsp.getHttp().getPassword()));
+					new UsernamePasswordCredentialsProvider(gsp.getHttp().getUsername(),
+							gsp.getHttp().getPassword()));
 		}
 
 	}

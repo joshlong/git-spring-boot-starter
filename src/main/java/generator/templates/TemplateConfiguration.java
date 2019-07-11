@@ -15,9 +15,6 @@ class TemplateConfiguration {
 
 	private final Charset charset;
 
-	// @Value("${classpath:/templates/index.templates}")
-	// Resource resource ;
-
 	TemplateConfiguration(@Value("${podcasts.generator.charset:}") String charset) {
 		this.charset = !StringUtils.hasText(charset) ? Charset.defaultCharset()
 				: Charset.forName(charset);
