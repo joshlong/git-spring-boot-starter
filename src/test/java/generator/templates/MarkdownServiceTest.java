@@ -27,7 +27,8 @@ public class MarkdownServiceTest {
 		log.debug(markdownHtml);
 		Assert.assertTrue(markdownHtml.contains("<li>Now is the time</li>"));
 		Assert.assertTrue(markdownHtml.contains("<h2>A Subheader</h2>"));
-		Assert.assertTrue(markdownHtml.contains("<a href=\"http://slashdot.org\">nonsense</a>"));
+		Assert.assertTrue(
+				markdownHtml.contains("<a href=\"http://slashdot.org\">nonsense</a>"));
 		Assert.assertTrue(markdownHtml.contains("<h1>A Simple Markdown Document</h1>"));
 	}
 
