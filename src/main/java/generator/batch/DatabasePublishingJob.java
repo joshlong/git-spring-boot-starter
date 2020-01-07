@@ -20,10 +20,10 @@ class DatabasePublishingJob {
 	@Bean
 	Job job(JobBuilderFactory jobBuilderFactory, Step1Configuration s1) {
 		return jobBuilderFactory //
-			.get("podcast-publishing-job") //
-			.incrementer(new RunIdIncrementer()) //
-			.start(s1.readMarkdownFromDatabaseStep())//
-			.build();
+				.get("podcast-publishing-job") //
+				.incrementer(new RunIdIncrementer()) //
+				.start(s1.readMarkdownFromDatabaseStep())//
+				.build();
 	}
-}
 
+}

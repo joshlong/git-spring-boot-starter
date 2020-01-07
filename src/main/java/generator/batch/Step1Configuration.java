@@ -27,10 +27,9 @@ class Step1Configuration {
 	private final String loadAllPodcastsSql;
 
 	Step1Configuration(
-		@Value("${podcast.generator.sql.load-podcasts}") String loadAllPodcastsSql,
-		DataSource dataSource,
-		StepBuilderFactory stepBuilderFactory,
-		PodcastRowMapper podcastRowMapper) {
+			@Value("${podcast.generator.sql.load-podcasts}") String loadAllPodcastsSql,
+			DataSource dataSource, StepBuilderFactory stepBuilderFactory,
+			PodcastRowMapper podcastRowMapper) {
 		this.dataSource = dataSource;
 		this.stepBuilderFactory = stepBuilderFactory;
 		this.podcastRowMapper = podcastRowMapper;
@@ -40,8 +39,8 @@ class Step1Configuration {
 	@Bean
 	Step readMarkdownFromDatabaseStep() {
 		return this.stepBuilderFactory.get(NAME + "-step1").<Podcast, Podcast>chunk(100)
-			.reader(this.podcastItemReader()).writer(this.podcastItemWriter())
-			.build();
+				.reader(this.podcastItemReader()).writer(this.podcastItemWriter())
+				.build();
 	}
 
 	@Bean
@@ -51,10 +50,9 @@ class Step1Configuration {
 
 	@Bean
 	ItemReader<Podcast> podcastItemReader() {
-
 		return new JdbcCursorItemReaderBuilder<Podcast>().dataSource(this.dataSource)
-			.sql(this.loadAllPodcastsSql).rowMapper(this.podcastRowMapper)
-			.name(NAME + "reader").build();
+				.sql(this.loadAllPodcastsSql).rowMapper(this.podcastRowMapper)
+				.name(NAME + "reader").build();
 	}
 
 }
