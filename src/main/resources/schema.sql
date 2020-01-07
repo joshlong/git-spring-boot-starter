@@ -1,3 +1,9 @@
+drop table podcast_media;
+drop table podcast_link;
+drop table media;
+drop table link;
+drop table podcast;
+
 create table if not exists podcast
 (
     id serial not null
@@ -11,8 +17,6 @@ create table if not exists podcast
     s3_fqn_uri varchar(255)
 );
 
-alter table podcast owner to orders;
-
 create table if not exists link
 (
     id serial not null
@@ -21,8 +25,6 @@ create table if not exists link
     description varchar(255),
     href varchar(255)
 );
-
-alter table link owner to orders;
 
 create table if not exists media
 (
@@ -36,8 +38,6 @@ create table if not exists media
     type varchar(255)
 );
 
-alter table media owner to orders;
-
 create table if not exists podcast_link
 (
     podcast_id integer not null
@@ -47,8 +47,6 @@ create table if not exists podcast_link
         constraint podcast_link_link_id_fkey
             references media
 );
-
-alter table podcast_link owner to orders;
 
 create table if not exists podcast_media
 (
@@ -60,5 +58,8 @@ create table if not exists podcast_media
             references media
 );
 
+alter table podcast owner to orders;
+alter table media owner to orders;
+alter table podcast_link owner to orders;
 alter table podcast_media owner to orders;
-
+alter table link owner to orders;
