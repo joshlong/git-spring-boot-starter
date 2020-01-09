@@ -18,11 +18,13 @@ class DatabasePublishingJob {
 	}
 
 	@Bean
-	Job job(JobBuilderFactory jobBuilderFactory, Step1Configuration s1) {
+	Job job(JobBuilderFactory jobBuilderFactory, Step1Configuration s1,
+			Step2Configuration s2) {
 		return jobBuilderFactory //
 				.get("podcast-publishing-job") //
 				.incrementer(new RunIdIncrementer()) //
-				.start(s1.readMarkdownFromDatabaseStep())//
+				.start(s1.readPodcastsIntoIndividualDescriptions())//
+				// .next(s2.readDescriptionsIntoPages())//
 				.build();
 	}
 
