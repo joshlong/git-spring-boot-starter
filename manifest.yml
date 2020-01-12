@@ -1,0 +1,10 @@
+---
+applications:
+  - name: site-generator
+    path: site-generator-0.0.1-SNAPSHOT.jar
+    buildpack: https://github.com/cloudfoundry/java-buildpack.git
+    services:
+      - bootiful-podcast-db
+    env:
+      SPRING_PROFILES_ACTIVE: cloud
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+}}'

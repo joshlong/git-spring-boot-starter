@@ -1,0 +1,21 @@
+language: java
+
+sudo: required
+
+jdk:
+  - openjdk11
+
+cache:
+  directories:
+    - $HOME/.m2/repository/
+
+before_script:
+  - export PATH=$PATH:$HOME/bin/
+
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U
+
+script:
+  - mvn -e verify deploy
+  - ./deploy/cf.sh
+  - ./deploy/deploy.sh
