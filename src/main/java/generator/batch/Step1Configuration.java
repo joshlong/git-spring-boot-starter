@@ -93,6 +93,13 @@ class Step1Configuration {
 				.build();
 	}
 
+	private String paddedDate(int num) {
+		if (num < 10) {
+			return "0" + num;
+		}
+		return Integer.toString(num);
+	}
+
 	@SneakyThrows
 	private File emitDescriptionFor(Podcast podcast) {
 		var cal = Calendar.getInstance();
@@ -101,9 +108,8 @@ class Step1Configuration {
 		var year = cal.get(Calendar.YEAR);
 		var month = cal.get(Calendar.MONTH) + 1;
 		var date = cal.get(Calendar.DAY_OF_MONTH);
-
 		var folderForYear = new File(this.itemsDirectory, Long.toString(year));
-		var sortingItemFileName = year + "_" + month + "_" + date;
+		var sortingItemFileName = year + "_" + paddedDate(month) + "_" + paddedDate(date);
 		var fileNameForEpisodeHtml = new File(folderForYear,
 				sortingItemFileName + ".html");
 		log.info("---------------------------------");

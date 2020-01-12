@@ -24,7 +24,7 @@ class DatabasePublishingJob {
 				.get("podcast-publishing-job") //
 				.incrementer(new RunIdIncrementer()) //
 				.start(s1.readPodcastsIntoIndividualDescriptions())//
-				// .next(s2.readDescriptionsIntoPages())//
+				.next(s2.readDescriptionsIntoPages())//
 				.build();
 	}
 

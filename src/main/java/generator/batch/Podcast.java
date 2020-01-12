@@ -14,8 +14,8 @@ class Podcast {
 
 	private final Date date;
 
-	private final String description, notes, title, transcript, uid, s3OutputFileName,
-			s3FullyQualifiedUri;
+	private final String description, podbeanMediaUri, notes, title, transcript, uid,
+			s3OutputFileName, s3FullyQualifiedUri;
 
 	private final Collection<Media> media;
 
