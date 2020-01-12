@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -44,9 +45,14 @@ class Step2Configuration {
 		this.pagesDirectory = pagesDirectory;
 		this.itemsDirectory = itemsDirectory;
 		this.yearTemplateResource = yearTemplateResource;
-
-		this.assertThatTheDirectoryExists(this.pagesDirectory);
-		this.assertThatTheDirectoryExists(this.itemsDirectory);
+		log.info("deleting the pages directory " + this.pagesDirectory.getAbsolutePath());
+		log.info("deleting the items directory " + this.itemsDirectory.getAbsolutePath());
+		Arrays.asList(this.pagesDirectory, this.itemsDirectory).forEach(f -> {
+			log.info("deleting " + f.getAbsolutePath() + " recursively.");
+			FileSystemUtils.deleteRecursively(f);
+			log.info("recreating " + f.getAbsolutePath() + ".");
+			assertThatTheDirectoryExists(f);
+		});
 	}
 
 	private void assertThatTheDirectoryExists(File file) {
@@ -96,19 +102,12 @@ class Step2Configuration {
 
 	@Bean
 	Step readDescriptionsIntoPages() {
-		return this.stepBuilderFactory.get(NAME + "-step-1").<File, File>chunk(1000) // I'm
-																						// not
-																						// going
-																						// to
-																						// do
-																						// more
-																						// than
-																						// 1000
-																						// podcasts
-																						// per
-																						// year!
-				.reader(this.directoryItemReader())
-				.writer(this.pageFromFolderItemWriter()).build();
+		return this.stepBuilderFactory//
+				.get(NAME + "-step-1")//
+				.<File, File>chunk(1000) //
+				.reader(this.directoryItemReader())//
+				.writer(this.pageFromFolderItemWriter())//
+				.build();
 	}
 
 }

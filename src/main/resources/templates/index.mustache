@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <title>
+        A Bootiful Podcast
+    </title>
+</head>
+<body>
+
+<P>
+    <a href="http://twitter.com/starbuxman">I'm Josh Long</a>,
+    and this is a Bootiful Podcast.
+</P>
+<P>
+    Find the show on your favorite podcatchers,
+    including Apple iTunes, Google Play, Spotify and more.
+</P>
+
+<div class="current-year">
+    <h1>
+        {{  currentYear.year  }}
+    </h1>
+    <div>
+        {{{currentYear.html}}}
+    </div>
+</div>
+
+<div class="other-years">
+    {{#years}}
+        <a href="{{{ year }}}.html">{{{year}}}</a>
+    {{/years}}
+</div>
+
+</body>
+</html>
