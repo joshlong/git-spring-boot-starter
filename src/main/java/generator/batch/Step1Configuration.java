@@ -104,7 +104,6 @@ class Step1Configuration {
 	private File emitDescriptionFor(Podcast podcast) {
 		var cal = Calendar.getInstance();
 		cal.setTime(podcast.getDate());
-
 		var year = cal.get(Calendar.YEAR);
 		var month = cal.get(Calendar.MONTH) + 1;
 		var date = cal.get(Calendar.DAY_OF_MONTH);
@@ -116,12 +115,12 @@ class Step1Configuration {
 		log.info("podcast year: " + year + " " + podcast.toString());
 		log.info("sorting file name " + sortingItemFileName);
 		log.info("folder for year " + folderForYear);
-		var html = this.mustacheService.convertMustacheTemplateToHtml(
-				this.episodeTemplateResource,
-				Map.of("href", podcast.getS3FullyQualifiedUri(), //
-						"description", podcast.getDescription(), "title",
-						podcast.getTitle())//
-		);
+		var html = this.mustacheService
+				.convertMustacheTemplateToHtml(this.episodeTemplateResource,
+						Map.of("href", podcast.getPodbeanMediaUri(), //
+								"description", podcast.getDescription(), "title",
+								podcast.getTitle())//
+				);
 		log.info("html: " + html);
 		var parentFile = fileNameForEpisodeHtml.getParentFile();
 		Assert.isTrue(parentFile.exists() || parentFile.mkdirs(),
