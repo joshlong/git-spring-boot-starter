@@ -23,6 +23,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Log4j2
 @Configuration
@@ -96,18 +97,10 @@ class Step3Configuration {
 		var indexPage = new File(this.pagesDirectory, "index.html");
 		FileCopyUtils.copy(html, new FileWriter(indexPage));
 		log.info("the index page is " + indexPage.getAbsolutePath());
-
 		Arrays//
 				.asList(Objects.requireNonNull(staticAssets.getFile().listFiles()))//
-				.forEach(staticAsset -> {
-					copyRecursively(staticAsset,
-							new File(this.pagesDirectory, staticAsset.getName()));
-				});
-	}
-
-	@SneakyThrows
-	private void copyRecursively(File a, File b) {
-		FileSystemUtils.copyRecursively(a, b);
+				.forEach(staticAsset -> this.copyRecursively(staticAsset,
+						new File(this.pagesDirectory, staticAsset.getName())));
 	}
 
 	@Bean
@@ -121,6 +114,11 @@ class Step3Configuration {
 	Step indexStep() {
 		return this.stepBuilderFactory.get(NAME).<File, File>chunk(100)
 				.reader(yearFileItemReader()).writer(indexItemWriter()).build();
+	}
+
+	@SneakyThrows
+	private void copyRecursively(File a, File b) {
+		FileSystemUtils.copyRecursively(a, b);
 	}
 
 }
