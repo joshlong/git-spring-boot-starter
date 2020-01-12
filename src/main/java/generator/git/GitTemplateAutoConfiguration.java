@@ -121,10 +121,8 @@ public class GitTemplateAutoConfiguration {
 		Git git(GitTemplateConfigurationProperties gsp) throws GitAPIException {
 			File cloneDirectory = gsp.getLocalCloneDirectory();
 
-			if (log.isDebugEnabled()) {
-				log.debug("going to clone the GIT repo " + gsp.getUri()
-						+ " into directory " + gsp.getLocalCloneDirectory() + ".");
-			}
+			log.info("going to clone the GIT repo " + gsp.getUri() + " into directory "
+					+ gsp.getLocalCloneDirectory() + ".");
 
 			Assert.isTrue(
 					!cloneDirectory.exists()

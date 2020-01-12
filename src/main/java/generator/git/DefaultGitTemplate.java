@@ -37,11 +37,7 @@ class DefaultGitTemplate implements GitTemplate {
 	@Override
 	public void executeAndPush(GitCallback callback) {
 		try {
-			callback.execute(this.git);
-		}
-		catch (Throwable e) {
-			log.error(e);
-			ReflectionUtils.rethrowRuntimeException(e);
+			execute(callback);
 		}
 		finally {
 			try {
