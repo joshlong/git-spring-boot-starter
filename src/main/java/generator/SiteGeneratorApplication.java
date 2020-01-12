@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.batch.BasicBatchConfigurer;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -33,6 +34,7 @@ import static org.springframework.web.servlet.function.RouterFunctions.route;
  */
 @Log4j2
 @EnableBatchProcessing
+@EnableConfigurationProperties(SiteGeneratorProperties.class)
 @SpringBootApplication
 public class SiteGeneratorApplication {
 

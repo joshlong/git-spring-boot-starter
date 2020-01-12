@@ -1,5 +1,6 @@
 package generator.batch;
 
+import generator.SiteGeneratorProperties;
 import generator.templates.MustacheService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,18 +38,15 @@ class Step3Configuration {
 
 	private final File pagesDirectory;
 
-	private final Resource indexResourceTemplate;
-
-	private final Resource staticAssets;
+	private final Resource indexResourceTemplate, staticAssets;
 
 	@SneakyThrows
 	Step3Configuration(@Value("classpath:/static") Resource staticAssets,
-			@Value("${podcast.generator.output-directory.pages}") File pagesDirectory,
-			@Value("${podcast.generator.index-template}") Resource indexResourceTemplate,
-			MustacheService mustacheService, StepBuilderFactory stepBuilderFactory) {
+			SiteGeneratorProperties properties, MustacheService mustacheService,
+			StepBuilderFactory stepBuilderFactory) {
 		this.stepBuilderFactory = stepBuilderFactory;
-		this.pagesDirectory = pagesDirectory;
-		this.indexResourceTemplate = indexResourceTemplate;
+		this.pagesDirectory = properties.getOutput().getPages();
+		this.indexResourceTemplate = properties.getTemplates().getIndexTemplate();
 		this.mustacheService = mustacheService;
 		this.staticAssets = staticAssets;
 
@@ -111,9 +109,12 @@ class Step3Configuration {
 	}
 
 	@Bean
-	Step indexStep() {
-		return this.stepBuilderFactory.get(NAME).<File, File>chunk(100)
-				.reader(yearFileItemReader()).writer(indexItemWriter()).build();
+	Step buildIndex() {
+		return this.stepBuilderFactory//
+				.get(NAME)//
+				.<File, File>chunk(100).reader(yearFileItemReader())//
+				.writer(indexItemWriter())//
+				.build();
 	}
 
 	@SneakyThrows

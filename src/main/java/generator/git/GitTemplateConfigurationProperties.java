@@ -3,9 +3,7 @@ package generator.git;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.util.Assert;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 
 @Data

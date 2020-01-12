@@ -1,5 +1,6 @@
 package generator.batch;
 
+import generator.SiteGeneratorProperties;
 import generator.templates.MustacheService;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 @Configuration
 class Step2Configuration {
 
-	private final String NAME = "podcast-items-to-pages";
+	private static String NAME = "podcast-items-to-pages";
 
 	private final StepBuilderFactory stepBuilderFactory;
 
@@ -36,28 +37,14 @@ class Step2Configuration {
 
 	private final Resource yearTemplateResource;
 
+	@SneakyThrows
 	Step2Configuration(StepBuilderFactory sbf, MustacheService mustacheService,
-			@Value("${podcast.generator.year-template}") Resource yearTemplateResource,
-			@Value("${podcast.generator.output-directory.pages}") File pagesDirectory,
-			@Value("${podcast.generator.output-directory.items}") File itemsDirectory) {
+			SiteGeneratorProperties properties) {
 		this.mustacheService = mustacheService;
 		this.stepBuilderFactory = sbf;
-		this.pagesDirectory = pagesDirectory;
-		this.itemsDirectory = itemsDirectory;
-		this.yearTemplateResource = yearTemplateResource;
-		log.info("deleting the pages directory " + this.pagesDirectory.getAbsolutePath());
-		log.info("deleting the items directory " + this.itemsDirectory.getAbsolutePath());
-		Arrays.asList(this.pagesDirectory, this.itemsDirectory).forEach(f -> {
-			log.info("deleting " + f.getAbsolutePath() + " recursively.");
-			FileSystemUtils.deleteRecursively(f);
-			log.info("recreating " + f.getAbsolutePath() + ".");
-			assertThatTheDirectoryExists(f);
-		});
-	}
-
-	private void assertThatTheDirectoryExists(File file) {
-		Assert.isTrue(file.exists() || file.mkdirs(), "the directory "
-				+ file.getAbsolutePath() + " directory could not be found");
+		this.pagesDirectory = properties.getOutput().getPages();
+		this.itemsDirectory = properties.getOutput().getItems();
+		this.yearTemplateResource = properties.getTemplates().getYearTemplate();
 	}
 
 	@Bean

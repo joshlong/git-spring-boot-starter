@@ -1,5 +1,6 @@
 package generator.batch;
 
+import generator.SiteGeneratorProperties;
 import generator.templates.MustacheService;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -47,26 +48,24 @@ class Step1Configuration {
 
 	private final String apiServerHost;
 
-	Step1Configuration(@Value("${api-server.host}") String apiServerHost,
-			@Value("${podcast.generator.sql.load-podcasts}") String loadAllPodcastsSql,
-			@Value("${podcast.generator.output-directory.items}") File itemsDirectory,
-			@Value("${podcast.generator.output-directory.pages}") File pagesDirectory,
-			@Value("${podcast.generator.episode-template}") Resource episodeTemplateResource,
+	@SneakyThrows
+	Step1Configuration(SiteGeneratorProperties siteGeneratorProperties,
 			DataSource dataSource, MustacheService mustacheService,
 			StepBuilderFactory stepBuilderFactory, PodcastRowMapper podcastRowMapper) {
-		this.episodeTemplateResource = episodeTemplateResource;
-		this.apiServerHost = apiServerHost;
 		this.mustacheService = mustacheService;
-		this.itemsDirectory = itemsDirectory;
-		this.pagesDirectory = pagesDirectory;
 		this.dataSource = dataSource;
 		this.stepBuilderFactory = stepBuilderFactory;
 		this.podcastRowMapper = podcastRowMapper;
-		this.loadAllPodcastsSql = loadAllPodcastsSql;
+		this.apiServerHost = siteGeneratorProperties.getApiServerUrl().toString();
+		this.episodeTemplateResource = siteGeneratorProperties.getTemplates()
+				.getEpisodeTemplate();
+		this.loadAllPodcastsSql = siteGeneratorProperties.getSql().getLoadPodcasts();
+		this.itemsDirectory = siteGeneratorProperties.getOutput().getItems();
+		this.pagesDirectory = siteGeneratorProperties.getOutput().getPages();
 	}
 
 	@Bean
-	Step readPodcastsIntoIndividualDescriptions() {
+	Step readPodcastsIntoDescriptions() {
 		return this.stepBuilderFactory//
 				.get(NAME + "-step-1")//
 				.<Podcast, Podcast>chunk(100)//
