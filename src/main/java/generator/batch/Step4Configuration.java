@@ -103,7 +103,7 @@ class Step4Configuration {
 
 	@Bean
 	ItemWriter<File> gitItemWriter() {
-		return list -> gitTemplate.executeAndPush(
+		return list -> this.gitTemplate.executeAndPush(
 				g -> list.stream().map(this::copy).forEach(file -> add(g, file)));
 	}
 
