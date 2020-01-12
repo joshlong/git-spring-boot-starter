@@ -100,14 +100,14 @@ class Step3Configuration {
 		Arrays//
 				.asList(Objects.requireNonNull(staticAssets.getFile().listFiles()))//
 				.forEach(staticAsset -> {
-					try {
-						FileSystemUtils.copyRecursively(staticAsset,
-								new File(this.pagesDirectory, staticAsset.getName()));
-					}
-					catch (IOException e) {
-						throw new RuntimeException(e);
-					}
+					copyRecursively(staticAsset,
+							new File(this.pagesDirectory, staticAsset.getName()));
 				});
+	}
+
+	@SneakyThrows
+	private void copyRecursively(File a, File b) {
+		FileSystemUtils.copyRecursively(a, b);
 	}
 
 	@Bean
