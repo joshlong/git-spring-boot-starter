@@ -1,11 +1,8 @@
 <html lang="en">
 <head>
-    <title>
-        A Bootiful Podcast
-    </title>
+    <title> A Bootiful Podcast</title>
 </head>
 <body>
-
 <P>
     <a href="http://twitter.com/starbuxman">I'm Josh Long</a>,
     and this is a Bootiful Podcast.
@@ -15,7 +12,7 @@
     including Apple iTunes, Google Play, Spotify and more.
 </P>
 <div class="last-updated">
-    {{ date-of-last-site-generation }}
+   last generated at: {{ dateOfLastSiteGeneration }}
 </div>
 <div class="current-year">
     <h1>
@@ -28,7 +25,7 @@
 
 <div class="other-years">
     {{#years}}
-        <a href="{{{ year }}}.html">{{{year}}}</a>
+        <a href="{{{.}}}.html">{{{.}}}</a>
     {{/years}}
 </div>
 

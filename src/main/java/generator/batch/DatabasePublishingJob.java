@@ -25,7 +25,7 @@ class DatabasePublishingJob {
 				.incrementer(new RunIdIncrementer()) //
 				.start(s1.readPodcastsIntoDescriptions())//
 				.next(s2.readDescriptionsIntoPages())//
-				.next(s3.buildIndex())//
+				.next(s3.copyIndexIntoPlace())//
 				.next(s4.commitPagesToGithub())//
 				.build();
 	}

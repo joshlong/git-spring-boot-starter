@@ -26,6 +26,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * The first step in the pipeline writes fragments of markup for each episode into the
+ * episodes folder.
+ */
 @Log4j2
 @Configuration
 class Step1Configuration {
@@ -40,13 +44,11 @@ class Step1Configuration {
 
 	private final String loadAllPodcastsSql;
 
-	private final File itemsDirectory, pagesDirectory;
+	private final File itemsDirectory;
 
 	private final Resource episodeTemplateResource;
 
 	private final MustacheService mustacheService;
-
-	private final String apiServerHost;
 
 	@SneakyThrows
 	Step1Configuration(SiteGeneratorProperties siteGeneratorProperties,
@@ -56,12 +58,10 @@ class Step1Configuration {
 		this.dataSource = dataSource;
 		this.stepBuilderFactory = stepBuilderFactory;
 		this.podcastRowMapper = podcastRowMapper;
-		this.apiServerHost = siteGeneratorProperties.getApiServerUrl().toString();
 		this.episodeTemplateResource = siteGeneratorProperties.getTemplates()
 				.getEpisodeTemplate();
 		this.loadAllPodcastsSql = siteGeneratorProperties.getSql().getLoadPodcasts();
 		this.itemsDirectory = siteGeneratorProperties.getOutput().getItems();
-		this.pagesDirectory = siteGeneratorProperties.getOutput().getPages();
 	}
 
 	@Bean

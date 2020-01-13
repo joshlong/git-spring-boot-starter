@@ -31,7 +31,7 @@ public class SiteGeneratorProperties {
 	@Data
 	public static class Templates {
 
-		private Resource episodeTemplate, indexTemplate, yearTemplate;
+		private Resource episodeTemplate, pageChromeTemplate, yearTemplate;
 
 	}
 

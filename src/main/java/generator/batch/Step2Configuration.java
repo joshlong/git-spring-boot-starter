@@ -1,5 +1,6 @@
 package generator.batch;
 
+import generator.FileUtils;
 import generator.SiteGeneratorProperties;
 import generator.templates.MustacheService;
 import lombok.SneakyThrows;
@@ -7,22 +8,24 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.item.*;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-import org.springframework.util.Assert;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The second step in the pipeline creates pages for each of the years.
+ */
 @Log4j2
 @Configuration
 class Step2Configuration {
@@ -35,13 +38,16 @@ class Step2Configuration {
 
 	private final MustacheService mustacheService;
 
-	private final Resource yearTemplateResource;
+	private final Resource yearTemplateResource, pageChromeTemplate, staticAssets;
 
 	@SneakyThrows
-	Step2Configuration(StepBuilderFactory sbf, MustacheService mustacheService,
+	Step2Configuration(@Value("classpath:/static") Resource staticAssets,
+			StepBuilderFactory sbf, MustacheService mustacheService,
 			SiteGeneratorProperties properties) {
 		this.mustacheService = mustacheService;
+		this.staticAssets = staticAssets;
 		this.stepBuilderFactory = sbf;
+		this.pageChromeTemplate = properties.getTemplates().getPageChromeTemplate();
 		this.pagesDirectory = properties.getOutput().getPages();
 		this.itemsDirectory = properties.getOutput().getItems();
 		this.yearTemplateResource = properties.getTemplates().getYearTemplate();
@@ -65,22 +71,44 @@ class Step2Configuration {
 	}
 
 	@SneakyThrows
-	private void oneYear(File directory) {
-		var year = Integer.parseInt(directory.getName());
-		log.info("the year is " + year);
+	private void oneYear(Collection<Integer> allYears, int theYearOfThisDirectory,
+			Calendar calendar, File directory) {
+
+		var otherYears = allYears.stream().filter(y -> y != theYearOfThisDirectory)
+				.sorted().collect(Collectors.toList());
+
 		var allItems = Arrays
 				.stream(Objects.requireNonNull(directory
-						.listFiles(pathname -> pathname.getName().endsWith(".html"))))
-				.sorted(Comparator.comparing(File::getName)).map(this::fileToString)
-				.map(this::envelopeEachItem).collect(Collectors.toList());
+						.listFiles(pathname -> pathname.getName().endsWith(".html"))))//
+				.sorted(Comparator.comparing(File::getName))//
+				.map(this::fileToString) //
+				.map(this::envelopeEachItem)//
+				.collect(Collectors.toList());
+
+		var htmlForAyearsWorthOfEpisodes = this.mustacheService
+				.convertMustacheTemplateToHtml(this.yearTemplateResource,
+						Map.of("year", theYearOfThisDirectory, //
+								"episodes", allItems//
+						));
+
+		var sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+
 		var html = this.mustacheService.convertMustacheTemplateToHtml(
-				this.yearTemplateResource, Map.of("year", year, "episodes", allItems));
-		var pageForYear = new File(this.pagesDirectory, year + ".html");
+				this.pageChromeTemplate,
+				Map.of("currentYear",
+						new Year(theYearOfThisDirectory, htmlForAyearsWorthOfEpisodes), //
+						"dateOfLastSiteGeneration", sdf.format(calendar.getTime()), //
+						"years", otherYears));
+		var pageForYear = new File(this.pagesDirectory, theYearOfThisDirectory + ".html");
 		FileCopyUtils.copy(html, new FileWriter(pageForYear));
 	}
 
 	private void emitUniquePagesForEachYear(List<? extends File> items) {
-		items.forEach(this::oneYear);
+		var calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		var allYears = items.stream().map(f -> Integer.parseInt(f.getName()))
+				.collect(Collectors.toList());
+		items.forEach(x -> oneYear(allYears, Integer.parseInt(x.getName()), calendar, x));
 	}
 
 	private String envelopeEachItem(String episodeFragment) {
