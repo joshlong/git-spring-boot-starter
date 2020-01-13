@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-APP_NAME=site-generator-job
+APP_NAME=site-generator
 JOB_NAME=$APP_NAME
 SCHEDULER_NAME=scheduler-bootiful-podcast
 
