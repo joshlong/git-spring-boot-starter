@@ -16,6 +16,6 @@ install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U
 
 script:
-  - mvn -e verify deploy
+  - mvn -e -Dspring.profiles.active=manual-ignition verify deploy
   - ./deploy/cf.sh
   - ./deploy/deploy.sh
