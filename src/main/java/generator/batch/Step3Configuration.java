@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -78,13 +79,19 @@ class Step3Configuration {
 	@SneakyThrows
 	private void buildIndexGivenAllTheYears(List<? extends File> years) {
 		log.info("there are " + years.size() + " year files in the pages directory.");
+
+		// current year
 		var calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		var theCurrentYear = calendar.get(Calendar.YEAR);
 
+		// human readable date for the index
+		var sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+
 		var context = new HashMap<String, Object>();
 		var otherYears = new ArrayList<Year>();
 		context.put("years", otherYears);
+		context.put("date-of-last-site-generation", sdf.format(calendar.getTime()));
 		years.stream().map(this::toYear).filter(yr -> yr.getYear() == theCurrentYear)
 				.forEach(yr -> context.put("currentYear", yr));
 		years.stream().map(this::toYear).filter(yr -> yr.getYear() != theCurrentYear)
