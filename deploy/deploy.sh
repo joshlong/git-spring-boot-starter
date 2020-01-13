@@ -2,9 +2,7 @@
 
 APP_NAME=site-generator-job
 JOB_NAME=$APP_NAME
-
 SCHEDULER_NAME=scheduler-bootiful-podcast
-
 
 cf push -b java_buildpack -u none --no-route --no-start -p target/${APP_NAME}.jar ${APP_NAME}
 cf set-health-check $APP_NAME none # the new version of the cf cli will take 'process' instead of 'none'
