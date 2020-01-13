@@ -41,14 +41,16 @@ public class SiteGeneratorApplication {
 	@Bean
 	@Profile("manual-ignition")
 	RouterFunction<ServerResponse> routes(JobLauncher jobLauncher, Job job) {
-		return route().GET("/start", serverRequest -> {
-			var jobExecution = jobLauncher.run(job, new JobParametersBuilder()
-					.addDate("runtime", new Date()).toJobParameters());
-			var ok = jobExecution.getEndTime() != null
-					&& jobExecution.getExitStatus().equals(ExitStatus.COMPLETED);
-			log.info("did the job complete successfully? " + ok);
-			return ServerResponse.ok().build();
-		}).build();
+		return route()//
+				.GET("/start", serverRequest -> {
+					var jobExecution = jobLauncher.run(job, new JobParametersBuilder()
+							.addDate("runtime", new Date()).toJobParameters());
+					var ok = jobExecution.getEndTime() != null
+							&& jobExecution.getExitStatus().equals(ExitStatus.COMPLETED);
+					log.info("did the job complete successfully? " + ok);
+					return ServerResponse.ok().build();
+				})//
+				.build();
 	}
 
 	public static void main(String[] args) {
