@@ -89,7 +89,10 @@ class Step3Configuration {
 		var context = new HashMap<String, Object>();
 		var otherYears = new ArrayList<Year>();
 		context.put("years", otherYears);
-		context.put("date-of-last-site-generation", sdf.format(calendar.getTime()));
+		var dateOfLastSiteGeneration = sdf.format(calendar.getTime());
+		context.put("date-of-last-site-generation", dateOfLastSiteGeneration);
+		log.info("just added the date-of-last-site-generation as "
+				+ dateOfLastSiteGeneration);
 		years.stream().map(this::toYear).filter(yr -> yr.getYear() == theCurrentYear)
 				.forEach(yr -> context.put("currentYear", yr));
 		years.stream().map(this::toYear).filter(yr -> yr.getYear() != theCurrentYear)
