@@ -6,6 +6,8 @@ SCHEDULER_NAME=scheduler-bootiful-podcast
 
 cf push -b java_buildpack -u none --no-route --no-start -p target/${APP_NAME}.jar ${APP_NAME}
 cf set-health-check $APP_NAME none # the new version of the cf cli will take 'process' instead of 'none'
+cf set-env $APP_NAME GIT_PASSWORD $GIT_PASSWORD
+cf set-env $APP_NAME GIT_USERNAME $GIT_USERNAME
 
 # scheduler
 cf s | grep ${SCHEDULER_NAME} || cf cs scheduler-for-pcf standard ${SCHEDULER_NAME}
