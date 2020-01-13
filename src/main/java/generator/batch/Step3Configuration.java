@@ -84,8 +84,6 @@ class Step3Configuration {
 		var calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		var theCurrentYear = calendar.get(Calendar.YEAR);
-
-		// human readable date for the index
 		var sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
 
 		var context = new HashMap<String, Object>();
