@@ -2,6 +2,7 @@ package generator.batch;
 
 import generator.FileUtils;
 import generator.SiteGeneratorProperties;
+import generator.git.GitCallback;
 import generator.git.GitTemplate;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -59,19 +60,22 @@ class Step4Configuration {
 				.build();
 	}
 
+	@Bean
+	ItemWriter<File> gitItemWriter() {
+		return list -> this.gitTemplate.executeAndPush(g -> {
+			list.stream()
+					.map(fileToCopyToGitRepo -> FileUtils.copy(fileToCopyToGitRepo,
+							new File(this.gitCloneDirectory,
+									fileToCopyToGitRepo.getName())))
+					.forEach(file -> add(g, file));
+		});
+	}
+
 	@SneakyThrows
 	private void add(Git g, File f) {
 		g.add().addFilepattern(f.getName()).call();
 		g.commit().setMessage("Adding " + f.getName() + " @ " + Instant.now().toString())
 				.call();
-	}
-
-	@Bean
-	ItemWriter<File> gitItemWriter() {
-		return list -> this.gitTemplate.executeAndPush(g -> list.stream()
-				.map(fileToCopyToGitRepo -> FileUtils.copy(fileToCopyToGitRepo,
-						new File(this.gitCloneDirectory, fileToCopyToGitRepo.getName())))
-				.forEach(file -> add(g, file)));
 	}
 
 }

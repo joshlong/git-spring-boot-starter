@@ -21,7 +21,7 @@ public abstract class FileUtils {
 
 	@SneakyThrows
 	private static void copyFile(File og, File target) {
-		Assert.isTrue((target.exists() && (target).delete()) || !target.exists(),
+		Assert.isTrue((target.exists() && target.delete()) || !target.exists(),
 				"the target file " + target.getAbsolutePath()
 						+ " exists, but could not be deleted");
 		FileCopyUtils.copy(og, target);

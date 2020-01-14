@@ -1,5 +1,6 @@
 package generator.batch;
 
+import generator.DateUtils;
 import generator.SiteGeneratorProperties;
 import generator.templates.MustacheService;
 import lombok.SneakyThrows;
@@ -101,6 +102,7 @@ class Step1Configuration {
 
 	@SneakyThrows
 	private File emitDescriptionFor(Podcast podcast) {
+		var sdf = DateUtils.date();
 		var cal = Calendar.getInstance();
 		cal.setTime(podcast.getDate());
 		var year = cal.get(Calendar.YEAR);
@@ -114,12 +116,13 @@ class Step1Configuration {
 		log.info("podcast year: " + year + " " + podcast.toString());
 		log.info("sorting file name " + sortingItemFileName);
 		log.info("folder for year " + folderForYear);
-		var html = this.mustacheService
-				.convertMustacheTemplateToHtml(this.episodeTemplateResource,
-						Map.of("href", podcast.getPodbeanMediaUri(), //
-								"description", podcast.getDescription(), "title",
-								podcast.getTitle())//
-				);
+		var html = this.mustacheService.convertMustacheTemplateToHtml(
+				this.episodeTemplateResource,
+				Map.of("when", sdf.format(podcast.getDate()), //
+						"href", podcast.getPodbeanMediaUri(), //
+						"description", podcast.getDescription(), //
+						"title", podcast.getTitle()//
+				));
 		log.info("html: " + html);
 		var parentFile = fileNameForEpisodeHtml.getParentFile();
 		Assert.isTrue(parentFile.exists() || parentFile.mkdirs(),

@@ -1,6 +1,6 @@
 package generator.batch;
 
-import generator.FileUtils;
+import generator.DateUtils;
 import generator.SiteGeneratorProperties;
 import generator.templates.MustacheService;
 import lombok.SneakyThrows;
@@ -71,11 +71,13 @@ class Step2Configuration {
 	}
 
 	@SneakyThrows
-	private void oneYear(Collection<Integer> allYears, int theYearOfThisDirectory,
-			Calendar calendar, File directory) {
+	private void generatePageForASingleYear(Collection<Integer> allYears,
+			int theYearOfThisDirectory, Calendar calendar, File directory) {
 
-		var otherYears = allYears.stream().filter(y -> y != theYearOfThisDirectory)
-				.sorted().collect(Collectors.toList());
+		var otherYears = allYears.stream()//
+				.filter(y -> y != theYearOfThisDirectory)//
+				.sorted()//
+				.collect(Collectors.toList());
 
 		var allItems = Arrays
 				.stream(Objects.requireNonNull(directory
@@ -91,7 +93,7 @@ class Step2Configuration {
 								"episodes", allItems//
 						));
 
-		var sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+		var sdf = DateUtils.dateAndTime();
 
 		var html = this.mustacheService.convertMustacheTemplateToHtml(
 				this.pageChromeTemplate,
@@ -108,7 +110,8 @@ class Step2Configuration {
 		calendar.setTime(new Date());
 		var allYears = items.stream().map(f -> Integer.parseInt(f.getName()))
 				.collect(Collectors.toList());
-		items.forEach(x -> oneYear(allYears, Integer.parseInt(x.getName()), calendar, x));
+		items.forEach(x -> generatePageForASingleYear(allYears,
+				Integer.parseInt(x.getName()), calendar, x));
 	}
 
 	private String envelopeEachItem(String episodeFragment) {
