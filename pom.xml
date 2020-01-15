@@ -22,6 +22,23 @@
 
     <dependencies>
         <dependency>
+            <groupId>fm.bootifulpodcast</groupId>
+            <artifactId>rabbitmq-utilities</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-integration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -43,7 +60,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-batch</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -159,6 +175,7 @@
             </plugin>
         </plugins>
     </build>
+
     <repositories>
         <repository>
             <snapshots>
@@ -166,17 +183,13 @@
             </snapshots>
             <id>central</id>
             <name>libs-release</name>
-            <url>
-                https://cloudnativejava.artifactoryonline.com/cloudnativejava/libs-release
-            </url>
+            <url>https://cloudnativejava.jfrog.io/cloudnativejava/libs-release</url>
         </repository>
         <repository>
             <snapshots/>
             <id>snapshots</id>
             <name>libs-snapshot</name>
-            <url>
-                https://cloudnativejava.artifactoryonline.com/cloudnativejava/libs-snapshot
-            </url>
+            <url>https://cloudnativejava.jfrog.io/cloudnativejava/libs-snapshot</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -186,18 +199,13 @@
             </snapshots>
             <id>central</id>
             <name>plugins-release</name>
-            <url>
-                https://cloudnativejava.artifactoryonline.com/cloudnativejava/plugins-release
-            </url>
+            <url>https://cloudnativejava.jfrog.io/cloudnativejava/plugins-release</url>
         </pluginRepository>
         <pluginRepository>
             <snapshots/>
             <id>snapshots</id>
-            <name>plugins-snapshot</name>
-            <url>
-                https://cloudnativejava.artifactoryonline.com/cloudnativejava/plugins-snapshot
-            </url>
+            <name>plugins-release</name>
+            <url>https://cloudnativejava.jfrog.io/cloudnativejava/plugins-release</url>
         </pluginRepository>
     </pluginRepositories>
-
 </project>

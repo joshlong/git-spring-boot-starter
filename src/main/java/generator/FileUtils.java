@@ -7,6 +7,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
+import java.util.Objects;
 
 @Log4j2
 public abstract class FileUtils {
@@ -38,6 +39,18 @@ public abstract class FileUtils {
 			copyDirectory(og, target);
 		}
 		return target;
+	}
+
+	public static boolean delete(File f) {
+		if (!f.exists()) {
+			return true;
+		}
+		if (f.isFile()) {
+			return f.delete();
+		}
+		else {
+			return FileSystemUtils.deleteRecursively(f);
+		}
 	}
 
 	public static File ensureDirectoryExists(File f) {

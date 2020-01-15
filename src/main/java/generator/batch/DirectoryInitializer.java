@@ -16,13 +16,12 @@ class DirectoryInitializer {
 
 	DirectoryInitializer(SiteGeneratorProperties properties) {
 		var output = properties.getOutput();
-		Stream.of(output.getItems(), output.getGitClone(), output.getPages())
-				.forEach(this::reset);
+		Stream.of(output.getItems(), output.getPages()).forEach(this::reset);
 	}
 
 	private void reset(File file) {
 		log.info("resetting the directory " + file.getAbsolutePath());
-		FileSystemUtils.deleteRecursively(file);
+		FileUtils.delete(file);
 		FileUtils.ensureDirectoryExists(file);
 	}
 

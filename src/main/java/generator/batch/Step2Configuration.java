@@ -19,7 +19,6 @@ import org.springframework.util.FileCopyUtils;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,14 +37,13 @@ class Step2Configuration {
 
 	private final MustacheService mustacheService;
 
-	private final Resource yearTemplateResource, pageChromeTemplate, staticAssets;
+	private final Resource yearTemplateResource, pageChromeTemplate;
 
 	@SneakyThrows
 	Step2Configuration(@Value("classpath:/static") Resource staticAssets,
 			StepBuilderFactory sbf, MustacheService mustacheService,
 			SiteGeneratorProperties properties) {
 		this.mustacheService = mustacheService;
-		this.staticAssets = staticAssets;
 		this.stepBuilderFactory = sbf;
 		this.pageChromeTemplate = properties.getTemplates().getPageChromeTemplate();
 		this.pagesDirectory = properties.getOutput().getPages();

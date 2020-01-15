@@ -21,6 +21,8 @@ public class SiteGeneratorProperties {
 
 	private final Output output = new Output();
 
+	private final Launcher launcher = new Launcher();
+
 	@Data
 	public static class Output {
 
@@ -43,6 +45,17 @@ public class SiteGeneratorProperties {
 		private String loadLinks;
 
 		private String loadMedia;
+
+	}
+
+	@Data
+	public static class Launcher {
+
+		private String requestsQueue = "site-generator-requests";
+
+		private String requestsExchange = this.requestsQueue;
+
+		private String requestsRoutingKey = this.requestsQueue;
 
 	}
 

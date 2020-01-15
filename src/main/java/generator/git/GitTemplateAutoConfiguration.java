@@ -2,6 +2,7 @@ package generator.git;
 
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
+import generator.FileUtils;
 import lombok.extern.log4j.Log4j2;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.TransportConfigCallback;
@@ -96,16 +97,20 @@ public class GitTemplateAutoConfiguration {
 		@ConditionalOnMissingBean
 		Git git(GitTemplateConfigurationProperties gsp,
 				TransportConfigCallback transportConfigCallback) throws GitAPIException {
-			return Git.cloneRepository()
-					.setTransportConfigCallback(transportConfigCallback)
-					.setURI(gsp.getUri()).setDirectory(gsp.getLocalCloneDirectory())
+			return Git//
+					.cloneRepository()//
+					.setTransportConfigCallback(transportConfigCallback)//
+					.setURI(gsp.getUri())//
+					.setDirectory(gsp.getLocalCloneDirectory())//
 					.call();
 		}
 
 		@Bean
 		PushCommandCreator commandCreator(
 				TransportConfigCallback transportConfigCallback) {
-			return git -> git.push().setRemote("origin")
+			return git -> git//
+					.push()//
+					.setRemote("origin")//
 					.setTransportConfigCallback(transportConfigCallback);
 		}
 
@@ -119,17 +124,14 @@ public class GitTemplateAutoConfiguration {
 		@Bean
 		@ConditionalOnMissingBean
 		Git git(GitTemplateConfigurationProperties gsp) throws GitAPIException {
-			File cloneDirectory = gsp.getLocalCloneDirectory();
-
+			var cloneDirectory = gsp.getLocalCloneDirectory();
+			FileUtils.delete(gsp.getLocalCloneDirectory());
 			log.info("going to clone the GIT repo " + gsp.getUri() + " into directory "
 					+ gsp.getLocalCloneDirectory() + ".");
-
-			Assert.isTrue(
-					!cloneDirectory.exists()
-							|| FileSystemUtils.deleteRecursively(cloneDirectory),
-					"the directory " + cloneDirectory.getAbsolutePath()
-							+ " already exists and couldn't be deleted");
-			return Git.cloneRepository().setURI(gsp.getUri()).setDirectory(cloneDirectory)
+			return Git//
+					.cloneRepository()//
+					.setURI(gsp.getUri())//
+					.setDirectory(cloneDirectory)//
 					.call();
 		}
 
@@ -137,8 +139,8 @@ public class GitTemplateAutoConfiguration {
 		@ConditionalOnMissingBean
 		PushCommandCreator httpPushCommandCreator(
 				GitTemplateConfigurationProperties gsp) {
-			String user = gsp.getHttp().getUsername();
-			String pw = gsp.getHttp().getPassword();
+			var user = gsp.getHttp().getUsername();
+			var pw = gsp.getHttp().getPassword();
 			Assert.notNull(user, "http.username can't be null");
 			Assert.notNull(pw, "http.password can't be null");
 			return git -> git.push().setRemote("origin").setCredentialsProvider(
