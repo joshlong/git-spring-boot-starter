@@ -8,4 +8,4 @@ cf set-env ${APP_NAME} GIT_USERNAME $GIT_USERNAME
 cf set-env ${APP_NAME} GIT_URI $GIT_URI
 cf set-env ${APP_NAME} RMQ_ADDRESS $RMQ_ADDRESS
 cf start $APP_NAME
-cf stop $APP_NAME
+#cf stop $APP_NAME
