@@ -45,26 +45,20 @@ public class SiteGeneratorApplication {
 	IntegrationFlow integrationFlow(RabbitMqHelper helper,
 			ConnectionFactory connectionFactory, SiteGeneratorProperties properties) {
 
-		var requestsQueue = properties.getLauncher().getRequestsQueue();
-		var requestsExchange = properties.getLauncher().getRequestsExchange();
-		var requestsRoutingKey = properties.getLauncher().getRequestsRoutingKey();
-
-		helper.defineDestination(requestsExchange, requestsQueue, requestsRoutingKey);
+		helper.defineDestination(properties.getLauncher().getRequestsQueue(),
+				properties.getLauncher().getRequestsExchange(),
+				properties.getLauncher().getRequestsRoutingKey());
 
 		var amqpInboundAdapter = Amqp//
-				.inboundAdapter(connectionFactory, requestsQueue)//
+				.inboundAdapter(connectionFactory,
+						properties.getLauncher().getRequestsQueue())//
 				.get();
 
 		return IntegrationFlows//
 				.from(amqpInboundAdapter)//
 				.handle(String.class, (str, messageHeaders) -> {//
 					var ok = this.launchSiteGeneratorJob();
-					if (ok) {
-						log.info("the job completed.");
-					}
-					else {
-						log.error("something went wrong with the job.");
-					}
+					log.info("the job " + (!ok ? "is not" : "is") + " completed.");
 					return null;
 				})//
 				.get();

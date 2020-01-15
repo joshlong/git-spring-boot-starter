@@ -51,7 +51,7 @@ public class SiteGeneratorProperties {
 	@Data
 	public static class Launcher {
 
-		private String requestsQueue = "site-generator-requests";
+		private String requestsQueue = "site-generator-requests-queue";
 
 		private String requestsExchange = this.requestsQueue;
 
