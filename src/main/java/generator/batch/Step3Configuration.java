@@ -39,7 +39,7 @@ class Step3Configuration {
 		return this.stepBuilderFactory.get(COPY_INDEX_NAME)
 				.tasklet((stepContribution, chunkContext) -> {
 
-					var pagesFile = properties.getOutput().getPages();
+					var pagesFile = this.properties.getOutput().getPages();
 
 					// move the latest file to the output/index.html
 					Arrays//
@@ -58,8 +58,8 @@ class Step3Configuration {
 							});
 
 					// copy all the files in /static/* to the output/*
-					Arrays.asList(
-							Objects.requireNonNull(staticAssets.getFile().listFiles()))
+					Arrays.asList(Objects
+							.requireNonNull(this.staticAssets.getFile().listFiles()))
 							.forEach(file -> FileUtils.copy(file,
 									new File(pagesFile, file.getName())));
 

@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import java.io.File;
 import java.util.stream.Stream;
 
+@Log4j2
 @Configuration
 @RequiredArgsConstructor
-@Log4j2
 class Step0Configuration {
 
 	private final SiteGeneratorProperties properties;
