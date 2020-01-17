@@ -40,8 +40,7 @@ class Step2Configuration {
 	private final Resource yearTemplateResource, pageChromeTemplate;
 
 	@SneakyThrows
-	Step2Configuration(@Value("classpath:/static") Resource staticAssets,
-			StepBuilderFactory sbf, MustacheService mustacheService,
+	Step2Configuration(StepBuilderFactory sbf, MustacheService mustacheService,
 			SiteGeneratorProperties properties) {
 		this.mustacheService = mustacheService;
 		this.stepBuilderFactory = sbf;

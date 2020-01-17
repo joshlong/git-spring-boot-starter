@@ -50,17 +50,16 @@ class Step4Configuration {
 		return this.stepBuilderFactory//
 				.get(NAME)//
 				.tasklet((stepContribution, chunkContext) -> {
-					gitTemplate.executeAndPush(g -> Stream
+					gitTemplate.executeAndPush(git -> Stream
 							.of(Objects.requireNonNull(pagesDirectory.listFiles()))
 							.map(fileToCopyToGitRepo -> FileUtils.copy(
 									fileToCopyToGitRepo,
 									new File(gitCloneDirectory,
 											fileToCopyToGitRepo.getName())))
-							.forEach(file -> add(g, file)));
+							.forEach(file -> add(git, file)));
 					return RepeatStatus.FINISHED;
 				})//
 				.build();
-
 	}
 
 	@SneakyThrows

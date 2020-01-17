@@ -40,12 +40,19 @@ class PodcastRowMapper implements RowMapper<Podcast> {
 		var transcript = resultSet.getString("transcript");
 		var uid = resultSet.getString("uid");
 		var podbeanMediaUri = resultSet.getString("podbean_media_uri");
-		var s3_output_file_name = resultSet.getString("s3_output_file_name");
-		var s3_fqn_uri = resultSet.getString("s3_fqn_uri");
+
+		var s3AudioFileName = resultSet.getString("s3_audio_file_name");
+		var s3AudioUri = resultSet.getString("s3_audio_uri");
+
+		var s3PhotoFileName = resultSet.getString("s3_photo_file_name");
+		var s3PhotoUri = resultSet.getString("s3_photo_uri");
+
 		var media = this.template.query(this.loadMediaSql, this.mediaRowMapper, id);
 		var links = this.template.query(this.loadLinkSql, this.linkRowMapper, id);
+
 		return new Podcast(id, date, description, podbeanMediaUri, notes, title,
-				transcript, uid, s3_output_file_name, s3_fqn_uri, media, links);
+				transcript, uid, s3AudioFileName, s3AudioUri, s3PhotoFileName, s3PhotoUri,
+				media, links);
 	}
 
 }

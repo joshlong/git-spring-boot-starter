@@ -10,7 +10,6 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -19,13 +18,9 @@ import org.springframework.util.FileCopyUtils;
 
 import javax.sql.DataSource;
 import java.io.*;
-import java.time.Instant;
-import java.time.temporal.TemporalField;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * The first step in the pipeline writes fragments of markup for each episode into the
@@ -76,14 +71,6 @@ class Step1Configuration {
 	}
 
 	@Bean
-	ItemWriter<Podcast> podcastItemWriter() {
-		return items -> items.forEach(podcast -> {
-			var podcastFile = Objects.requireNonNull(this.emitDescriptionFor(podcast));
-			log.info("the podcast episode file is " + podcastFile.getAbsolutePath());
-		});
-	}
-
-	@Bean
 	ItemReader<Podcast> podcastItemReader() {
 		return new JdbcCursorItemReaderBuilder<Podcast>()//
 				.dataSource(this.dataSource)//
@@ -91,6 +78,16 @@ class Step1Configuration {
 				.rowMapper(this.podcastRowMapper)//
 				.name(NAME + "reader")//
 				.build();
+	}
+
+	@Bean
+	ItemWriter<Podcast> podcastItemWriter() {
+		return items -> items.forEach(podcast -> {
+			podcast.getMedia().forEach(m -> log.info(" " + m.toString()));
+			var podcastFile = Objects.requireNonNull(this.emitDescriptionFor(podcast));
+			log.info("the episode .HTML for " + podcast.getUid() + " lives at "
+					+ podcastFile.getAbsolutePath());
+		});
 	}
 
 	private String paddedDate(int num) {
@@ -116,13 +113,14 @@ class Step1Configuration {
 		log.info("podcast year: " + year + " " + podcast.toString());
 		log.info("sorting file name " + sortingItemFileName);
 		log.info("folder for year " + folderForYear);
+		var contextForHtmlTemplate = Map.<String, Object>of("when",
+				sdf.format(podcast.getDate()), //
+				"href", podcast.getPodbeanMediaUri(), //
+				"description", podcast.getDescription(), //
+				"title", podcast.getTitle()//
+		);
 		var html = this.mustacheService.convertMustacheTemplateToHtml(
-				this.episodeTemplateResource,
-				Map.of("when", sdf.format(podcast.getDate()), //
-						"href", podcast.getPodbeanMediaUri(), //
-						"description", podcast.getDescription(), //
-						"title", podcast.getTitle()//
-				));
+				this.episodeTemplateResource, contextForHtmlTemplate);
 		log.info("html: " + html);
 		var parentFile = fileNameForEpisodeHtml.getParentFile();
 		Assert.isTrue(parentFile.exists() || parentFile.mkdirs(),

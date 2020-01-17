@@ -22,17 +22,18 @@ class Step0Configuration {
 
 	private final StepBuilderFactory stepBuilderFactory;
 
-	private static String NAME = "reset";
+	private static String NAME = Step0Configuration.class.getName() + "-reset";
 
 	@Bean
 	Step reset() {
-		return this.stepBuilderFactory.get(NAME)
+		return this.stepBuilderFactory.get(NAME)//
 				.tasklet((stepContribution, chunkContext) -> {
 					var output = properties.getOutput();
 					Stream.of(output.getItems(), output.getPages())
 							.forEach(Step0Configuration.this::reset);
 					return RepeatStatus.FINISHED;
-				}).build();
+				})//
+				.build();
 	}
 
 	private void reset(File file) {
