@@ -43,8 +43,9 @@ class Step3Configuration {
 
 					// move the latest file to the output/index.html
 					Arrays//
-							.stream(Objects.requireNonNull(pagesFile.listFiles(
-									f -> f.isFile() && f.getName().endsWith(".html"))))//
+							.stream(Objects.requireNonNull(
+									pagesFile.listFiles(htmlFile -> htmlFile.isFile()
+											&& htmlFile.getName().endsWith(".html"))))//
 							.map(f -> f.getName().split("\\.")[0])//
 							.map(Integer::parseInt)//
 							.sorted()//

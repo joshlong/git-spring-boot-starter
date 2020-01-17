@@ -19,6 +19,7 @@ import org.springframework.util.FileCopyUtils;
 import javax.sql.DataSource;
 import java.io.*;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -100,8 +101,7 @@ class Step1Configuration {
 	@SneakyThrows
 	private File emitDescriptionFor(Podcast podcast) {
 		var sdf = DateUtils.date();
-		var cal = Calendar.getInstance();
-		cal.setTime(podcast.getDate());
+		var cal = DateUtils.getCalendarFor(new Date());
 		var year = cal.get(Calendar.YEAR);
 		var month = cal.get(Calendar.MONTH) + 1;
 		var date = cal.get(Calendar.DAY_OF_MONTH);
