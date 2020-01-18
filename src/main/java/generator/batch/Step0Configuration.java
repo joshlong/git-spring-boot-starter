@@ -43,7 +43,6 @@ class Step0Configuration {
 
 		return this.stepBuilderFactory.get(NAME)//
 				.tasklet((stepContribution, chunkContext) -> {
-
 					// first delete everything
 					Stream.of(output.getItems(), output.getPages())
 							.forEach(Step0Configuration.this::reset);

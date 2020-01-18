@@ -18,6 +18,7 @@ import org.springframework.util.FileCopyUtils;
 
 import javax.sql.DataSource;
 import java.io.*;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -41,16 +42,20 @@ class Step1Configuration {
 
 	private final String loadAllPodcastsSql;
 
-	private final File itemsDirectory;
+	private final File itemsDirectory, pagesDirectory;
 
 	private final Resource episodeTemplateResource;
 
 	private final MustacheService mustacheService;
 
+	private final String apiUrl;
+
 	@SneakyThrows
 	Step1Configuration(SiteGeneratorProperties siteGeneratorProperties,
 			DataSource dataSource, MustacheService mustacheService,
 			StepBuilderFactory stepBuilderFactory, PodcastRowMapper podcastRowMapper) {
+
+		this.apiUrl = siteGeneratorProperties.getApiServerUrl().toString();
 		this.mustacheService = mustacheService;
 		this.dataSource = dataSource;
 		this.stepBuilderFactory = stepBuilderFactory;
@@ -59,6 +64,7 @@ class Step1Configuration {
 				.getEpisodeTemplate();
 		this.loadAllPodcastsSql = siteGeneratorProperties.getSql().getLoadPodcasts();
 		this.itemsDirectory = siteGeneratorProperties.getOutput().getItems();
+		this.pagesDirectory = siteGeneratorProperties.getOutput().getPages();
 	}
 
 	@Bean
@@ -100,6 +106,23 @@ class Step1Configuration {
 
 	@SneakyThrows
 	private File emitDescriptionFor(Podcast podcast) {
+
+		// todo download the profile photo for the podcast
+
+		var uid = podcast.getUid();
+		var imagesDirectory = new File(this.pagesDirectory, "episode-photos");
+		Assert.isTrue(imagesDirectory.exists() || imagesDirectory.mkdirs(),
+				"the images directory " + imagesDirectory.getAbsolutePath()
+						+ " could not be created");
+		var profilePhotoUrl = new URL(
+				this.apiUrl + "/podcasts/" + uid + "/profile-photo");
+		var file = new File(imagesDirectory, uid + ".jpg");
+		try (var fin = profilePhotoUrl.openStream();
+				var fout = new FileOutputStream(file)) {
+			FileCopyUtils.copy(fin, fout);
+			log.info("the image file lives in " + file.getAbsolutePath());
+		}
+
 		var sdf = DateUtils.date();
 		var cal = DateUtils.getCalendarFor(new Date());
 		var year = cal.get(Calendar.YEAR);
@@ -113,8 +136,13 @@ class Step1Configuration {
 		log.info("podcast year: " + year + " " + podcast.toString());
 		log.info("sorting file name " + sortingItemFileName);
 		log.info("folder for year " + folderForYear);
+
+		for (var f : Objects.requireNonNull(pagesDirectory.list()))
+			log.info("profile photo is  " + f);
+
 		var contextForHtmlTemplate = Map.<String, Object>of("when",
 				sdf.format(podcast.getDate()), //
+				"imageSrc", "episode-photos/" + podcast.getUid() + ".jpg", //
 				"href", podcast.getPodbeanMediaUri(), //
 				"description", podcast.getDescription(), //
 				"title", podcast.getTitle()//

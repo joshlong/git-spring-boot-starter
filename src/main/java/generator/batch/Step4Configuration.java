@@ -2,26 +2,18 @@ package generator.batch;
 
 import generator.FileUtils;
 import generator.SiteGeneratorProperties;
-import generator.git.GitCallback;
 import generator.git.GitTemplate;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.eclipse.jgit.api.Git;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -64,6 +56,7 @@ class Step4Configuration {
 
 	@SneakyThrows
 	private void add(Git g, File f) {
+		log.info("adding " + f.getAbsolutePath());
 		g.add().addFilepattern(f.getName()).call();
 		g.commit().setMessage("Adding " + f.getName() + " @ " + Instant.now().toString())
 				.call();
