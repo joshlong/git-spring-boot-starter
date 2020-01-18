@@ -7,10 +7,19 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
-import java.util.Objects;
 
 @Log4j2
 public abstract class FileUtils {
+
+	public static String extensionFor(File file) {
+		var name = file.getName();
+		var lastIndexOf = name.lastIndexOf(".");
+		var trim = name.substring(lastIndexOf).toLowerCase().trim();
+		if (trim.startsWith(".")) {
+			return trim.substring(1);
+		}
+		return trim;
+	}
 
 	@SneakyThrows
 	private static void copyDirectory(File og, File target) {
