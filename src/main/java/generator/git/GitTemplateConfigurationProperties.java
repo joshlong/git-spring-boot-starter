@@ -11,8 +11,7 @@ import java.io.File;
 @ConfigurationProperties("git")
 public class GitTemplateConfigurationProperties {
 
-	private File localCloneDirectory = new File(System.getProperty("user.home"),
-			"blog-clone");
+	private File localCloneDirectory = new File(System.getProperty("user.home"), "blog-clone");
 
 	private String uri;
 

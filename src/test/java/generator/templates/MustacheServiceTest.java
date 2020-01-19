@@ -47,9 +47,8 @@ public class MustacheServiceTest {
 				.withZone(ZoneId.of(ZoneId.SHORT_IDS.get("PST")));
 
 		Instant now = Instant.ofEpochSecond(1562812157);
-		var context = Map.of("date", formatter.format(now), "links",
-				List.of(new Link("http://cnn.com", "A link to CNN"),
-						new Link("http://microsoft.com", "a link to Microsoft")));
+		var context = Map.of("date", formatter.format(now), "links", List.of(
+				new Link("http://cnn.com", "A link to CNN"), new Link("http://microsoft.com", "a link to Microsoft")));
 
 		var html = this.service.convertMustacheTemplateToHtml(this.sample, context);
 		log.info("html: " + html);

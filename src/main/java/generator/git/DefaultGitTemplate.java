@@ -17,10 +17,8 @@ class DefaultGitTemplate implements GitTemplate {
 	DefaultGitTemplate(Git git, PushCommandCreator commandCreator) {
 		this.git = git;
 		this.commandCreator = commandCreator;
-		Assert.notNull(this.git,
-				"the " + Git.class.getName() + " reference can't be null");
-		Assert.notNull(this.commandCreator,
-				"the " + PushCommandCreator.class.getName() + " reference can't be null");
+		Assert.notNull(this.git, "the " + Git.class.getName() + " reference can't be null");
+		Assert.notNull(this.commandCreator, "the " + PushCommandCreator.class.getName() + " reference can't be null");
 	}
 
 	@Override

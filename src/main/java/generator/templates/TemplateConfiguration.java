@@ -16,14 +16,12 @@ class TemplateConfiguration {
 	private final Charset charset;
 
 	TemplateConfiguration(@Value("${podcasts.generator.charset:}") String charset) {
-		this.charset = !StringUtils.hasText(charset) ? Charset.defaultCharset()
-				: Charset.forName(charset);
+		this.charset = !StringUtils.hasText(charset) ? Charset.defaultCharset() : Charset.forName(charset);
 	}
 
 	@Bean
 	MarkdownService markdownService() {
-		return new MarkdownService(Parser.builder().build(),
-				HtmlRenderer.builder().build());
+		return new MarkdownService(Parser.builder().build(), HtmlRenderer.builder().build());
 	}
 
 	@Bean

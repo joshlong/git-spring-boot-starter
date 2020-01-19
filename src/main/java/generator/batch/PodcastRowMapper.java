@@ -19,8 +19,7 @@ class PodcastRowMapper implements RowMapper<Podcast> {
 
 	private final LinkRowMapper linkRowMapper;
 
-	PodcastRowMapper(JdbcTemplate template, LinkRowMapper linkRowMapper,
-			MediaRowMapper mediaRowMapper,
+	PodcastRowMapper(JdbcTemplate template, LinkRowMapper linkRowMapper, MediaRowMapper mediaRowMapper,
 			@Value("${podcast.generator.sql.load-media}") String loadMediaSql,
 			@Value("${podcast.generator.sql.load-links}") String loadLinkSql) {
 		this.loadMediaSql = loadMediaSql;
@@ -50,9 +49,8 @@ class PodcastRowMapper implements RowMapper<Podcast> {
 		var media = this.template.query(this.loadMediaSql, this.mediaRowMapper, id);
 		var links = this.template.query(this.loadLinkSql, this.linkRowMapper, id);
 
-		return new Podcast(id, date, description, podbeanMediaUri, notes, title,
-				transcript, uid, s3AudioFileName, s3AudioUri, s3PhotoFileName, s3PhotoUri,
-				media, links);
+		return new Podcast(id, date, description, podbeanMediaUri, notes, title, transcript, uid, s3AudioFileName,
+				s3AudioUri, s3PhotoFileName, s3PhotoUri, media, links);
 	}
 
 }

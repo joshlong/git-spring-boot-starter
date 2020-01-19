@@ -20,17 +20,14 @@ public class MustacheService {
 	}
 
 	@SneakyThrows
-	public String convertMustacheTemplateToHtml(Resource template,
-			Map<String, Object> context) {
-		try (var reader = new InputStreamReader(template.getInputStream(),
-				this.charset)) {
+	public String convertMustacheTemplateToHtml(Resource template, Map<String, Object> context) {
+		try (var reader = new InputStreamReader(template.getInputStream(), this.charset)) {
 			return this.compiler.compile(reader).execute(context);
 		}
 	}
 
 	@SneakyThrows
-	public String convertMustacheTemplateToHtml(String template,
-			Map<String, Object> context) {
+	public String convertMustacheTemplateToHtml(String template, Map<String, Object> context) {
 		var processed = this.compiler.compile(template);
 		return processed.execute(context);
 	}

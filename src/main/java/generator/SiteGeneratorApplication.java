@@ -33,8 +33,7 @@ public class SiteGeneratorApplication {
 	}
 
 	@Bean
-	IntegrationFlow incomingRequests(ConnectionFactory cf,
-			SiteGeneratorProperties properties) {
+	IntegrationFlow incomingRequests(ConnectionFactory cf, SiteGeneratorProperties properties) {
 		var amqpInboundAdapter = Amqp //
 				.inboundAdapter(cf, properties.getLauncher().getRequestsQueue()) //
 				.get();

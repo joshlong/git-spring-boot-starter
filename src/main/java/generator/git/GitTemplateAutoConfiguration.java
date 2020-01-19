@@ -15,9 +15,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
-import org.springframework.util.FileSystemUtils;
-
-import java.io.File;
 
 @Configuration
 @EnableConfigurationProperties(GitTemplateConfigurationProperties.class)
@@ -36,12 +33,10 @@ public class GitTemplateAutoConfiguration {
 
 		@Bean
 		@ConditionalOnMissingBean
-		TransportConfigCallback transportConfigCallback(
-				SshSessionFactory sshSessionFactory) {
+		TransportConfigCallback transportConfigCallback(SshSessionFactory sshSessionFactory) {
 			return transport -> {
 				Assert.isTrue(transport instanceof SshTransport,
-						"the " + Transport.class.getName() + " must be an instance of "
-								+ SshTransport.class.getName());
+						"the " + Transport.class.getName() + " must be an instance of " + SshTransport.class.getName());
 				SshTransport ssh = SshTransport.class.cast(transport);
 				ssh.setSshSessionFactory(sshSessionFactory);
 			};
@@ -95,8 +90,8 @@ public class GitTemplateAutoConfiguration {
 
 		@Bean
 		@ConditionalOnMissingBean
-		Git git(GitTemplateConfigurationProperties gsp,
-				TransportConfigCallback transportConfigCallback) throws GitAPIException {
+		Git git(GitTemplateConfigurationProperties gsp, TransportConfigCallback transportConfigCallback)
+				throws GitAPIException {
 			return Git//
 					.cloneRepository()//
 					.setTransportConfigCallback(transportConfigCallback)//
@@ -106,8 +101,7 @@ public class GitTemplateAutoConfiguration {
 		}
 
 		@Bean
-		PushCommandCreator commandCreator(
-				TransportConfigCallback transportConfigCallback) {
+		PushCommandCreator commandCreator(TransportConfigCallback transportConfigCallback) {
 			return git -> git//
 					.push()//
 					.setRemote("origin")//
@@ -126,8 +120,8 @@ public class GitTemplateAutoConfiguration {
 		Git git(GitTemplateConfigurationProperties gsp) throws GitAPIException {
 			var cloneDirectory = gsp.getLocalCloneDirectory();
 			FileUtils.delete(gsp.getLocalCloneDirectory());
-			log.info("going to clone the GIT repo " + gsp.getUri() + " into directory "
-					+ gsp.getLocalCloneDirectory() + ".");
+			log.info("going to clone the GIT repo " + gsp.getUri() + " into directory " + gsp.getLocalCloneDirectory()
+					+ ".");
 			return Git//
 					.cloneRepository()//
 					.setURI(gsp.getUri())//
@@ -137,15 +131,13 @@ public class GitTemplateAutoConfiguration {
 
 		@Bean
 		@ConditionalOnMissingBean
-		PushCommandCreator httpPushCommandCreator(
-				GitTemplateConfigurationProperties gsp) {
+		PushCommandCreator httpPushCommandCreator(GitTemplateConfigurationProperties gsp) {
 			var user = gsp.getHttp().getUsername();
 			var pw = gsp.getHttp().getPassword();
 			Assert.notNull(user, "http.username can't be null");
 			Assert.notNull(pw, "http.password can't be null");
 			return git -> git.push().setRemote("origin").setCredentialsProvider(
-					new UsernamePasswordCredentialsProvider(gsp.getHttp().getUsername(),
-							gsp.getHttp().getPassword()));
+					new UsernamePasswordCredentialsProvider(gsp.getHttp().getUsername(), gsp.getHttp().getPassword()));
 		}
 
 	}

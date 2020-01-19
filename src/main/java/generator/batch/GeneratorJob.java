@@ -11,8 +11,6 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.eclipse.jgit.api.Git;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -46,9 +44,13 @@ public class GeneratorJob {
 
 	private final Resource staticAssets;
 
-	GeneratorJob(JdbcTemplate template, PodcastRowMapper podcastRowMapper,
-			SiteGeneratorProperties properties, MustacheService mustacheService,
-			GitTemplate gitTemplate, @Value("classpath:/static") Resource staticAssets) {
+	private final Comparator<PodcastRecord> reversed = Comparator
+			.comparing((Function<PodcastRecord, Date>) podcastRecord -> podcastRecord.getPodcast().getDate())
+			.reversed();
+
+	GeneratorJob(JdbcTemplate template, PodcastRowMapper podcastRowMapper, SiteGeneratorProperties properties,
+			MustacheService mustacheService, GitTemplate gitTemplate,
+			@Value("classpath:/static") Resource staticAssets) {
 		this.template = template;
 		this.staticAssets = staticAssets;
 		this.podcastRowMapper = podcastRowMapper;
@@ -60,16 +62,13 @@ public class GeneratorJob {
 	@SneakyThrows
 	private void downloadImageFor(PodcastRecord podcast) {
 		var uid = podcast.getPodcast().getUid();
-		var imagesDirectory = new File(this.properties.getOutput().getPages(),
-				"episode-photos");
-		Assert.isTrue(imagesDirectory.mkdirs() || imagesDirectory.exists(),
-				"the imagesDirectory ('" + imagesDirectory.getAbsolutePath()
-						+ "') does not exist and could not be created");
-		var profilePhotoUrl = new URL(this.properties.getApiServerUrl().toString()
-				+ "/podcasts/" + uid + "/profile-photo");
+		var imagesDirectory = new File(this.properties.getOutput().getPages(), "episode-photos");
+		Assert.isTrue(imagesDirectory.mkdirs() || imagesDirectory.exists(), "the imagesDirectory ('"
+				+ imagesDirectory.getAbsolutePath() + "') does not exist and could not be created");
+		var profilePhotoUrl = new URL(
+				this.properties.getApiServerUrl().toString() + "/podcasts/" + uid + "/profile-photo");
 		var file = new File(imagesDirectory, uid + ".jpg");
-		try (var fin = profilePhotoUrl.openStream();
-				var fout = new FileOutputStream(file)) {
+		try (var fin = profilePhotoUrl.openStream(); var fout = new FileOutputStream(file)) {
 			FileCopyUtils.copy(fin, fout);
 			log.info("the image file lives in " + file.getAbsolutePath());
 		}
@@ -86,18 +85,11 @@ public class GeneratorJob {
 		DateFormat dateFormat = DateUtils.dateAndTime();
 		log.info("starting the site generation @ " + dateFormat.format(new Date()));
 
-		Stream.of(properties.getOutput().getItems(), properties.getOutput().getPages())
-				.forEach(this::reset);
+		Stream.of(properties.getOutput().getItems(), properties.getOutput().getPages()).forEach(this::reset);
 
-		var reversed = Comparator
-				.comparing((Function<PodcastRecord, Date>) podcastRecord -> podcastRecord
-						.getPodcast().getDate())
-				.reversed();
-		var allPodcasts = this.template
-				.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper)
+		var allPodcasts = this.template.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper)
 				.stream()
-				.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg",
-						dateFormat.format(p.getDate())))
+				.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg", dateFormat.format(p.getDate())))
 				.collect(Collectors.toList());
 		allPodcasts.forEach(this::downloadImageFor);
 		allPodcasts.sort(reversed);
@@ -107,7 +99,6 @@ public class GeneratorJob {
 		for (var i = 0; i < 3 && i < allPodcasts.size(); i++) {
 			top3.add(allPodcasts.get(i));
 		}
-
 		var map = this.getPodcastsByYear(allPodcasts);
 		var years = new ArrayList<YearRollup>();
 		map.forEach((year, podcasts) -> {
@@ -119,11 +110,8 @@ public class GeneratorJob {
 		var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate,
 				Map.of("top3", top3, "years", years));
 		var page = new File(this.properties.getOutput().getPages(), "index.html");
-		try (var fout = new FileWriter(page)) {
-			FileCopyUtils.copy(html, fout);
-		}
+		FileCopyUtils.copy(html, new FileWriter(page));
 		log.info("wrote the template to " + page.getAbsolutePath());
-
 		copyPagesIntoPlace();
 		commit();
 	}
@@ -133,33 +121,27 @@ public class GeneratorJob {
 		var gitCloneDirectory = properties.getOutput().getGitClone();
 		var pagesDirectory = properties.getOutput().getPages();
 		this.gitTemplate.executeAndPush(git -> Stream
-				.of(Objects.requireNonNull(pagesDirectory.listFiles()))
-				.map(fileToCopyToGitRepo -> FileUtils.copy(fileToCopyToGitRepo,
-						new File(gitCloneDirectory, fileToCopyToGitRepo.getName())))
+				.of(Objects.requireNonNull(pagesDirectory.listFiles())).map(fileToCopyToGitRepo -> FileUtils
+						.copy(fileToCopyToGitRepo, new File(gitCloneDirectory, fileToCopyToGitRepo.getName())))
 				.forEach(file -> add(git, file)));
+		log.info("committed everything");
 	}
 
 	@SneakyThrows
-	private void add(Git g, File f) {
-		g.add().addFilepattern(f.getName()).call();
-		g.commit().setMessage("Adding " + f.getName() + " @ " + Instant.now().toString())
-				.call();
+	private void add(Git git, File f) {
+		git.add().addFilepattern(f.getName()).call();
+		git.commit().setMessage("adding " + f.getName() + " @ " + Instant.now().toString()).call();
 		log.info("added " + f.getAbsolutePath());
 	}
 
 	@SneakyThrows
 	private void copyPagesIntoPlace() {
-
 		var pagesFile = this.properties.getOutput().getPages();
-
-		// copy all the files in /static/* to the output/*
-		Arrays.asList(Objects.requireNonNull(staticAssets.getFile().listFiles())).forEach(
-				file -> FileUtils.copy(file, new File(pagesFile, file.getName())));
-
+		Arrays.asList(Objects.requireNonNull(this.staticAssets.getFile().listFiles())) //
+				.forEach(file -> FileUtils.copy(file, new File(pagesFile, file.getName())));
 	}
 
-	private Map<Integer, List<PodcastRecord>> getPodcastsByYear(
-			List<PodcastRecord> podcasts) {
+	private Map<Integer, List<PodcastRecord>> getPodcastsByYear(List<PodcastRecord> podcasts) {
 		var map = new HashMap<Integer, List<PodcastRecord>>();
 		for (var podcast : podcasts) {
 			var calendar = DateUtils.getCalendarFor(podcast.getPodcast().getDate());
@@ -169,11 +151,7 @@ public class GeneratorJob {
 			}
 			map.get(year).add(podcast);
 		}
-		map.forEach((key,
-				value) -> value.sort(Comparator.comparing(
-						(Function<PodcastRecord, Date>) podcastRecord -> podcastRecord
-								.getPodcast().getDate())
-						.reversed()));
+		map.forEach((key, value) -> value.sort(this.reversed.reversed()));
 		return map;
 	}
 

@@ -11,8 +11,7 @@ class LinkRowMapper implements RowMapper<Link> {
 
 	@Override
 	public Link mapRow(ResultSet resultSet, int i) throws SQLException {
-		return new Link(resultSet.getLong("id"), resultSet.getString("href"),
-				resultSet.getString("description"));
+		return new Link(resultSet.getLong("id"), resultSet.getString("href"), resultSet.getString("description"));
 	}
 
 }

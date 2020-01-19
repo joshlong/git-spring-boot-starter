@@ -24,25 +24,22 @@ public abstract class FileUtils {
 	@SneakyThrows
 	private static void copyDirectory(File og, File target) {
 		Assert.isTrue(!target.exists() || FileSystemUtils.deleteRecursively(target),
-				"the target directory " + target.getAbsolutePath()
-						+ " exists and could not be deleted");
-		Assert.isTrue(target.exists() || target.mkdirs(), "the target directory "
-				+ target.getAbsolutePath() + "does not exist and could not be created");
+				"the target directory " + target.getAbsolutePath() + " exists and could not be deleted");
+		Assert.isTrue(target.exists() || target.mkdirs(),
+				"the target directory " + target.getAbsolutePath() + "does not exist and could not be created");
 		FileSystemUtils.copyRecursively(og, target);
 	}
 
 	@SneakyThrows
 	private static void copyFile(File og, File target) {
 		Assert.isTrue((target.exists() && target.delete()) || !target.exists(),
-				"the target file " + target.getAbsolutePath()
-						+ " exists, but could not be deleted");
+				"the target file " + target.getAbsolutePath() + " exists, but could not be deleted");
 		FileCopyUtils.copy(og, target);
 	}
 
 	@SneakyThrows
 	public static File copy(File og, File target) {
-		log.info("copying from " + og.getAbsolutePath() + " to "
-				+ target.getAbsolutePath());
+		log.info("copying from " + og.getAbsolutePath() + " to " + target.getAbsolutePath());
 		if (og.isFile()) {
 			copyFile(og, target);
 		}
@@ -65,8 +62,8 @@ public abstract class FileUtils {
 	}
 
 	public static File ensureDirectoryExists(File f) {
-		Assert.isTrue(f.exists() || f.mkdirs(), "the directory " + f.getAbsolutePath()
-				+ " does not exist and could not be created");
+		Assert.isTrue(f.exists() || f.mkdirs(),
+				"the directory " + f.getAbsolutePath() + " does not exist and could not be created");
 		return f;
 	}
 
