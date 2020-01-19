@@ -48,8 +48,8 @@ class GeneratorJob {
 	private final Resource staticAssets;
 
 	GeneratorJob(JdbcTemplate template, PodcastRowMapper podcastRowMapper,
-														SiteGeneratorProperties properties, MustacheService mustacheService,
-														GitTemplate gitTemplate, @Value("classpath:/static") Resource staticAssets) {
+			SiteGeneratorProperties properties, MustacheService mustacheService,
+			GitTemplate gitTemplate, @Value("classpath:/static") Resource staticAssets) {
 		this.template = template;
 		this.staticAssets = staticAssets;
 		this.podcastRowMapper = podcastRowMapper;
@@ -62,12 +62,12 @@ class GeneratorJob {
 	private void downloadImageFor(PodcastRecord podcast) {
 		var uid = podcast.getPodcast().getUid();
 		var imagesDirectory = new File(this.properties.getOutput().getPages(),
-			"episode-photos");
+				"episode-photos");
 		var profilePhotoUrl = new URL(this.properties.getApiServerUrl().toString()
-			+ "/podcasts/" + uid + "/profile-photo");
+				+ "/podcasts/" + uid + "/profile-photo");
 		var file = new File(imagesDirectory, uid + ".jpg");
 		try (var fin = profilePhotoUrl.openStream();
-							var fout = new FileOutputStream(file)) {
+				var fout = new FileOutputStream(file)) {
 			FileCopyUtils.copy(fin, fout);
 			log.info("the image file lives in " + file.getAbsolutePath());
 		}
@@ -75,13 +75,14 @@ class GeneratorJob {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void build() throws Exception {
-		log.info("starting the site generation @ " + DateUtils.dateAndTime().format(new Date()));
+		log.info("starting the site generation @ "
+				+ DateUtils.dateAndTime().format(new Date()));
 
 		var allPodcasts = this.template
-			.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper)
-			.stream()
-			.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg"))
-			.collect(Collectors.toList());
+				.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper)
+				.stream()
+				.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg"))
+				.collect(Collectors.toList());
 		allPodcasts.forEach(this::downloadImageFor);
 		allPodcasts.sort((o1, o2) -> {
 			var date1 = o1.getPodcast().getDate();
@@ -101,7 +102,7 @@ class GeneratorJob {
 		years.sort(Comparator.comparing(YearRollup::getYear));
 		var pageChromeTemplate = this.properties.getTemplates().getPageChromeTemplate();
 		var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate,
-			Map.of("top3", top3, "years", years));
+				Map.of("top3", top3, "years", years));
 		var page = new File(this.properties.getOutput().getPages(), "index.html");
 		try (var fout = new FileWriter(page)) {
 			FileCopyUtils.copy(html, fout);
@@ -117,10 +118,10 @@ class GeneratorJob {
 		var gitCloneDirectory = properties.getOutput().getGitClone();
 		var pagesDirectory = properties.getOutput().getPages();
 		this.gitTemplate.executeAndPush(git -> Stream
-			.of(Objects.requireNonNull(pagesDirectory.listFiles()))
-			.map(fileToCopyToGitRepo -> FileUtils.copy(fileToCopyToGitRepo,
-				new File(gitCloneDirectory, fileToCopyToGitRepo.getName())))
-			.forEach(file -> add(git, file)));
+				.of(Objects.requireNonNull(pagesDirectory.listFiles()))
+				.map(fileToCopyToGitRepo -> FileUtils.copy(fileToCopyToGitRepo,
+						new File(gitCloneDirectory, fileToCopyToGitRepo.getName())))
+				.forEach(file -> add(git, file)));
 	}
 
 	@SneakyThrows
@@ -128,7 +129,7 @@ class GeneratorJob {
 		log.info("adding " + f.getAbsolutePath());
 		g.add().addFilepattern(f.getName()).call();
 		g.commit().setMessage("Adding " + f.getName() + " @ " + Instant.now().toString())
-			.call();
+				.call();
 	}
 
 	@SneakyThrows
@@ -138,12 +139,12 @@ class GeneratorJob {
 
 		// copy all the files in /static/* to the output/*
 		Arrays.asList(Objects.requireNonNull(staticAssets.getFile().listFiles())).forEach(
-			file -> FileUtils.copy(file, new File(pagesFile, file.getName())));
+				file -> FileUtils.copy(file, new File(pagesFile, file.getName())));
 
 	}
 
 	private Map<Integer, List<PodcastRecord>> getPodcastsByYear(
-		List<PodcastRecord> podcasts) {
+			List<PodcastRecord> podcasts) {
 		var map = new HashMap<Integer, List<PodcastRecord>>();
 		for (var podcast : podcasts) {
 			var calendar = DateUtils.getCalendarFor(podcast.getPodcast().getDate());
@@ -154,10 +155,10 @@ class GeneratorJob {
 			map.get(year).add(podcast);
 		}
 		map.forEach((key,
-															value) -> value.sort(Comparator.comparing(
-			(Function<PodcastRecord, Date>) podcastRecord -> podcastRecord
-				.getPodcast().getDate())
-			.reversed()));
+				value) -> value.sort(Comparator.comparing(
+						(Function<PodcastRecord, Date>) podcastRecord -> podcastRecord
+								.getPodcast().getDate())
+						.reversed()));
 		return map;
 	}
 

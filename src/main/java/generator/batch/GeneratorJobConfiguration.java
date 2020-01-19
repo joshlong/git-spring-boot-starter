@@ -13,4 +13,5 @@ class GeneratorJobConfiguration {
 	JdbcTemplate jdbcTemplate(DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
 	}
+
 }
