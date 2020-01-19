@@ -115,8 +115,9 @@
     <nav class="navbar">
         <div class="container-fluid">
 
-            <div class="logo"><a href="index.html"><img srcset='assets/images/logo-ne.png 1x,
-                      assets/images/logo-ne@2x.png 2x' alt="Josh Long"></a>
+            <div class="logo"><a href="index.html"><img
+                    srcset='assets/images/logo-ne.png 1x, assets/images/logo-ne@2x.png 2x'
+                    alt="Josh Long"></a>
             </div>
 
             <ul class="nav-menu">
@@ -150,10 +151,13 @@
 
                 <div class="right-cover-part">
                     <div class="caption">
-                        <h1>Hi, I'm Josh Long, a humble Spring advocate, and
-                            this is <br>A Bootiful Podcast, a celebration<br> of
-                            the real heroes that
-                            drive<br> ecosystems.</h1>
+                        <h1>
+                            Hi, I'm Josh Long,<br>
+                            a humble Spring developer advocate,
+                            and this is A Bootiful Podcast,
+                            a celebration of the real heroes that drive
+                            ecosystems.
+                        </h1>
                         <a href="#latest-podcasts"
                            class="btn-slide minimal-btn"><i
                                 class="fas fa-angle-down"></i> view
@@ -209,23 +213,35 @@
         <div class="row justify-content-center">
 
             <div class="col-md-10 col-12">
-                <p>Josh <span class="text-primary">@starbuxman</span> is the
-                    Spring Developer Advocate at Pivotal. Josh
-                    is a Java Champion, author of 6 books including <span
-                            class="text-underline">O'Reilly's Cloud Native Java</span>:
-                    Designing Resilient Systems with Spring Boot,<span
-                            class="text-underline"> Spring Cloud</span>, and
-                    <span class="text-underline">Cloud Foundry and the upcoming Reactive Spring</span>
-                    ) and numerous
-                    best-selling video trainings (including Building
-                    Microservices with Spring Boot Livelessons with
+                <p>Josh Long <a target="_blank"
+                                href="http://twitter.com/starbuxman"><span
+                        class="text-primary">@starbuxman</span></a> is a Spring
+                    Developer Advocate at VMWare.
+                    Josh is a <a target="_blank"
+                                 href="https://community.oracle.com/docs/DOC-922857">Java
+                        Champion</a>,
+                    author of 6 books including <a target="_blank"
+                                                   href="http://CloudNativeJava.io"><span
+                            class="text-underline">O'Reilly's Cloud Native Java:
+                    Designing Resilient Systems with Spring Boot,  Spring Cloud , and Cloud Foundry</span>
+                    </a> and the upcoming
+                    <a href="http://ReactiveSpring.io" target="_blank"><span
+                            class="text-underline">Reactive Spring</span></a>)
+                    and numerous
+                    best-selling video trainings (including <a target="_blank"
+                                                               href="http://joshlong.com/livelessons.html"><span
+                            class="text-underline">Building
+                        Microservices with Spring Boot Livelessons</span></a>
+                    with
                     Spring Boot co-founder Phil Webb), and an open-source
                     contributor (Spring Boot, <span
                             class="text-underline">Spring Integration</span>,
                     <span
                             class="text-underline">Spring Cloud</span>, Activiti
                     and Vaadin), a podcaster and a
-                    screencaster.</p>
+                    <a target="_blank"
+                       href="http://bit.ly/spring-tips-playlist"><span
+                            class="text-underline">screencaster</span></a> .</p>
             </div><!-- /.col x 10 -->
 
         </div><!-- /.row -->
@@ -251,7 +267,8 @@
                         {{#years}}
                             <li>
                                 <a id="{{year}}-tab" data-toggle="tab"
-                                   href="#{{{year}}}-content" class="tab-pane-toggle"
+                                   href="#{{{year}}}-content"
+                                   class="tab-pane-toggle {{yearTabClassName}}"
                                    role="tab">{{{ year }}} Episodes</a>
                             </li>
                         {{/years}}
@@ -265,7 +282,7 @@
                         <!--
                          to show the episodes, make this element have a class active
                         -->
-                        <div class="tab-pane fade show tab-pane-content"
+                        <div class="tab-pane fade show tab-pane-content {{yearTabClassName}}"
                              id="{{year}}-content" role="tabpanel"
                              aria-labelledby="{{year}} tab">
 
@@ -330,7 +347,7 @@
 
             </div><!-- /.col x 11 -->
 
-            <button class="btn-simple" type="button">Load more episodes</button>
+            <!--            <button class="btn-simple" type="button">Load more episodes</button>-->
 
 
         </div><!-- /.row -->

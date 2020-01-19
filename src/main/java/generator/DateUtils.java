@@ -11,6 +11,10 @@ import java.util.Date;
  */
 public abstract class DateUtils {
 
+	public static int getYearFor(Date d) {
+		return DateUtils.getCalendarFor(d).get(Calendar.YEAR);
+	}
+
 	public static Calendar getCalendarFor(Date d) {
 		var c = Calendar.getInstance();
 		c.setTime(d);

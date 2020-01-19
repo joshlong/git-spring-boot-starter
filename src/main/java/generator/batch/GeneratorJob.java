@@ -68,9 +68,14 @@ public class GeneratorJob {
 		var profilePhotoUrl = new URL(
 				this.properties.getApiServerUrl().toString() + "/podcasts/" + uid + "/profile-photo");
 		var file = new File(imagesDirectory, uid + ".jpg");
-		try (var fin = profilePhotoUrl.openStream(); var fout = new FileOutputStream(file)) {
-			FileCopyUtils.copy(fin, fout);
-			log.info("the image file lives in " + file.getAbsolutePath());
+		if (!file.exists()) {
+			try (var fin = profilePhotoUrl.openStream(); var fout = new FileOutputStream(file)) {
+				FileCopyUtils.copy(fin, fout);
+				log.info("the image file lives in " + file.getAbsolutePath());
+			}
+		}
+		else {
+			log.info("the image file " + file.getAbsolutePath() + " already exists. No need to download it again.");
 		}
 	}
 
@@ -82,19 +87,18 @@ public class GeneratorJob {
 
 	@SneakyThrows
 	public void build() {
-		DateFormat dateFormat = DateUtils.dateAndTime();
+		var dateFormat = DateUtils.date();
+
 		log.info("starting the site generation @ " + dateFormat.format(new Date()));
-
 		Stream.of(properties.getOutput().getItems(), properties.getOutput().getPages()).forEach(this::reset);
-
-		var allPodcasts = this.template.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper)
-				.stream()
+		var podcastList = this.template.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper);
+		var maxYear = podcastList.stream().max(Comparator.comparing(Podcast::getDate))
+				.map(podcast -> DateUtils.getYearFor(podcast.getDate())).get();
+		var allPodcasts = podcastList.stream()
 				.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg", dateFormat.format(p.getDate())))
 				.collect(Collectors.toList());
 		allPodcasts.forEach(this::downloadImageFor);
 		allPodcasts.sort(reversed);
-
-		// get the top3 latest episodes
 		var top3 = new ArrayList<PodcastRecord>();
 		for (var i = 0; i < 3 && i < allPodcasts.size(); i++) {
 			top3.add(allPodcasts.get(i));
@@ -102,10 +106,10 @@ public class GeneratorJob {
 		var map = this.getPodcastsByYear(allPodcasts);
 		var years = new ArrayList<YearRollup>();
 		map.forEach((year, podcasts) -> {
-			podcasts.sort(reversed);
-			years.add(new YearRollup(year, podcasts));
+			podcasts.sort(this.reversed);
+			years.add(new YearRollup(year, podcasts, year.equals(maxYear) ? "active" : ""));
 		});
-		years.sort(Comparator.comparing(YearRollup::getYear));
+		years.sort(Comparator.comparing(YearRollup::getYear).reversed());
 		var pageChromeTemplate = this.properties.getTemplates().getPageChromeTemplate();
 		var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate,
 				Map.of("top3", top3, "years", years));
@@ -165,6 +169,8 @@ class YearRollup {
 
 	private final Collection<PodcastRecord> episodes;
 
+	private final String yearTabClassName;
+
 }
 
 @RequiredArgsConstructor
@@ -173,8 +179,6 @@ class PodcastRecord {
 
 	private final Podcast podcast;
 
-	private final String imageSrc;
-
-	private final String dateAndTime;
+	private final String imageSrc, dateAndTime;
 
 }
