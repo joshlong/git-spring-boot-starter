@@ -1,61 +1,374 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>A Bootiful Podcast</title>
-    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- IMPORTS -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,800,900|Open+Sans:300,400,600&display=swap"
+          rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="scss/framework.css">
+    <!-- Icongraphy -->
+    <link href="assets/icongraphy/awesomefont/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <title>
+        A Bootiful Podcast with Josh Long
+    </title>
 </head>
 <body>
-<!-- Main Container -->
-<div class="container">
-    <!-- Header -->
-    <header class="header">
-        <h4 class="logo">A BOOTIFUL PODCAST</h4>
-    </header>
-    <!-- Hero Section -->
-    <section class="intro">
-        <div class="column">
 
-            <img src="images/profile.png" alt="" class="profile"></div>
-        <div class="column">
-            <p>
-                I'm <a href="http://www.twitter.com/starbuxman">Josh Long (@starbuxman)</a>,
-                a humble Spring advocate at VMWare and this is a <a href="http://www.twitter.com/BootifulPodcast">
-                a Bootiful Podcast</a>, a celebration of the real heroes that drive Spring and its ambient ecosystems.
-            </p>
-        </div>
-    </section>
-    <!-- Stats Gallery Section -->
+<header class="top-bar" id="topBar">
+    <div class="container-fluid">
 
-    <div class="gallery">
-        <h3>
-            {{ currentYear.year }}
-        </h3>
-        <div>
-            {{{currentYear.html}}}
-        </div>
-    </div>
+        <div class="podcast-bar">
+            <ul>
+                <li>
+                    <div class="pod-thumbnail"><img src="assets/images/thumbnail.png" alt=""></div>
+                </li>
+                <li>
+                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                </li>
+                <li>
+                    <div class="player-waves"><img src="assets/images/player-waves.png" alt=""></div>
+                </li>
+            </ul>
+        </div><!-- /.podcast bar -->
 
-    <div>
-        {{#years}}
-            <a href="{{{.}}}.html">{{{.}}}</a>
-        {{/years}}
-    </div>
+        <div class="right-menu">
 
-    <div class="last-updated">
-        last generated at: {{ dateOfLastSiteGeneration }}
-    </div>
+            <button class="navbar-toggler mobile-nav-btn" type="button" data-toggle="collapse"
+                    data-target="#mobile-menu"
+                    aria-controls="mobile menu" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="hamburger-menu"><span></span><span></span><span></span></div>
+            </button>
 
-    <!-- Footer Section -->
-    <footer id="contact">
-        <p class="hero_header">GET IN TOUCH WITH ME</p>
-        <div class="button">EMAIL ME</div>
-    </footer>
-    <!-- Copyrights Section -->
-    <div class="copyright">&copy;2020 - <strong>BootifulPodcast.fm</strong></div>
-</div>
-<!-- Main Container Ends -->
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse mobile-menu-collapse" id="mobile-menu">
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Videos </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Books </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">PodCasts </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Archive</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Linkedin </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">twitter </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">facebook </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">instagram</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">youtube </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">RSS </a>
+                    </li>
+                </ul>
+
+                <!-- Links -->
+            </div>
+            <!-- Collapsible content -->
+        </div><!-- /.mobile menu -->
+
+    </div><!-- /.container fluid -->
+</header><!-- /.podcast top bar-->
+
+<header class="header" id="header">
+
+    <nav class="navbar">
+        <div class="container-fluid">
+
+            <div class="logo"><a href="index.html"><img srcset='assets/images/logo-ne.png 1x,
+                      assets/images/logo-ne@2x.png 2x' alt="Josh Long"></a>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Latest Episodes</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul><!-- Nav Menu -->
+            <div class="search-nav">
+                <form action="">
+                    <input type="text" placeholder="type your search ..">
+                </form>
+                <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav><!-- /.navbar -->
+
+
+    <div class="cover">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="left-cover-part">
+                    <div class="josh-photo">
+                        <img srcset='assets/images/josh.png 1x,
+                      assets/images/josh@2x.png 2x' alt="josh Long">
+                    </div>
+                </div><!-- /. col x 5 -->
+
+                <div class="right-cover-part">
+                    <div class="caption">
+                        <h1>humble Spring advocate,<br> Bootiful Podcast, a celebration<br> of the real heroes that
+                            drive<br> ecosystems.</h1>
+                        <a href="#latest-podcasts" class="btn-slide minimal-btn"><i class="fas fa-angle-down"></i> view
+                            podcast</a>
+                    </div><!-- caption -->
+                </div><!-- /.col x 7 -->
+
+            </div><!-- /.row -->
+
+        </div><!-- /.container fluid -->
+    </div><!-- /.cover -->
+
+    <div class="cover-decoration-bottom"></div>
+
+</header><!-- HEADER -->
+
+<section class="section" id="latest-podcasts">
+
+    <div class="heading-section">
+        <h5>Latest Podcasts</h5>
+    </div><!-- /.heading -->
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-12">
+                <div class="latest-ep-item">
+                    <div class="photo"><img src="assets/images/post-1.jpg" alt=""></div>
+                    <div class="content">
+                        <h4><a href="#">Pivotal Labs Sydney director David Julia</a></h4>
+                        <p>talks to Pivotal Labs Sydney director David Julia (@DavidJulia) about applied agile, testing
+                            strategy, architecture and more.</p>
+                        <a href="#" class="listen-btn clicked"><span class="vid-icon-span"><i
+                                class="fas fa-play"></i></span>Listen Now</a>
+                    </div><!-- /.content -->
+                </div><!-- /.ep-item -->
+            </div><!-- /.col x 4 -->
+
+            <div class="col-md-4 col-sm-12">
+                <div class="latest-ep-item">
+                    <div class="photo"><img src="assets/images/post-2.jpg" alt=""></div>
+                    <div class="content">
+                        <h4><a href="#">Microsoft's Jialin Dai on Spring for Azure</a></h4>
+                        <p>talks to Pivotal Labs Sydney director David Julia (@DavidJulia) about applied agile, testing
+                            strategy, architecture and more.</p>
+                        <a href="#" class="listen-btn"><span class="vid-icon-span"><i class="fas fa-play"></i></span>Listen
+                            Now</a>
+                    </div><!-- /.content -->
+                </div><!-- /.ep-item -->
+            </div><!-- /.col x 4 -->
+
+
+            <div class="col-md-4 col-sm-12">
+                <div class="latest-ep-item">
+                    <div class="photo"><img src="assets/images/post-3.jpg" alt=""></div>
+                    <div class="content">
+                        <h4><a href="#">Spring mad scientist Andy Clement on Eclipse</a></h4>
+                        <p>talks to Pivotal Labs Sydney director David Julia (@DavidJulia) about applied agile, testing
+                            strategy, architecture and more.</p>
+                        <a href="#" class="listen-btn"><span class="vid-icon-span"><i class="fas fa-play"></i></span>Listen
+                            Now</a>
+                    </div><!-- /.content -->
+                </div><!-- /.ep-item -->
+            </div><!-- /.col x 4 -->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section><!-- latest section -->
+
+
+<section class="about">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+
+            <div class="col-md-10 col-12">
+                <p>Josh <span class="text-primary">@starbuxman</span> is the Spring Developer Advocate at Pivotal. Josh
+                    is a Java Champion, author of 6 books including <span class="text-underline">O'Reilly's Cloud Native Java</span>:
+                    Designing Resilient Systems with Spring Boot,<span class="text-underline"> Spring Cloud</span>, and
+                    <span class="text-underline">Cloud Foundry and the upcoming Reactive Spring</span> ) and numerous
+                    best-selling video trainings (including Building Microservices with Spring Boot Livelessons with
+                    Spring Boot co-founder Phil Webb), and an open-source contributor (Spring Boot, <span
+                            class="text-underline">Spring Integration</span>, <span
+                            class="text-underline">Spring Cloud</span>, Activiti and Vaadin), a podcaster and a
+                    screencaster.</p>
+            </div><!-- /.col x 10 -->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section><!-- /.section -->
+
+
+<section class="section" id="podcasts-archieve">
+
+    <div class="heading-section">
+        <h5>Podcasts Archive</h5>
+    </div><!-- /.heading -->
+
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+
+            <div class="col-lg-11 col-md-12 col-12">
+
+                <div class="tab-nav-archieve">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li><a id="twentytab" data-toggle="tab" href="#twentyContent" role="tab" aria-controls="twenty"
+                               aria-selected="false">2020 Episodes</a></li>
+                        <li><a class="active" id="ninteentab" data-toggle="tab" href="#nineteenContent" role="tab"
+                               aria-controls="nineteen" aria-selected="true">2019 Episodes</a></li>
+                        <li><a id="eighteentab" data-toggle="tab" href="#eighteenContent" role="tab"
+                               aria-controls="eighteen" aria-selected="false">2018 Episodes</a></li>
+                        <li><a id="seventeentab" data-toggle="tab" href="#seventeenContent" role="tab"
+                               aria-controls="seventeen" aria-selected="false">2017 Episodes</a></li>
+                    </ul>
+                </div><!-- tab nav archieve -->
+
+                <div class="tab-content">
+
+                    <div class="tab-pane fade" id="twentyContent" role="tabpanel" aria-labelledby="twentys tab">
+                        <p class="text-gray">let's add some episodes here too ..</p>
+                    </div>
+
+
+                    <div class="tab-pane fade show active" id="nineteenContent" role="tabpanel"
+                         aria-labelledby="ninteen tab">
+
+
+                        {{{currentYear.html}}}
+
+
+
+                    </div><!-- /.tab item -->
+
+                    <div class="tab-pane fade" id="eighteenContent" role="tabpanel" aria-labelledby="eighteen tab">
+                        <p class="text-gray">let's add some episodes in 2018 too ..</p>
+                    </div>
+
+
+                    <div class="tab-pane fade" id="seventeenContent" role="tabpanel" aria-labelledby="seventeen tab">
+                        <p class="text-gray">let's add some episodes in 2017 too ..</p>
+                    </div>
+
+
+                </div><!-- /.tab content -->
+
+            </div><!-- /.col x 11 -->
+
+            <button class="btn-simple" type="button">Load more episodes</button>
+
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section><!-- Archive section -->
+
+<section class="section" id="newsletter">
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="offset-lg-1 col-lg-5 col-sm-8 col-12">
+
+                <div class="heading-newsletter">
+                    <h3>Get notifications <br> about my next podcast</h3>
+                </div><!-- /.heading section -->
+
+                <form action="">
+                    <div class="input-wrapper">
+                        <input type="email" class="form-control" id="newsletter-input" placeholder="Email@website.com">
+                        <button class="submit-btn btn btn-primary" type="submit"><i class="far fa-paper-plane"></i> Send
+                        </button>
+                    </div><!-- /.wrapper -->
+                </form>
+
+            </div><!-- /.col x 7-->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section><!-- /.section -->
+
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+
+            <div class="col-md-4 col-sm-6">
+                <p class="copyrights">all rights reserved for josh long 2017-2019</p>
+            </div><!-- /.col 6 -->
+
+            <div class="col-md-4 col-sm-6">
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fas fa-play"></i></a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 col-hide">
+                <a href="#topBar" id="scrollTop" class="button-scroll-top">
+                    <img src="assets/images/scrollTop.png" alt="">
+                </a>
+            </div><!-- /.col 6 -->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</footer><!-- /.footer -->
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/js/custom.js"></script>
+<script src="assets/js/wow.min.js"></script>
+<script type="text/JavaScript">
+    wow = new WOW(
+            {
+                boxClass: 'wow',      // default
+                animateClass: 'animated', // default
+                offset: 0,          // default
+                mobile: false,       // default
+                live: true        // default
+            }
+    )
+    wow.init();
+</script>
+
+
 </body>
 </html>
