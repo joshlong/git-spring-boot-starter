@@ -26,6 +26,8 @@ public abstract class FileUtils {
 		Assert.isTrue(!target.exists() || FileSystemUtils.deleteRecursively(target),
 				"the target directory " + target.getAbsolutePath()
 						+ " exists and could not be deleted");
+		Assert.isTrue(target.exists() || target.mkdirs(), "the target directory "
+				+ target.getAbsolutePath() + "does not exist and could not be created");
 		FileSystemUtils.copyRecursively(og, target);
 	}
 

@@ -16,6 +16,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
@@ -31,7 +32,7 @@ import java.util.stream.Stream;
 
 @Log4j2
 @Component
-class GeneratorJob {
+public class GeneratorJob {
 
 	private final JdbcTemplate template;
 
@@ -61,6 +62,9 @@ class GeneratorJob {
 		var uid = podcast.getPodcast().getUid();
 		var imagesDirectory = new File(this.properties.getOutput().getPages(),
 				"episode-photos");
+		Assert.isTrue(imagesDirectory.mkdirs() || imagesDirectory.exists(),
+				"the imagesDirectory ('" + imagesDirectory.getAbsolutePath()
+						+ "') does not exist and could not be created");
 		var profilePhotoUrl = new URL(this.properties.getApiServerUrl().toString()
 				+ "/podcasts/" + uid + "/profile-photo");
 		var file = new File(imagesDirectory, uid + ".jpg");
@@ -71,10 +75,19 @@ class GeneratorJob {
 		}
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void build() throws Exception {
+	private void reset(File file) {
+		log.info("resetting the directory " + file.getAbsolutePath());
+		FileUtils.delete(file);
+		FileUtils.ensureDirectoryExists(file);
+	}
+
+	@SneakyThrows
+	public void build() {
 		DateFormat dateFormat = DateUtils.dateAndTime();
 		log.info("starting the site generation @ " + dateFormat.format(new Date()));
+
+		Stream.of(properties.getOutput().getItems(), properties.getOutput().getPages())
+				.forEach(this::reset);
 
 		var reversed = Comparator
 				.comparing((Function<PodcastRecord, Date>) podcastRecord -> podcastRecord
