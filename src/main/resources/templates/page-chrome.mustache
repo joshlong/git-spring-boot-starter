@@ -3,7 +3,8 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- IMPORTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,800,900|Open+Sans:300,400,600&display=swap"
@@ -30,27 +31,34 @@
         <div class="podcast-bar">
             <ul>
                 <li>
-                    <div class="pod-thumbnail"><img src="assets/images/thumbnail.png" alt=""></div>
+                    <div class="pod-thumbnail"><img
+                            src="assets/images/thumbnail.png" alt=""></div>
                 </li>
                 <li>
-                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                    <button class="play-btn"><i class="fas fa-play"></i>
+                    </button>
                 </li>
                 <li>
-                    <div class="player-waves"><img src="assets/images/player-waves.png" alt=""></div>
+                    <div class="player-waves"><img
+                            src="assets/images/player-waves.png" alt=""></div>
                 </li>
             </ul>
         </div><!-- /.podcast bar -->
 
         <div class="right-menu">
 
-            <button class="navbar-toggler mobile-nav-btn" type="button" data-toggle="collapse"
+            <button class="navbar-toggler mobile-nav-btn" type="button"
+                    data-toggle="collapse"
                     data-target="#mobile-menu"
-                    aria-controls="mobile menu" aria-expanded="false" aria-label="Toggle navigation">
-                <div class="hamburger-menu"><span></span><span></span><span></span></div>
+                    aria-controls="mobile menu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <div class="hamburger-menu">
+                    <span></span><span></span><span></span></div>
             </button>
 
             <!-- Collapsible content -->
-            <div class="collapse navbar-collapse mobile-menu-collapse" id="mobile-menu">
+            <div class="collapse navbar-collapse mobile-menu-collapse"
+                 id="mobile-menu">
 
                 <!-- Links -->
                 <ul class="navbar-nav mr-auto">
@@ -121,7 +129,8 @@
                 <form action="">
                     <input type="text" placeholder="type your search ..">
                 </form>
-                <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+                <button type="button" class="search-btn"><i
+                        class="fas fa-search"></i></button>
 
             </div>
         </div><!-- /.container-fluid -->
@@ -134,15 +143,20 @@
 
                 <div class="left-cover-part">
                     <div class="josh-photo">
-                        <img srcset='assets/images/josh.png 1x, assets/images/josh@2x.png 2x' alt="josh Long">
+                        <img srcset='assets/images/josh.png 1x, assets/images/josh@2x.png 2x'
+                             alt="josh Long">
                     </div>
                 </div><!-- /. col x 5 -->
 
                 <div class="right-cover-part">
                     <div class="caption">
-                        <h1>Hi, I'm Josh Long, a humble Spring advocate, and this is <br>A Bootiful Podcast, a celebration<br> of the real heroes that
+                        <h1>Hi, I'm Josh Long, a humble Spring advocate, and
+                            this is <br>A Bootiful Podcast, a celebration<br> of
+                            the real heroes that
                             drive<br> ecosystems.</h1>
-                        <a href="#latest-podcasts" class="btn-slide minimal-btn"><i class="fas fa-angle-down"></i> view
+                        <a href="#latest-podcasts"
+                           class="btn-slide minimal-btn"><i
+                                class="fas fa-angle-down"></i> view
                             podcast</a>
                     </div><!-- caption -->
                 </div><!-- /.col x 7 -->
@@ -169,22 +183,20 @@
             {{#top3}}
                 <div class="col-md-4 col-sm-12">
                     <div class="latest-ep-item">
-                        <div class="photo"><img src="{{ imageSrc}}" alt=""></div>
+                        <div class="photo"><img src="{{ imageSrc}}" alt="">
+                        </div>
                         <div class="content">
-                            <h4><a href="#">
-                                {{podcast.title}}
-                            </a></h4>
-                            <p>
-                                {{podcast.description}}
-                            </p>
-                            <a href="#" class="listen-btn clicked"><span class="vid-icon-span"><i
-                                    class="fas fa-play"></i></span>Listen Now</a>
-                        </div><!-- /.content -->
-                    </div><!-- /.ep-item -->
-                </div><!-- /.col x 4 -->
+                            <h4><a href="#"> {{podcast.title}} </a></h4>
+                            <P><strong> {{ dateAndTime }}</strong></P>
+                            <p> {{podcast.description}} </p>
+                            <a href="#" class="listen-btn clicked"><span
+                                    class="vid-icon-span"><i
+                                    class="fas fa-play"></i></span>Listen
+                                Now</a>
+                        </div>
+                    </div>
+                </div>
             {{/top3}}
-
-            <!--            -->
 
 
         </div><!-- /.row -->
@@ -197,14 +209,22 @@
         <div class="row justify-content-center">
 
             <div class="col-md-10 col-12">
-                <p>Josh <span class="text-primary">@starbuxman</span> is the Spring Developer Advocate at Pivotal. Josh
-                    is a Java Champion, author of 6 books including <span class="text-underline">O'Reilly's Cloud Native Java</span>:
-                    Designing Resilient Systems with Spring Boot,<span class="text-underline"> Spring Cloud</span>, and
-                    <span class="text-underline">Cloud Foundry and the upcoming Reactive Spring</span> ) and numerous
-                    best-selling video trainings (including Building Microservices with Spring Boot Livelessons with
-                    Spring Boot co-founder Phil Webb), and an open-source contributor (Spring Boot, <span
-                            class="text-underline">Spring Integration</span>, <span
-                            class="text-underline">Spring Cloud</span>, Activiti and Vaadin), a podcaster and a
+                <p>Josh <span class="text-primary">@starbuxman</span> is the
+                    Spring Developer Advocate at Pivotal. Josh
+                    is a Java Champion, author of 6 books including <span
+                            class="text-underline">O'Reilly's Cloud Native Java</span>:
+                    Designing Resilient Systems with Spring Boot,<span
+                            class="text-underline"> Spring Cloud</span>, and
+                    <span class="text-underline">Cloud Foundry and the upcoming Reactive Spring</span>
+                    ) and numerous
+                    best-selling video trainings (including Building
+                    Microservices with Spring Boot Livelessons with
+                    Spring Boot co-founder Phil Webb), and an open-source
+                    contributor (Spring Boot, <span
+                            class="text-underline">Spring Integration</span>,
+                    <span
+                            class="text-underline">Spring Cloud</span>, Activiti
+                    and Vaadin), a podcaster and a
                     screencaster.</p>
             </div><!-- /.col x 10 -->
 
@@ -230,18 +250,23 @@
 
                         {{#years}}
                             <li>
-                                <a id="{{year}}-tab" data-toggle="tab" href="#{{{year}}}-content" role="tab"
-                                   aria-controls="{{year}}" aria-selected="false">{{{ year }}} Episodes</a>
+                                <a id="{{year}}-tab" data-toggle="tab"
+                                   href="#{{{year}}}-content" class="tab-pane-toggle"
+                                   role="tab">{{{ year }}} Episodes</a>
                             </li>
                         {{/years}}
 
                     </ul>
-                </div><!-- tab nav archieve -->
+                </div><!-- tab nav archive -->
 
                 <div class="tab-content">
 
                     {{#years}}
-                        <div class="tab-pane fade show active" id="{{year}}-content" role="tabpanel"
+                        <!--
+                         to show the episodes, make this element have a class active
+                        -->
+                        <div class="tab-pane fade show tab-pane-content"
+                             id="{{year}}-content" role="tabpanel"
                              aria-labelledby="{{year}} tab">
 
                             <!-- {{ year}} -->
@@ -251,15 +276,24 @@
                                     <div class="row">
                                         <div class="col-lg-9 col-md-8">
                                             <div class="episode-item">
-                                                <div class="photo-ep"><img src="{{{  imageSrc }}}" alt=""></div>
+                                                <div class="photo-ep"><img
+                                                        src="{{{  imageSrc }}}"
+                                                        alt=""></div>
                                                 <div class="content-ep">
                                                     <span class="cat-ep">Development</span>
                                                     <div class="heading-episode">
-                                                        <h4><a href="#" class="active">{{{ podcast.title }}}</a></h4>
-                                                        <button type="button" class="btn-light-green"><i
-                                                                class="fas fa-share"></i> share this
+                                                        <h4><a href="#"
+                                                               class="active">{{{ podcast.title }}}</a>
+                                                        </h4>
+                                                        <button type="button"
+                                                                class="btn-light-green">
+                                                            <i class="fas fa-share"></i>
+                                                            share this
                                                         </button>
                                                     </div>
+                                                    <P>
+                                                        {{ dateAndTime }}
+                                                    </P>
                                                     <p>  {{{ podcast.description }}}  </p>
                                                 </div>
                                             </div>
@@ -269,13 +303,17 @@
                                                 <ul>
                                                     <li class="control-ep">
                                                         <a href="">
-                                                            <div class="icon"><i class="fas fa-pause"></i></div>
+                                                            <div class="icon"><i
+                                                                    class="fas fa-pause"></i>
+                                                            </div>
                                                             <span>Listening now</span>
                                                         </a>
                                                     </li>
                                                     <li class="control-ep">
                                                         <a href="">
-                                                            <div class="icon"><i class="fas fa-arrow-down"></i></div>
+                                                            <div class="icon"><i
+                                                                    class="fas fa-arrow-down"></i>
+                                                            </div>
                                                             <span>Download</span>
                                                         </a>
                                                     </li>
@@ -312,8 +350,12 @@
 
                 <form action="">
                     <div class="input-wrapper">
-                        <input type="email" class="form-control" id="newsletter-input" placeholder="Email@website.com">
-                        <button class="submit-btn btn btn-primary" type="submit"><i class="far fa-paper-plane"></i> Send
+                        <input type="email" class="form-control"
+                               id="newsletter-input"
+                               placeholder="Email@website.com">
+                        <button class="submit-btn btn btn-primary"
+                                type="submit"><i class="far fa-paper-plane"></i>
+                            Send
                         </button>
                     </div><!-- /.wrapper -->
                 </form>
@@ -329,7 +371,8 @@
         <div class="row justify-content-center">
 
             <div class="col-md-4 col-sm-6">
-                <p class="copyrights">all rights reserved for josh long 2017-2019</p>
+                <p class="copyrights">all rights reserved for josh long
+                    2017-2019</p>
             </div><!-- /.col 6 -->
 
             <div class="col-md-4 col-sm-6">
