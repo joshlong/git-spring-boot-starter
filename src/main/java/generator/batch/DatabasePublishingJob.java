@@ -17,7 +17,7 @@ class DatabasePublishingJob {
 		return new JdbcTemplate(dataSource);
 	}
 
-	@Bean
+//	@Bean
 	Job job(JobBuilderFactory jobBuilderFactory, Step0Configuration s0,
 			Step1Configuration s1, Step2Configuration s2, Step3Configuration s3,
 			Step4Configuration s4) {

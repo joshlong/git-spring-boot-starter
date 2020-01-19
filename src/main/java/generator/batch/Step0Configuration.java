@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Log4j2
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 class Step0Configuration {
 

@@ -134,8 +134,7 @@
 
                 <div class="left-cover-part">
                     <div class="josh-photo">
-                        <img srcset='assets/images/josh.png 1x,
-                      assets/images/josh@2x.png 2x' alt="josh Long">
+                        <img srcset='assets/images/josh.png 1x, assets/images/josh@2x.png 2x' alt="josh Long">
                     </div>
                 </div><!-- /. col x 5 -->
 
@@ -166,45 +165,27 @@
     <div class="container-fluid">
         <div class="row">
 
-            <div class="col-md-4 col-sm-12">
-                <div class="latest-ep-item">
-                    <div class="photo"><img src="assets/images/post-1.jpg" alt=""></div>
-                    <div class="content">
-                        <h4><a href="#">Pivotal Labs Sydney director David Julia</a></h4>
-                        <p>talks to Pivotal Labs Sydney director David Julia (@DavidJulia) about applied agile, testing
-                            strategy, architecture and more.</p>
-                        <a href="#" class="listen-btn clicked"><span class="vid-icon-span"><i
-                                class="fas fa-play"></i></span>Listen Now</a>
-                    </div><!-- /.content -->
-                </div><!-- /.ep-item -->
-            </div><!-- /.col x 4 -->
 
-            <div class="col-md-4 col-sm-12">
-                <div class="latest-ep-item">
-                    <div class="photo"><img src="assets/images/post-2.jpg" alt=""></div>
-                    <div class="content">
-                        <h4><a href="#">Microsoft's Jialin Dai on Spring for Azure</a></h4>
-                        <p>talks to Pivotal Labs Sydney director David Julia (@DavidJulia) about applied agile, testing
-                            strategy, architecture and more.</p>
-                        <a href="#" class="listen-btn"><span class="vid-icon-span"><i class="fas fa-play"></i></span>Listen
-                            Now</a>
-                    </div><!-- /.content -->
-                </div><!-- /.ep-item -->
-            </div><!-- /.col x 4 -->
+            {{#top3}}
+                <div class="col-md-4 col-sm-12">
+                    <div class="latest-ep-item">
+                        <div class="photo"><img src="{{ imageSrc}}" alt=""></div>
+                        <div class="content">
+                            <h4><a href="#">
+                                {{podcast.title}}
+                            </a></h4>
+                            <p>
+                                {{podcast.description}}
+                            </p>
+                            <a href="#" class="listen-btn clicked"><span class="vid-icon-span"><i
+                                    class="fas fa-play"></i></span>Listen Now</a>
+                        </div><!-- /.content -->
+                    </div><!-- /.ep-item -->
+                </div><!-- /.col x 4 -->
+            {{/top3}}
 
+            <!--            -->
 
-            <div class="col-md-4 col-sm-12">
-                <div class="latest-ep-item">
-                    <div class="photo"><img src="assets/images/post-3.jpg" alt=""></div>
-                    <div class="content">
-                        <h4><a href="#">Spring mad scientist Andy Clement on Eclipse</a></h4>
-                        <p>talks to Pivotal Labs Sydney director David Julia (@DavidJulia) about applied agile, testing
-                            strategy, architecture and more.</p>
-                        <a href="#" class="listen-btn"><span class="vid-icon-span"><i class="fas fa-play"></i></span>Listen
-                            Now</a>
-                    </div><!-- /.content -->
-                </div><!-- /.ep-item -->
-            </div><!-- /.col x 4 -->
 
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -246,43 +227,66 @@
 
                 <div class="tab-nav-archieve">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li><a id="twentytab" data-toggle="tab" href="#twentyContent" role="tab" aria-controls="twenty"
-                               aria-selected="false">2020 Episodes</a></li>
-                        <li><a class="active" id="ninteentab" data-toggle="tab" href="#nineteenContent" role="tab"
-                               aria-controls="nineteen" aria-selected="true">2019 Episodes</a></li>
-                        <li><a id="eighteentab" data-toggle="tab" href="#eighteenContent" role="tab"
-                               aria-controls="eighteen" aria-selected="false">2018 Episodes</a></li>
-                        <li><a id="seventeentab" data-toggle="tab" href="#seventeenContent" role="tab"
-                               aria-controls="seventeen" aria-selected="false">2017 Episodes</a></li>
+
+                        {{#years}}
+                            <li>
+                                <a id="{{year}}-tab" data-toggle="tab" href="#{{{year}}}-content" role="tab"
+                                   aria-controls="{{year}}" aria-selected="false">{{{ year }}} Episodes</a>
+                            </li>
+                        {{/years}}
+
                     </ul>
                 </div><!-- tab nav archieve -->
 
                 <div class="tab-content">
 
-                    <div class="tab-pane fade" id="twentyContent" role="tabpanel" aria-labelledby="twentys tab">
-                        <p class="text-gray">let's add some episodes here too ..</p>
-                    </div>
+                    {{#years}}
+                        <div class="tab-pane fade show active" id="{{year}}-content" role="tabpanel"
+                             aria-labelledby="{{year}} tab">
 
+                            <!-- {{ year}} -->
 
-                    <div class="tab-pane fade show active" id="nineteenContent" role="tabpanel"
-                         aria-labelledby="ninteen tab">
-
-
-                        {{{currentYear.html}}}
-
-
-
-                    </div><!-- /.tab item -->
-
-                    <div class="tab-pane fade" id="eighteenContent" role="tabpanel" aria-labelledby="eighteen tab">
-                        <p class="text-gray">let's add some episodes in 2018 too ..</p>
-                    </div>
-
-
-                    <div class="tab-pane fade" id="seventeenContent" role="tabpanel" aria-labelledby="seventeen tab">
-                        <p class="text-gray">let's add some episodes in 2017 too ..</p>
-                    </div>
-
+                            {{#episodes}}
+                                <div class="podcast-episode">
+                                    <div class="row">
+                                        <div class="col-lg-9 col-md-8">
+                                            <div class="episode-item">
+                                                <div class="photo-ep"><img src="{{{  imageSrc }}}" alt=""></div>
+                                                <div class="content-ep">
+                                                    <span class="cat-ep">Development</span>
+                                                    <div class="heading-episode">
+                                                        <h4><a href="#" class="active">{{{ podcast.title }}}</a></h4>
+                                                        <button type="button" class="btn-light-green"><i
+                                                                class="fas fa-share"></i> share this
+                                                        </button>
+                                                    </div>
+                                                    <p>  {{{ podcast.description }}}  </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4">
+                                            <div class="controls-episode">
+                                                <ul>
+                                                    <li class="control-ep">
+                                                        <a href="">
+                                                            <div class="icon"><i class="fas fa-pause"></i></div>
+                                                            <span>Listening now</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="control-ep">
+                                                        <a href="">
+                                                            <div class="icon"><i class="fas fa-arrow-down"></i></div>
+                                                            <span>Download</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/episodes}}
+                        </div>
+                    {{/years}}
 
                 </div><!-- /.tab content -->
 

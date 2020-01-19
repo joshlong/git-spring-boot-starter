@@ -10,15 +10,14 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@Configuration
 @Log4j2
+//@Configuration
 class Step4Configuration {
 
 	private final static String NAME = "git-push-the-project";

@@ -29,7 +29,7 @@ import java.util.Objects;
  * episodes folder.
  */
 @Log4j2
-@Configuration
+//@Configuration
 class Step1Configuration {
 
 	private final String NAME = "read-podcasts-from-db";

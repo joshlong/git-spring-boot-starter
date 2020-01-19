@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Log4j2
-@Configuration
+//@Configuration
 class Step3Configuration {
 
 	private final SiteGeneratorProperties properties;

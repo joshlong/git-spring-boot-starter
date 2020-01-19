@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * The second step in the pipeline creates pages for each of the years.
  */
 @Log4j2
-@Configuration
+//@Configuration
 class Step2Configuration {
 
 	private static String NAME = "podcast-items-to-pages";
