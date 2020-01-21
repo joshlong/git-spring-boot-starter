@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.net.URL;
-import java.text.DateFormat;
 import java.time.Instant;
 import java.util.*;
 import java.util.function.Function;
@@ -93,15 +92,17 @@ public class GeneratorJob {
 		}
 		var dateFormat = DateUtils.date();
 		log.info("starting the site generation @ " + dateFormat.format(new Date()));
-		Stream.of(properties.getOutput().getItems(), properties.getOutput().getPages()).forEach(this::reset);
+		Stream.of(this.properties.getOutput().getItems(), properties.getOutput().getPages()).forEach(this::reset);
 		var podcastList = this.template.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper);
-		var maxYear = podcastList.stream().max(Comparator.comparing(Podcast::getDate))
-				.map(podcast -> DateUtils.getYearFor(podcast.getDate())).get();
+		var maxYear = podcastList.stream()//
+				.max(Comparator.comparing(Podcast::getDate))//
+				.map(podcast -> DateUtils.getYearFor(podcast.getDate()))//
+				.orElse(DateUtils.getYearFor(new Date()));
 		var allPodcasts = podcastList.stream()
 				.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg", dateFormat.format(p.getDate())))
 				.collect(Collectors.toList());
 		allPodcasts.forEach(this::downloadImageFor);
-		allPodcasts.sort(reversed);
+		allPodcasts.sort(this.reversed);
 		var top3 = new ArrayList<PodcastRecord>();
 		for (var i = 0; i < 3 && i < allPodcasts.size(); i++) {
 			top3.add(allPodcasts.get(i));
