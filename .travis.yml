@@ -9,6 +9,10 @@ cache:
   directories:
     - $HOME/.m2/repository/
 
+services:
+  - postgresql
+
+
 before_script:
   - export PATH=$PATH:$HOME/bin/
 
