@@ -4,17 +4,17 @@
 
 -- Dumped from database version 11.5
 -- Dumped by pg_dump version 11.5
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
+--
+-- SET statement_timeout = 0;
+-- SET lock_timeout = 0;
+-- SET idle_in_transaction_session_timeout = 0;
+-- SET client_encoding = 'UTF8';
+-- SET standard_conforming_strings = on;
+-- SELECT pg_catalog.set_config('search_path', '', false);
+-- SET check_function_bodies = false;
+-- SET xmloption = content;
+-- SET client_min_messages = warning;
+-- SET row_security = off;
 
 --
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: orders
@@ -28,7 +28,6 @@ CREATE SEQUENCE  hibernate_sequence
     CACHE 1;
 
 
-ALTER TABLE  hibernate_sequence OWNER TO orders;
 
 SET default_tablespace = '';
 
@@ -45,7 +44,6 @@ CREATE TABLE  link (
 );
 
 
-ALTER TABLE  link OWNER TO orders;
 
 --
 -- Name: media; Type: TABLE; Schema: public; Owner: orders
@@ -61,7 +59,6 @@ CREATE TABLE  media (
 );
 
 
-ALTER TABLE  media OWNER TO orders;
 
 --
 -- Name: podcast; Type: TABLE; Schema: public; Owner: orders
@@ -85,7 +82,6 @@ CREATE TABLE  podcast (
 );
 
 
-ALTER TABLE  podcast OWNER TO orders;
 
 --
 -- Name: podcast_link; Type: TABLE; Schema: public; Owner: orders
@@ -97,7 +93,6 @@ CREATE TABLE  podcast_link (
 );
 
 
-ALTER TABLE  podcast_link OWNER TO orders;
 
 --
 -- Name: podcast_media; Type: TABLE; Schema: public; Owner: orders
@@ -109,14 +104,13 @@ CREATE TABLE  podcast_media (
 );
 
 
-ALTER TABLE  podcast_media OWNER TO orders;
 
 
 --
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: orders
 --
 
-SELECT pg_catalog.setval(' hibernate_sequence', 220, true);
+-- SELECT pg_catalog.setval(' hibernate_sequence', 220, true);
 
 
 --
@@ -131,40 +125,35 @@ ALTER TABLE ONLY  link
 -- Name: media media_pkey; Type: CONSTRAINT; Schema: public; Owner: orders
 --
 
-ALTER TABLE ONLY  media
-    ADD CONSTRAINT media_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY  media ADD CONSTRAINT media_pkey PRIMARY KEY (id);
 
 
 --
 -- Name: podcast podcast_pkey; Type: CONSTRAINT; Schema: public; Owner: orders
 --
 
-ALTER TABLE ONLY  podcast
-    ADD CONSTRAINT podcast_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY  podcast ADD CONSTRAINT podcast_pkey PRIMARY KEY (id);
 
 
 --
 -- Name: podcast_link fk2vu3w8tjdo0qb3vkpeydcc3w0; Type: FK CONSTRAINT; Schema: public; Owner: orders
 --
 
-ALTER TABLE ONLY  podcast_link
-    ADD CONSTRAINT fk2vu3w8tjdo0qb3vkpeydcc3w0 FOREIGN KEY (link_id) REFERENCES  link(id);
+ALTER TABLE ONLY  podcast_link add CONSTRAINT fk2vu3w8tjdo0qb3vkpeydcc3w0 FOREIGN KEY (link_id) REFERENCES  link(id);
 
 
 --
 -- Name: podcast_media fk8g18uypwfolj3nu8jew7vj6ex; Type: FK CONSTRAINT; Schema: public; Owner: orders
 --
 
-ALTER TABLE ONLY  podcast_media
-    ADD CONSTRAINT fk8g18uypwfolj3nu8jew7vj6ex FOREIGN KEY (media_id) REFERENCES  media(id);
+ALTER TABLE ONLY  podcast_media ADD CONSTRAINT fk8g18uypwfolj3nu8jew7vj6ex FOREIGN KEY (media_id) REFERENCES  media(id);
 
 
 --
 -- Name: podcast_media fkep89648nfax8u5t7cjle9bh77; Type: FK CONSTRAINT; Schema: public; Owner: orders
 --
 
-ALTER TABLE ONLY  podcast_media
-    ADD CONSTRAINT fkep89648nfax8u5t7cjle9bh77 FOREIGN KEY (podcast_id) REFERENCES  podcast(id);
+ALTER TABLE ONLY  podcast_media ADD CONSTRAINT fkep89648nfax8u5t7cjle9bh77 FOREIGN KEY (podcast_id) REFERENCES  podcast(id);
 
 
 --
