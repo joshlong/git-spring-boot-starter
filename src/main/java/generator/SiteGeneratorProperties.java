@@ -11,6 +11,8 @@ import java.net.URI;
 @ConfigurationProperties("podcast.generator")
 public class SiteGeneratorProperties {
 
+	private boolean disabled;
+
 	private String charset;
 
 	private URI apiServerUrl;

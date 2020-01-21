@@ -87,8 +87,11 @@ public class GeneratorJob {
 
 	@SneakyThrows
 	public void build() {
+		if (this.properties.isDisabled()) {
+			log.info(this.getClass().getName() + " is not enabled. Skipping...");
+			return;
+		}
 		var dateFormat = DateUtils.date();
-
 		log.info("starting the site generation @ " + dateFormat.format(new Date()));
 		Stream.of(properties.getOutput().getItems(), properties.getOutput().getPages()).forEach(this::reset);
 		var podcastList = this.template.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper);
@@ -112,7 +115,7 @@ public class GeneratorJob {
 		years.sort(Comparator.comparing(YearRollup::getYear).reversed());
 		var pageChromeTemplate = this.properties.getTemplates().getPageChromeTemplate();
 		var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate,
-				Map.of("top3", top3, "years", years));
+				Map.of("top3", top3, "years", years, "currentYear", DateUtils.getYearFor(new Date())));
 		var page = new File(this.properties.getOutput().getPages(), "index.html");
 		FileCopyUtils.copy(html, new FileWriter(page));
 		log.info("wrote the template to " + page.getAbsolutePath());
