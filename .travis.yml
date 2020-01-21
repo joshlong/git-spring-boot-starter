@@ -23,6 +23,6 @@ env:
   - SPRING_PROFILES_ACTIVE=ci
 
 script:
-  - mvn -e -Dspring.profiles.active=manual-ignition verify deploy
+  - mvn -e -Dspring.profiles.active=ci verify deploy
   - ./deploy/cf.sh
   - ./deploy/deploy.sh
