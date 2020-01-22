@@ -5,7 +5,7 @@
 
 /*
 
-+ josh Long website
++ Josh Long website
 + Design, Front-end : Sam osiris
 + https://samosiris.com
 
@@ -39,8 +39,6 @@ body {
 }
 
 .container-fluid {
-    /*padding-left:50px;
-     padding-right: 50px; */
     width: 90%;
 }
 
@@ -123,9 +121,7 @@ button {
 }
 
 button:active, button:visited, button:focus, button:hover {
-    /* outline: 0; */
     cursor: pointer;
-
 }
 
 input {
@@ -133,7 +129,6 @@ input {
 }
 
 textarea:focus, input:focus, input:hover {
-    /* outline: 0; */
 }
 
 ul {
@@ -154,11 +149,8 @@ img {
     text-decoration: underline !important;
 }
 
-/* ::-moz-selection { background: #0461BF; }
-::selection { background: #0461BF; }
-*/
-
-/* ---------------------------------------------------
+/*
+---------------------------------------------------
      1. Guidelines ( UI Design elements )
 ----------------------------------------------------- */
 
@@ -284,7 +276,7 @@ button.mobile-nav-btn {
     width: 30px;
     height: 20px;
     position: relative;
-    margin: 0px;
+    margin: 0;
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
