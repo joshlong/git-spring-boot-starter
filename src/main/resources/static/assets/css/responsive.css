@@ -1,79 +1,87 @@
+/*==========  Non-Mobile First Method  ==========*/
 
-    /*==========  Non-Mobile First Method  ==========*/
+/* Large Devices, Wide Screens */
+@media only screen and (max-width: 1200px) {
 
-    /* Large Devices, Wide Screens */
-    @media only screen and (max-width : 1200px) {
+}
 
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+
+    header.top-bar {
+        display: none;
     }
 
-    /* Medium Devices, Desktops */
-    @media only screen and (max-width : 992px) {
-
-        header.top-bar { display: none; }
-        .header { height:100%; max-height: 100%; position: relative; }
-
-        .left-cover-part {
-            right:5%;
-            left:auto;
-            width:50%;
-            bottom:0;
-        }
-
-        .right-cover-part {
-            left:0;
-            right:auto;
-            width:75%;
-        }
-
-        .cover .caption h1 {
-            font-size: 5vh;
-        }
-
-        .controls-episode li.control-ep { margin:0 5px; }
-        footer.footer .copyrights { line-height: 1.6em; }
-
-
-
-
-
+    .header {
+        height: 100%;
+        max-height: 100%;
+        position: relative;
     }
 
-    /* Small Devices, Tablets */
-    @media only screen and (max-width : 768px) {
-
-        .col-hide { display: none; }
-
-        .nav-menu li {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .search-nav { display: none; }
-
-        .cover .caption h1 {
-            font-size: 4vh;
-        }
-
-
-
+    .left-cover-part {
+        right: 5%;
+        left: auto;
+        width: 50%;
+        bottom: 0;
     }
 
-    /* Extra Small Devices, Phones */ 
-    @media only screen and (max-width : 480px) {
-
-        .nav-menu { display: none; }
-
-
-
-
-     }
-
-    
-
-    /* Custom, iPhone Retina */ 
-    @media only screen and (max-width : 320px) {
-
-
-        
-        
+    .right-cover-part {
+        left: 0;
+        right: auto;
+        width: 75%;
     }
+
+    .cover .caption h1 {
+        font-size: 5vh;
+    }
+
+    .controls-episode li.control-ep {
+        margin: 0 5px;
+    }
+
+    footer.footer .copyrights {
+        line-height: 1.6em;
+    }
+
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 768px) {
+
+    .col-hide {
+        display: none;
+    }
+
+    .nav-menu li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .search-nav {
+        display: none;
+    }
+
+    .cover .caption h1 {
+        font-size: 4vh;
+    }
+
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+
+    .nav-menu {
+        display: none;
+    }
+
+
+}
+
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width: 320px) {
+
+
+}

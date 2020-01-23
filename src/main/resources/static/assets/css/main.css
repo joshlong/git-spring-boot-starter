@@ -185,7 +185,7 @@ header.top-bar {
     line-height: 60px;
     width: 100%;
     clear: both;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .podcast-bar {
@@ -483,7 +483,6 @@ nav.navbar {
     margin-left: 30px;
     width: 52%;
     z-index: 100;
-
 }
 
 .right-cover-part a {

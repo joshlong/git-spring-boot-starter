@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" version="2.0">
+    <channel>
+        <atom:link href="http://www.podcastone.com/podcast?categoryID2=705" rel="self" type="application/rss+xml"/>
+        <link>http://PodcastOne.com</link>
+        <language>en-us</language>
+        <copyright>
+            Copyright © 2002-2014 PodcastOne.com. All rights reserved.
+        </copyright>
+        <generator>Nox Solutions RSS Builder v1.0</generator>
+        <sy:updatePeriod>hourly</sy:updatePeriod>
+        <sy:updateFrequency>2</sy:updateFrequency>
+        <webMaster>info@noxsolutions.com (NoxSolutions)</webMaster>
+        <category>Talk Radio</category>
+        <pubDate>Mon, 03 Nov 2014 12:00:00 PST</pubDate>
+        <lastBuildDate>Mon, 03 Nov 2014 12:00:00 PST</lastBuildDate>
+        <itunes:category text="Sports &amp; Recreation"/>
+        <itunes:author>PodcastOne</itunes:author>
+        <itunes:owner>
+            <itunes:name>PodcastOne</itunes:name>
+            <itunes:email>info@PodcastOne.com (PodcastOne.com)</itunes:email>
+        </itunes:owner>
+        <itunes:explicit>no</itunes:explicit>
+        <image>
+            <url>
+                http://www.podcastonesales.com/images/podcast/richeisenshow-1400x1400.jpg
+            </url>
+            <title>The Rich Eisen Show</title>
+            <link>http://PodcastOne.com</link>
+        </image>
+        <itunes:image href="http://www.podcastonesales.com/images/podcast/richeisenshow-1400x1400.jpg"/>
+        <title>The Rich Eisen Show</title>
+        <description>
+            The Rich Eisen Show will mix football analysis with pop culture, humor, and interviews with the biggest names in sports and entertainment. The nationally syndicated radio and TV talk show airs Monday-Friday, Noon-3PM Eastern / 9AM-Noon Pacific, on 125+ radio stations (starting Nov 3rd), DIRECTV's Audience channel 239, and three ROOT Sports regional sports networks (NW, Denver, Pittsburgh). It is also available digitally on the NFL Now mobile platform. Said Eisen, "After all these years of seeing TV add 10 pounds, I'm hoping phones and tablets will only add 5."
+        </description>
+        <itunes:subtitle>
+            The Rich Eisen Show will mix football analysis with pop culture, humor, and interviews with the biggest names in sports and entertainment. The nationally syndicated radio and TV talk show airs Monday-Friday, Noon-3PM Eastern / 9AM-Noon...
+        </itunes:subtitle>
+        <itunes:summary>
+            The Rich Eisen Show will mix football analysis with pop culture, humor, and interviews with the biggest names in sports and entertainment. The nationally syndicated radio and TV talk show airs Monday-Friday, Noon-3PM Eastern / 9AM-Noon Pacific, on 125+ radio stations (starting Nov 3rd), DIRECTV's Audience channel 239, and three ROOT Sports regional sports networks (NW, Denver, Pittsburgh). It is also available digitally on the NFL Now mobile platform. Said Eisen, "After all these years of seeing TV add 10 pounds, I'm hoping phones and tablets will only add 5."
+        </itunes:summary>
+        <item>
+            <category>Talk Radio</category>
+            <slash:comments>0</slash:comments>
+            <itunes:explicit>no</itunes:explicit>
+            <link>
+                http://www.podcastonesales.com/richeisen?pid=454311
+            </link>
+            <wfw:commentRss>
+                http://www.podcastonesales.com/richeisen?pid=454311
+            </wfw:commentRss>
+            <title>Rich Eisen Show Hour 1 (11-03-14)</title>
+            <description>
+                Dan Patrick calls in to the show and Former VP of NFL Officiating Mike Pereira sits down with Rich.
+            </description>
+            <author>info@podcastonesales.com (podcastonesales.com)</author>
+            <guid isPermaLink="false">468187</guid>
+            <pubDate>Mon, 03 Nov 2014 09:30:00 PST</pubDate>
+            <itunes:author>The Rich Eisen Show</itunes:author>
+            <itunes:subtitle>
+                Dan Patrick calls in to the show and Former VP of NFL Officiating Mike Pereira sits down with Rich.
+            </itunes:subtitle>
+            <itunes:summary>
+                Dan Patrick calls in to the show and Former VP of NFL Officiating Mike Pereira sits down with Rich.
+            </itunes:summary>
+            <itunes:duration>00:41:00</itunes:duration>
+            <itunes:keywords>
+                PodcastOne Sales The Rich Eisen Show Rich Eisen Show Hour 1 (11-03-14) Rich Eisen Show Hour 1 (11-03-14)
+            </itunes:keywords>
+            <enclosure length="21205074" type="audio/x-mpeg" url="http://serve.castfire.com/audio/2381380/2381380_2014-11-03-164720.64k.mp3?ad_params=zones%3DPreroll%2CMidroll%2CPostroll%7Cstation_id%3D2570"/>
+        </item>
+        <item>
+            <category>Talk Radio</category>
+            <slash:comments>0</slash:comments>
+            <itunes:explicit>no</itunes:explicit>
+            <link>
+                http://www.podcastonesales.com/richeisen?pid=454315
+            </link>
+            <wfw:commentRss>
+                http://www.podcastonesales.com/richeisen?pid=454315
+            </wfw:commentRss>
+            <title>Rich Eisen Show Hour 2 (11-03-14)</title>
+            <description>
+                Arizona Cardinals Quarter Back Carson Palmer calls in to the show, and Funnyman Rob Riggles is in studio with Rich.
+            </description>
+            <author>info@podcastonesales.com (podcastonesales.com)</author>
+            <guid isPermaLink="false">468191</guid>
+            <pubDate>Mon, 03 Nov 2014 10:30:00 PST</pubDate>
+            <itunes:author>The Rich Eisen Show</itunes:author>
+            <itunes:subtitle>
+                Arizona Cardinals Quarter Back Carson Palmer calls in to the show, and Funnyman Rob Riggles is in studio with Rich.
+            </itunes:subtitle>
+            <itunes:summary>
+                Arizona Cardinals Quarter Back Carson Palmer calls in to the show, and Funnyman Rob Riggles is in studio with Rich.
+            </itunes:summary>
+            <itunes:duration>00:41:00</itunes:duration>
+            <itunes:keywords>
+                PodcastOne Sales The Rich Eisen Show Rich Eisen Show Hour 2 (11-03-14) Rich Eisen Show Hour 2 (11-03-14)
+            </itunes:keywords>
+            <enclosure length="20756185" type="audio/x-mpeg" url="http://serve.castfire.com/audio/2381382/2381382_2014-11-03-164822.64k.mp3?ad_params=zones%3DPreroll%2CMidroll%2CPostroll%7Cstation_id%3D2570"/>
+        </item>
+    </channel>
+</rss>
