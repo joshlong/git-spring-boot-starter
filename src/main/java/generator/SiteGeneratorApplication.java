@@ -36,7 +36,7 @@ public class SiteGeneratorApplication {
 	@Bean
 	@ConditionalOnProperty(name = "online", havingValue = "true", matchIfMissing = true)
 	IntegrationFlow launchRequestHandlerIntegrationFlow(ConnectionFactory cf, SiteGeneratorProperties properties) {
-		log.info("installing a site-generator launcher");
+		log.info("installing a launch request handler integration flow...");
 		var amqpInboundAdapter = Amqp //
 				.inboundAdapter(cf, properties.getLauncher().getRequestsQueue()) //
 				.get();

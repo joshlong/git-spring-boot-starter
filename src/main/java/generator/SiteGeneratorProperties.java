@@ -8,8 +8,10 @@ import java.io.File;
 import java.net.URI;
 
 @Data
-@ConfigurationProperties("podcast.generator")
+@ConfigurationProperties(SiteGeneratorProperties.PODCAST_GENERATOR_PROPERTIES)
 public class SiteGeneratorProperties {
+
+	public static final String PODCAST_GENERATOR_PROPERTIES = "podcast.generator";
 
 	private boolean disabled;
 
@@ -24,6 +26,41 @@ public class SiteGeneratorProperties {
 	private final Output output = new Output();
 
 	private final Launcher launcher = new Launcher();
+
+	private final Git git = new Git();
+
+	@Data
+	public static class Git {
+
+		private File localCloneDirectory = new File(System.getProperty("user.home"), "blog-clone");
+
+		private String uri;
+
+		private final Ssh ssh = new Ssh();
+
+		private final Http http = new Http();
+
+		private boolean online = true;
+
+		@Data
+		public static class Ssh {
+
+			private boolean enabled;
+
+			private String password;
+
+		}
+
+		@Data
+		public static class Http {
+
+			private String username = null, password = "";
+
+			private boolean enabled;
+
+		}
+
+	}
 
 	@Data
 	public static class Output {
