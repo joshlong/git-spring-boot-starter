@@ -19,6 +19,8 @@ public class GitTemplateConfigurationProperties {
 
 	private final Http http = new Http();
 
+	private boolean online = true;
+
 	@Data
 	public static class Ssh {
 
