@@ -16,13 +16,32 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
+@Log4j2
 @Configuration
 @EnableConfigurationProperties(GitTemplateConfigurationProperties.class)
 public class GitTemplateAutoConfiguration {
 
 	@Bean
+	@ConditionalOnProperty(name = "git.enabled", havingValue = "false")
+	GitTemplate gitTemplate() {
+		log.info("installing a No-Op " + GitTemplate.class.getName() + " instance.");
+		return new GitTemplate() {
+			@Override
+			public void execute(GitCallback gitCallback) {
+				log.info("execute(GitCallback)");
+			}
+
+			@Override
+			public void executeAndPush(GitCallback callback) {
+				log.info("executeAndPush(GitCallback)");
+			}
+		};
+	}
+
+	@Bean
 	@ConditionalOnBean(Git.class)
 	@ConditionalOnMissingBean
+	@ConditionalOnProperty(name = "git.enabled", havingValue = "true")
 	GitTemplate gitService(Git git, PushCommandCreator commandCreator) {
 		return new DefaultGitTemplate(git, commandCreator);
 	}
@@ -120,7 +139,7 @@ public class GitTemplateAutoConfiguration {
 		Git git(GitTemplateConfigurationProperties gsp) throws GitAPIException {
 			var cloneDirectory = gsp.getLocalCloneDirectory();
 			FileUtils.delete(gsp.getLocalCloneDirectory());
-			log.info("going to clone the GIT repo " + gsp.getUri() + " into directory " + gsp.getLocalCloneDirectory()
+			log.info("going to clone the Git repo " + gsp.getUri() + " into directory " + gsp.getLocalCloneDirectory()
 					+ ".");
 			return Git//
 					.cloneRepository()//

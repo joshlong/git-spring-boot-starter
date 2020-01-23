@@ -225,7 +225,7 @@ button.mobile-nav-btn {
     background: #262d35;
     position: absolute;
     z-index: 1000;
-    width: 33.333333%;
+    width: 23.333333%;
     right: 5%;
     top: 60px;
     float: right;
@@ -464,15 +464,20 @@ nav.navbar {
 }
 
 .right-cover-part {
+
     color: #fff;
     position: absolute;
     top: 40%;
     transform: translateY(-40%);
     right: 5%;
     margin-left: 30px;
-    width: 60%;
+    width: 52%;
     z-index: 100;
 
+}
+
+.right-cover-part a {
+    text-shadow: 1px 1px 2px white ;
 }
 
 .caption {
@@ -487,7 +492,7 @@ nav.navbar {
 }
 
 .minimal-btn {
-    text-shadow: 1px 1px 2px pink;
+    /*text-shadow: 1px 1px 2px white;*/
     font-size: 18px;
     font-weight: 500;
     color: #1c201e;

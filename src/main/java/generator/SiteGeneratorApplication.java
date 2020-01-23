@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,9 @@ public class SiteGeneratorApplication {
 	}
 
 	@Bean
+	@ConditionalOnProperty(name = "online", havingValue = "true")
 	IntegrationFlow launchRequestHandlerIntegrationFlow(ConnectionFactory cf, SiteGeneratorProperties properties) {
+		log.info("installing a site-generator launcher");
 		var amqpInboundAdapter = Amqp //
 				.inboundAdapter(cf, properties.getLauncher().getRequestsQueue()) //
 				.get();
