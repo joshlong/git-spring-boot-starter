@@ -487,6 +487,7 @@ nav.navbar {
 }
 
 .minimal-btn {
+    text-shadow: 1px 1px 2px pink;
     font-size: 18px;
     font-weight: 500;
     color: #1c201e;
