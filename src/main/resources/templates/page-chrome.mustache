@@ -18,6 +18,7 @@
     <!-- Main Style -->
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel='stylesheet' type="text/css" href="assets/soundplugin/audioplayer/audioplayer.css"/>
 
     <title>
         A Bootiful Podcast with Josh Long
@@ -25,61 +26,67 @@
 </head>
 <body>
 
+
 <header class="top-bar" id="topBar">
     <div class="container-fluid">
+        <div class="row">
 
-        <div class="podcast-bar">
-            <ul>
-                <li>
-                    <div class="pod-thumbnail"><img
-                            src="assets/images/thumbnail.png" alt=""></div>
-                </li>
-                <li>
-                    <button class="play-btn"><i class="fas fa-play"></i>
-                    </button>
-                </li>
-                <li>
-                    <div class="player-waves"><img
-                            src="assets/images/player-waves.png" alt=""></div>
-                </li>
-            </ul>
-        </div><!-- /.podcast bar -->
 
-        <div class="right-menu">
+            <div class="col-md-9">
 
-            <button class="navbar-toggler mobile-nav-btn" type="button"
-                    data-toggle="collapse"
-                    data-target="#mobile-menu"
-                    aria-controls="mobile menu" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <div class="hamburger-menu">
-                    <span></span><span></span><span></span></div>
-            </button>
 
-            <!-- Collapsible content -->
-            <div class="collapse navbar-collapse mobile-menu-collapse" id="mobile-menu">
+                <!--   data-playfrom="last"  -->
+                <div id="ap1" data-thumb="assets/soundplugin/audioplayer/img/adg3.jpg" data-type="audio"
+                     class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir     "
+                     data-scrubbg="assets/soundplugin/audioplayer/img/dzsplugins.png"
+                     data-scrubprog="assets/soundplugin/audioplayer/img/bgminion.jpg"
+                     data-source="assets/audio/itsabeautifulday.mp3">
+                    <div class="meta-artist">
+                        <span class="the-artist">Mick Jagger - Revenge</span>
+                    </div>
+                </div>
 
-                <!-- Links -->
-                <ul class="navbar-nav mr-auto">
+            </div><!-- /.podcast bar -->
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">PodCasts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://twitter.com/BootifulPodcast">Twitter (@BootifulPodcast)</a>
-                    </li>
-                </ul>
+            <div class="col-md-3">
 
-            </div>
-            <!-- Collapsible content -->
-        </div><!-- /.mobile menu -->
+                <button class="navbar-toggler mobile-nav-btn" type="button" data-toggle="collapse"
+                        data-target="#mobile-menu"
+                        aria-controls="mobile menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="hamburger-menu"><span></span><span></span><span></span></div>
+                </button>
 
+                <!-- Collapsible content -->
+                <div class="collapse navbar-collapse mobile-menu-collapse" id="mobile-menu">
+
+                    <!-- Links -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Linkedin </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">twitter </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">facebook </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">instagram</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">youtube </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">RSS </a>
+                        </li>
+                    </ul>
+
+                    <!-- Links -->
+                </div>
+                <!-- Collapsible content -->
+            </div><!-- /.col x 3 -->
+
+        </div><!-- /.row -->
     </div><!-- /.container fluid -->
 </header><!-- /.podcast top bar-->
 
@@ -320,7 +327,9 @@
 
             </div><!-- /.col x 11 -->
 
-            <!--            <button class="btn-simple" type="button">Load more episodes</button>-->
+            <!--
+                <button class="btn-simple" type="button">Load more episodes</button>
+            -->
 
 
         </div><!-- /.row -->
@@ -361,9 +370,11 @@
         <div class="row justify-content-center">
 
             <div class="col-md-4 col-sm-6">
-                <p class="copyrights">all rights reserved for <EM> A Bootiful
-                    Podcast</EM>
-                    2019-{{currentYear}}</p>
+                <p class="copyrights">
+                    All rights reserved for
+                    <EM> A Bootiful Podcast </EM>
+                    2019-{{currentYear}}
+                </p>
             </div><!-- /.col 6 -->
 
             <div class="col-md-4 col-sm-6">
@@ -378,7 +389,6 @@
                     <img src="assets/images/scrollTop.png" alt="">
                 </a>
             </div><!-- /.col 6 -->
-
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </footer><!-- /.footer -->
@@ -386,24 +396,48 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="assets/soundplugin/audioplayer/audioplayer.js"
+        type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/custom.js"></script>
-<script src="assets/js/wow.min.js"></script>
-<script type="text/JavaScript">
-    wow = new WOW(
-            {
-                boxClass: 'wow',      // default
-                animateClass: 'animated', // default
-                offset: 0,          // default
-                mobile: false,       // default
-                live: true        // default
-            }
-    )
-    wow.init();
+
+<script>
+    jQuery(document).ready(function ($) {
+
+        dzsap_init(".aptest-with-play", {
+            autoplay: "off"
+            , init_each: "on"
+            , disable_volume: "on"
+            , skinwave_mode: 'normal'
+            , settings_backup_type: 'light' // == light or full
+            , skinwave_: 'light' // == light or full
+            , skinwave_enableSpectrum: "off"
+            , embed_code: 'light' // == light or full
+            , skinwave_wave_mode: "canvas"
+            , skinwave_wave_mode_canvas_waves_number: "3"
+            , skinwave_wave_mode_canvas_waves_padding: "1"
+            , skinwave_wave_mode_canvas_reflection_size: '0' // == light or full
+            , design_color_bg: '999999,ffffff' // --  light or full
+            , skinwave_wave_mode_canvas_mode: 'reflecto' // --  light or full
+            , preview_on_hover: 'off' // --  light or full
+            , design_wave_color_progress: 'ff657a,ffffff' // -- light or full
+            // ,settings_php_handler:'publisher.php'
+            , pcm_data_try_to_generate: 'on'
+            , skinwave_comments_enable: 'off' // -- enable the comments, publisher.php must be in the same folder as this html, also if you want the comments to automatically be taken from the database remember to set skinwave_comments_retrievefromajax to ON
+            , skinwave_comments_retrievefromajax: 'off'// --- retrieve the comment form ajax
+            , failsafe_repair_media_element: 500 // == light or full
+        });
+
+        setTimeout(function () {
+        }, 100);
+    });
 </script>
 
 

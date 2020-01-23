@@ -39,6 +39,8 @@ body {
 }
 
 .container-fluid {
+    /*padding-left:50px;
+     padding-right: 50px; */
     width: 90%;
 }
 
@@ -121,7 +123,9 @@ button {
 }
 
 button:active, button:visited, button:focus, button:hover {
+    /* outline: 0; */
     cursor: pointer;
+
 }
 
 input {
@@ -129,6 +133,7 @@ input {
 }
 
 textarea:focus, input:focus, input:hover {
+    /* outline: 0; */
 }
 
 ul {
@@ -149,8 +154,11 @@ img {
     text-decoration: underline !important;
 }
 
-/*
----------------------------------------------------
+/* ::-moz-selection { background: #0461BF; }
+::selection { background: #0461BF; }
+*/
+
+/* ---------------------------------------------------
      1. Guidelines ( UI Design elements )
 ----------------------------------------------------- */
 
@@ -181,7 +189,7 @@ header.top-bar {
 }
 
 .podcast-bar {
-    float: left;
+    /* float:left; */
 }
 
 .podcast-bar ul li {
@@ -213,7 +221,7 @@ header.top-bar {
 /* Mobile / Tablet - Navbar */
 
 .right-menu {
-    float: right;
+
 }
 
 button.mobile-nav-btn {
@@ -221,25 +229,24 @@ button.mobile-nav-btn {
     margin-top: 10px;
 }
 
-.right-menu .navbar-collapse {
+.navbar-collapse {
     background: #262d35;
     position: absolute;
-    z-index: 1000;
-    width: 23.333333%;
+    width: 300px;
     right: 5%;
     top: 60px;
-    float: right;
-    z-index: 9999;
+    z-index: 99999;
+
 }
 
-.right-menu .navbar-collapse > ul {
+header.top-bar .navbar-collapse > ul {
     display: inline-block;
-    width: 25%;
-    padding: 25px 25px 25px 50px;
+    width: 100%;
+    padding: 25px;
 
 }
 
-.right-menu .navbar-collapse > ul > li > a {
+header.top-bar .navbar-collapse > ul > li > a {
     display: block;
     line-height: 1;
     font-size: 1.125rem;
@@ -250,25 +257,29 @@ button.mobile-nav-btn {
     margin-bottom: 5px;
 }
 
-.right-menu .navbar-collapse > ul > li > a:hover {
+header.top-bar .navbar-collapse > ul > li > a:hover {
 
     border-bottom: 1px solid #0dac50;
 
 }
 
-.right-menu .navbar-collapse > ul > li > a:hover {
+header.top-bar .navbar-collapse > ul > li > a:hover {
 }
 
-.right-menu .navbar-collapse > ul > li:last-child a {
-    border: 0;
+header.top-bar .navbar-collapse > ul > li:last-child a {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.right-menu .navbar-collapse > ul > li {
+header.top-bar .navbar-collapse > ul > li:last-child a:hover {
+    border-bottom: 1px solid #0dac50;
+}
+
+header.top-bar .navbar-collapse > ul > li {
 }
 
 /* hamburger menu */
 
-.right-menu .navbar-mobile button:focus {
+header.top-bar .navbar-mobile button:focus {
     outline: 0;
 }
 
@@ -276,7 +287,7 @@ button.mobile-nav-btn {
     width: 30px;
     height: 20px;
     position: relative;
-    margin: 0;
+    margin: 0px;
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
@@ -464,7 +475,6 @@ nav.navbar {
 }
 
 .right-cover-part {
-
     color: #fff;
     position: absolute;
     top: 40%;
@@ -477,7 +487,7 @@ nav.navbar {
 }
 
 .right-cover-part a {
-    text-shadow: 1px 1px 2px white ;
+    text-shadow: 1px 1px 2px white;
 }
 
 .caption {
@@ -492,7 +502,6 @@ nav.navbar {
 }
 
 .minimal-btn {
-    /*text-shadow: 1px 1px 2px white;*/
     font-size: 18px;
     font-weight: 500;
     color: #1c201e;
@@ -558,10 +567,6 @@ nav.navbar {
 
 .latest-ep-item .photo {
     width: 100%;
-}
-
-.latest-ep-item .photo img {
-    height: 200px;
 }
 
 .latest-ep-item .content {
