@@ -24,18 +24,25 @@ public class GitTemplateAutoConfiguration {
 	@Bean
 	@ConditionalOnProperty(name = "git.enabled", havingValue = "false")
 	GitTemplate gitTemplate() {
-		log.info("installing a No-Op " + GitTemplate.class.getName() + " instance.");
-		return new GitTemplate() {
+
+		class NoOpGitTemplate implements GitTemplate {
+
+			private String name = NoOpGitTemplate.class.getName();
+
 			@Override
 			public void execute(GitCallback gitCallback) {
-				log.info("execute(GitCallback)");
+				log.info(name + "#execute(GitCallback)");
 			}
 
 			@Override
 			public void executeAndPush(GitCallback callback) {
-				log.info("executeAndPush(GitCallback)");
+				log.info(name + "#executeAndPush(GitCallback)");
 			}
-		};
+
+		}
+		log.info("installing a No-Op " + GitTemplate.class.getName() + " instance called ("
+				+ NoOpGitTemplate.class.getName() + ")");
+		return new NoOpGitTemplate();
 	}
 
 	@Bean
