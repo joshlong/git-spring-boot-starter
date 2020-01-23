@@ -26,35 +26,35 @@ import org.springframework.integration.dsl.IntegrationFlows;
 @RequiredArgsConstructor
 public class SiteGeneratorApplication {
 
-  private final GeneratorJob generatorJob;
+	private final GeneratorJob generatorJob;
 
-  @EventListener(ApplicationReadyEvent.class)
-  public void ready() {
-    this.generatorJob.build();
-  }
+	@EventListener(ApplicationReadyEvent.class)
+	public void ready() {
+		this.generatorJob.build();
+	}
 
-  @Bean
-  @ConditionalOnProperty(name = "online", havingValue = "true", matchIfMissing = true)
-  IntegrationFlow launchRequestHandlerIntegrationFlow(ConnectionFactory cf, SiteGeneratorProperties properties) {
-    log.info("installing a site-generator launcher");
-    var amqpInboundAdapter = Amqp //
-        .inboundAdapter(cf, properties.getLauncher().getRequestsQueue()) //
-        .get();
-    return IntegrationFlows //
-        .from(amqpInboundAdapter) //
-        .handle(String.class, (payload, headers) -> {
-          this.generatorJob.build();
-          return null;
-        })//
-        .get();
-  }
+	@Bean
+	@ConditionalOnProperty(name = "online", havingValue = "true", matchIfMissing = true)
+	IntegrationFlow launchRequestHandlerIntegrationFlow(ConnectionFactory cf, SiteGeneratorProperties properties) {
+		log.info("installing a site-generator launcher");
+		var amqpInboundAdapter = Amqp //
+				.inboundAdapter(cf, properties.getLauncher().getRequestsQueue()) //
+				.get();
+		return IntegrationFlows //
+				.from(amqpInboundAdapter) //
+				.handle(String.class, (payload, headers) -> {
+					this.generatorJob.build();
+					return null;
+				})//
+				.get();
+	}
 
-  public static void main(String[] args) {
+	public static void main(String[] args) {
 
-    var newArgs = (args.length == 0) ? //
-        new String[]{"runtime=" + System.currentTimeMillis()} : //
-        args;
-    SpringApplication.run(SiteGeneratorApplication.class, newArgs);
-  }
+		var newArgs = (args.length == 0) ? //
+				new String[] { "runtime=" + System.currentTimeMillis() } : //
+				args;
+		SpringApplication.run(SiteGeneratorApplication.class, newArgs);
+	}
 
 }
