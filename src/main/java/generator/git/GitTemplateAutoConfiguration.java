@@ -48,7 +48,7 @@ public class GitTemplateAutoConfiguration {
 	@Bean
 	@ConditionalOnBean(Git.class)
 	@ConditionalOnMissingBean
-	@ConditionalOnProperty(name = "git.enabled", havingValue = "true")
+	@ConditionalOnProperty(name = "git.enabled", havingValue = "true", matchIfMissing = true)
 	GitTemplate gitService(Git git, PushCommandCreator commandCreator) {
 		return new DefaultGitTemplate(git, commandCreator);
 	}
