@@ -30,18 +30,17 @@
 <header class="top-bar" id="topBar">
     <div class="container-fluid">
         <div class="row">
-
-
             <div class="col-md-9">
-
-
-                <div id="ap1" data-thumb="assets/soundplugin/audioplayer/img/adg3.jpg" data-type="audio"
-                     class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir     "
-                     data-scrubbg="assets/soundplugin/audioplayer/img/dzsplugins.png"
-                     data-scrubprog="assets/soundplugin/audioplayer/img/bgminion.jpg"
-                     data-source="assets/audio/itsabeautifulday.mp3">
-                    <div class="meta-artist">
-                        <span class="the-artist">Mick Jagger - Revenge</span>
+                <div id="containerOfDataSources">
+                    <div id="ap1"
+                         data-thumb="assets/soundplugin/audioplayer/img/adg3.jpg"
+                         data-type="audio"
+                         class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir"
+                         data-scrubbg="assets/soundplugin/audioplayer/img/dzsplugins.png"
+                         data-scrubprog="assets/soundplugin/audioplayer/img/bgminion.jpg"
+                         data-source="assets/audio/itsabeautifulday.mp3"
+                    >
+                        <div class="meta-artist"><span class="the-artist">Mick Jagger - Revenge</span></div>
                     </div>
                 </div>
 
@@ -399,7 +398,7 @@
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-<script src="assets/soundplugin/audioplayer/audioplayer.js"
+<script src="assets/soundplugin/audioplayer/audioplayer.dev.js"
         type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -408,9 +407,14 @@
 <script src="assets/js/custom.js"></script>
 
 <script>
+
+    // var playerId = '.aptest-with-play';
+    var playerId = '#ap1';
+
     jQuery(document).ready(function ($) {
 
-        dzsap_init(".aptest-with-play", {
+
+        dzsap_init(playerId, {
             autoplay: "off"
             , init_each: "on"
             , disable_volume: "on"
@@ -427,16 +431,66 @@
             , skinwave_wave_mode_canvas_mode: 'reflecto' // --  light or full
             , preview_on_hover: 'off' // --  light or full
             , design_wave_color_progress: 'ff657a,ffffff' // -- light or full
-            // ,settings_php_handler:'publisher.php'
             , pcm_data_try_to_generate: 'on'
             , skinwave_comments_enable: 'off' // -- enable the comments, publisher.php must be in the same folder as this html, also if you want the comments to automatically be taken from the database remember to set skinwave_comments_retrievefromajax to ON
             , skinwave_comments_retrievefromajax: 'off'// --- retrieve the comment form ajax
             , failsafe_repair_media_element: 500 // == light or full
         });
 
-        setTimeout(function () {
-        }, 100);
+
+    })
+
+    jQuery(document).ready(function () {
+        // jQuery('#playLink').click(function () {
+        /*  <div id="ap1"
+                                 data-thumb="assets/soundplugin/audioplayer/img/adg3.jpg"
+                                 data-type="audio"
+                                 class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir"
+                                 data-scrubbg="assets/soundplugin/audioplayer/img/dzsplugins.png"
+                                 data-scrubprog="assets/soundplugin/audioplayer/img/bgminion.jpg"
+                                 data-source="assets/audio/itsabeautifulday.mp3"
+                            >
+                                <div class="meta-artist"><span class="the-artist">Mick Jagger - Revenge</span></div>
+                            </div>*/
+        var container = document.getElementById('containerOfDataSources');
+
+        function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        var mp3s = {};
+        var uris = ['itsabeautifulday.mp3', 'audiosampletest.mp3'].map(function (x) {
+            return 'http://bootifulpodcast.fm/assets/audio/' + x;
+        });
+        for (var i = 0; i < uris.length; i++) {
+            var uri = uris [i];
+            console.log('the element should be ' + uri);
+            // var d = container.createElement('div').attr('data-source' , e ) ;
+            var uid = 'data-source-' + uuidv4();
+
+            var e = $("<div></div>");
+            e.attr('data-source', e);
+            e.attr('id', uid);
+            container.append(e);
+            mp3s[uri] = uid;
+            console.log('associating ' + uid + ' to ' + e)
+        }
+
+        var mp3 = mp3s[uris[1]];
+        var mp3DS = jQuery(mp3);
+        console.log(mp3 + ' is the .mp3');
+        document.getElementById(playerId.substr(1)).api_change_media(mp3DS, {
+            type: "audio",
+            fakeplayer_is_feeder: "off"
+        });
+
+
     });
+
+
 </script>
 
 
