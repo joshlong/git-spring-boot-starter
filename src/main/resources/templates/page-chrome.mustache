@@ -138,7 +138,8 @@
                 <div class="right-cover-part">
                     <div class="caption">
                         <h1>
-                            Hi, I'm <a style="color: greenyellow ; text-shadow: none" href="http://twitter.com/starbuxman">Josh Long</a>,<br>
+                            Hi, I'm <a style="color: greenyellow ; text-shadow: none"
+                                       href="http://twitter.com/starbuxman">Josh Long</a>,<br>
                             a humble Spring developer advocate, and this is <EM>A&nbsp;Bootiful&nbsp;Podcast</EM>,
                             a celebration of the real heroes that drive ecosystems.
                         </h1>
@@ -432,7 +433,7 @@
         this.uid = (uid != null && uid !== '' && uid) ? uid : 'data-source-' + uuidv4();
         this.title = title;
         this.artist = artist;
-        this.uri = '/assets/audio/' + uri;
+        this.uri = uri;
         this.episodePhotoUri = photo;
 
         var e = $("<span><span class=\"meta-artist\"><span class=\"the-artist\"> " + artist + "</span></span></span>");
@@ -488,8 +489,9 @@
 
 
         [
-            new Podcast(null, 'Title 1', 'Artist 1', 'audiosampletest.mp3', 'assets/episode-photos/art-1.jpg'),
-            new Podcast(null, 'Title 2', 'Artist 2', 'itsabeautifulday.mp3', 'assets/episode-photos/art-2.jpg')
+            // new Podcast(null, 'Title 1', 'Artist 1', 'audiosampletest.mp3', 'assets/episode-photos/art-1.jpg'),
+            new Podcast(null, 'Title 1', 'Artist 1', 'http://Joshuas-MacBook-Pro-2019.local:8080/podcasts/2866caf8-1836-4661-9613-681ace4a6432/produced-audio', 'assets/episode-photos/art-1.jpg'),
+            new Podcast(null, 'Title 2', 'Artist 2', 'http://bootifulpodcast.fm/assets/audio/itsabeautifulday.mp3', 'assets/episode-photos/art-2.jpg')
         ]
 
                 .forEach(function (value) {
