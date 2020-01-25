@@ -180,27 +180,17 @@ img {
 
 
 
+
 header.top-bar {
-    position: fixed;
-    top: 0;
-    width: 100%;
     background: #272d35;
     height: 60px;
     line-height: 60px;
+    width: 100%;
     clear: both;
-    z-index: 99999;
+    /*overflow: hidden;*/
 }
 
-/*
-header.top-bar {
-    background: #272d35;
-    height: 60px;
-    line-height: 60px;
-    width: 100%;
-    clear: both;
-    !*overflow: hidden;*!
-}
-*/
+
 
 .podcast-bar {
     /* float:left; */

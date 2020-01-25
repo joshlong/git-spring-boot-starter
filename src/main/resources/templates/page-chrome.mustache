@@ -34,7 +34,7 @@
                 <div id="containerOfDataSources">
 
                     <div id="globalPlayerDataSource"
-                         data-thumb="assets/soundplugin/audioplayer/img/adg3.jpg"
+                         data-thumb="assets/episode-photos/art-3.jpg"
                          data-type="audio"
                          class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir"
                          data-scrubbg="assets/soundplugin/audioplayer/img/dzsplugins.png"
@@ -123,11 +123,6 @@
 
 
     <div class="cover">
-
-        <ol id="playlistLinks">
-
-
-        </ol>
 
 
         <div class="container-fluid">
@@ -244,6 +239,11 @@
 
     <div class="heading-section">
         <h5>Podcasts Archive</h5>
+
+        <ol id="playlistLinks">
+        </ol>
+
+
     </div><!-- /.heading -->
 
 
@@ -421,7 +421,7 @@
 
     var playerId = '#globalPlayerDataSource';
 
-    function Podcast(uid, title, artist, uri) {
+    function Podcast(uid, title, artist, uri, photo) {
         function uuidv4() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -434,6 +434,7 @@
         this.title = title;
         this.artist = artist;
         this.uri = '/assets/audio/' + uri;
+        this.episodePhotoUri = photo;
 
         var e = $("<span><span class=\"meta-artist\"><span class=\"the-artist\"> " + artist + "</span></span></span>");
         e.attr('data-source', this.uri);
@@ -441,7 +442,7 @@
         e.attr('data-type', 'audio');
         e.attr('data-scrubbg', 'assets/soundplugin/audioplayer/img/dzsplugins.png');
         e.attr('data-scrubprog', 'assets/soundplugin/audioplayer/img/bgminion.jpg');
-        e.attr('data-thumb', 'assets/soundplugin/audioplayer/img/adg3.jpg');
+        e.attr('data-thumb', this.episodePhotoUri);
         'aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir'.split(' ').forEach(function (clz) {
             e.addClass(clz.trim());
         });
@@ -452,7 +453,7 @@
                 type: "audio",
                 fakeplayer_is_feeder: "off"
             };
-            console.log('play(): ' + this.title + '/' + this.uri);
+            console.log('playing ' + this.title + ' with URI ' + this.uri);
             // var dataSource = jQuery(this.uid);
             document.getElementById(playerId.substr(1)).api_change_media(this.element, pargs);
         }
@@ -488,8 +489,8 @@
 
 
         [
-            new Podcast(null, 'Title 1', 'Artist 1', 'audiosampletest.mp3'),
-            new Podcast(null, 'Title 2', 'Artist 2', 'itsabeautifulday.mp3')
+            new Podcast(null, 'Title 1', 'Artist 1', 'audiosampletest.mp3', 'assets/episode-photos/art-1.jpg'),
+            new Podcast(null, 'Title 2', 'Artist 2', 'itsabeautifulday.mp3', 'assets/episode-photos/art-2.jpg')
         ]
 
                 .forEach(function (value) {
@@ -497,7 +498,6 @@
                     var uri = p.uri;
                     var a = $('<LI><a>Click to play ' + p.title + ' ' + ' by ' + p.artist + '</a></li>');
                     a.click(function () {
-                        console.log('you are trying to play ' + p.uri);
                         p.play();
                     });
                     $('#playlistLinks').append(a);
