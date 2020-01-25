@@ -21,7 +21,7 @@
     <link rel='stylesheet' type="text/css" href="assets/soundplugin/audioplayer/audioplayer.css"/>
 
     <title>
-        A Bootiful Podcast with Josh Long
+        BootifulPodcast.fm - A Bootiful Podcast with Josh Long
     </title>
 </head>
 <body>
@@ -32,7 +32,8 @@
         <div class="row">
             <div class="col-md-9">
                 <div id="containerOfDataSources">
-                    <div id="ap1"
+
+                    <div id="globalPlayerDataSource"
                          data-thumb="assets/soundplugin/audioplayer/img/adg3.jpg"
                          data-type="audio"
                          class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir"
@@ -40,8 +41,13 @@
                          data-scrubprog="assets/soundplugin/audioplayer/img/bgminion.jpg"
                          data-source="assets/audio/itsabeautifulday.mp3"
                     >
-                        <div class="meta-artist"><span class="the-artist">Mick Jagger - Revenge</span></div>
+                        <div class="meta-artist">
+                            <span class="the-artist">
+                                The Artist Name
+                            </span>
+                        </div>
                     </div>
+
                 </div>
 
             </div><!-- /.podcast bar -->
@@ -117,6 +123,13 @@
 
 
     <div class="cover">
+
+        <ol id="playlistLinks">
+
+
+        </ol>
+
+
         <div class="container-fluid">
             <div class="row">
 
@@ -394,23 +407,59 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-<script src="assets/soundplugin/audioplayer/audioplayer.dev.js"
-        type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="assets/soundplugin/audioplayer/wavesurfer.js" type="text/javascript"></script>
+<script src="assets/soundplugin/audioplayer/audioplayer.dev.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/custom.js"></script>
-
 <script>
 
-    // var playerId = '.aptest-with-play';
-    var playerId = '#ap1';
 
+    var playerId = '#globalPlayerDataSource';
+
+    function Podcast(uid, title, artist, uri) {
+        function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        var container = jQuery('#containerOfDataSources');
+        this.uid = (uid != null && uid !== '' && uid) ? uid : 'data-source-' + uuidv4();
+        this.title = title;
+        this.artist = artist;
+        this.uri = '/assets/audio/' + uri;
+
+        var e = $("<span><span class=\"meta-artist\"><span class=\"the-artist\"> " + artist + "</span></span></span>");
+        e.attr('data-source', this.uri);
+        e.attr('id', this.uid);
+        e.attr('data-type', 'audio');
+        e.attr('data-scrubbg', 'assets/soundplugin/audioplayer/img/dzsplugins.png');
+        e.attr('data-scrubprog', 'assets/soundplugin/audioplayer/img/bgminion.jpg');
+        e.attr('data-thumb', 'assets/soundplugin/audioplayer/img/adg3.jpg');
+        'aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir'.split(' ').forEach(function (clz) {
+            e.addClass(clz.trim());
+        });
+        container.append(e);
+        this.element = e;
+        this.play = function () {
+            var pargs = {
+                type: "audio",
+                fakeplayer_is_feeder: "off"
+            };
+            console.log('play(): ' + this.title + '/' + this.uri);
+            // var dataSource = jQuery(this.uid);
+            document.getElementById(playerId.substr(1)).api_change_media(this.element, pargs);
+        }
+    }
+
+
+    // init the player
     jQuery(document).ready(function ($) {
 
 
@@ -438,56 +487,21 @@
         });
 
 
-    })
+        [
+            new Podcast(null, 'Title 1', 'Artist 1', 'audiosampletest.mp3'),
+            new Podcast(null, 'Title 2', 'Artist 2', 'itsabeautifulday.mp3')
+        ]
 
-    jQuery(document).ready(function () {
-        // jQuery('#playLink').click(function () {
-        /*  <div id="ap1"
-                                 data-thumb="assets/soundplugin/audioplayer/img/adg3.jpg"
-                                 data-type="audio"
-                                 class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir"
-                                 data-scrubbg="assets/soundplugin/audioplayer/img/dzsplugins.png"
-                                 data-scrubprog="assets/soundplugin/audioplayer/img/bgminion.jpg"
-                                 data-source="assets/audio/itsabeautifulday.mp3"
-                            >
-                                <div class="meta-artist"><span class="the-artist">Mick Jagger - Revenge</span></div>
-                            </div>*/
-        var container = document.getElementById('containerOfDataSources');
-
-        function uuidv4() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-        }
-
-        var mp3s = {};
-        var uris = ['itsabeautifulday.mp3', 'audiosampletest.mp3'].map(function (x) {
-            return 'http://bootifulpodcast.fm/assets/audio/' + x;
-        });
-        for (var i = 0; i < uris.length; i++) {
-            var uri = uris [i];
-            console.log('the element should be ' + uri);
-            // var d = container.createElement('div').attr('data-source' , e ) ;
-            var uid = 'data-source-' + uuidv4();
-
-            var e = $("<div></div>");
-            e.attr('data-source', e);
-            e.attr('id', uid);
-            container.append(e);
-            mp3s[uri] = uid;
-            console.log('associating ' + uid + ' to ' + e)
-        }
-
-        var mp3 = mp3s[uris[1]];
-        var mp3DS = jQuery(mp3);
-        console.log(mp3 + ' is the .mp3');
-        document.getElementById(playerId.substr(1)).api_change_media(mp3DS, {
-            type: "audio",
-            fakeplayer_is_feeder: "off"
-        });
-
-
+                .forEach(function (value) {
+                    var p = value;
+                    var uri = p.uri;
+                    var a = $('<LI><a>Click to play ' + p.title + ' ' + ' by ' + p.artist + '</a></li>');
+                    a.click(function () {
+                        console.log('you are trying to play ' + p.uri);
+                        p.play();
+                    });
+                    $('#playlistLinks').append(a);
+                });
     });
 
 

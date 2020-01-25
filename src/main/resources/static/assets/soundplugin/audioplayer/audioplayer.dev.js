@@ -3844,17 +3844,9 @@ function register_dzsap_plugin() {
                     });
 
 
-                    // console.log(String(cthis.attr('data-source')).indexOf('https://soundcloud.com'));
-                    if (String(cthis.attr('data-source')).indexOf('https://soundcloud.com') == 0 || cthis.attr('data-source') == 'fake') {
-                        return;
-                    }
-                    if (String(cthis.attr('data-source')).indexOf('https://api.soundcloud.com') == 0) {
-                    }
-
-
-                    // console.log(' src_real_mp3 - '+src_real_mp3, src_real_mp3);
                     try {
-                        wavesurfer.load(src_real_mp3);
+                        var s = src_real_mp3 instanceof String ? src_real_mp3 : src_real_mp3.attr('data-source');
+                        wavesurfer.load(s );
                     } catch (err) {
                         console.log("WAVE SURFER NO LOAD");
                     }
