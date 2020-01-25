@@ -1,5 +1,6 @@
 package generator;
 
+import fm.bootifulpodcast.rabbitmq.RabbitMqHelper;
 import generator.batch.GeneratorJob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,10 +35,13 @@ public class SiteGeneratorApplication {
 	}
 
 	// todo
-	// @Bean
+	@Bean
 	@ConditionalOnProperty(name = "online", havingValue = "true", matchIfMissing = true)
-	IntegrationFlow launchRequestHandlerIntegrationFlow(ConnectionFactory cf, SiteGeneratorProperties properties) {
+	IntegrationFlow launchRequestHandlerIntegrationFlow(ConnectionFactory cf, SiteGeneratorProperties properties,
+			RabbitMqHelper rabbitMqHelper) {
 		log.info("installing a launch request handler integration flow...");
+		rabbitMqHelper.defineDestination(properties.getLauncher().getRequestsExchange(),
+				properties.getLauncher().getRequestsQueue(), properties.getLauncher().getRequestsRoutingKey());
 		var amqpInboundAdapter = Amqp //
 				.inboundAdapter(cf, properties.getLauncher().getRequestsQueue()) //
 				.get();
