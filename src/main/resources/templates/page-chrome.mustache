@@ -179,7 +179,7 @@
                             <h4><a href="#"> {{podcast.title}} </a></h4>
                             <P><strong> {{ dateAndTime }}</strong></P>
                             <p> {{podcast.description}} </p>
-                            <a href="#" id="top3PlayFor{{podcast.id}}" class="listen-btn clicked"><span
+                            <a href="#" id="top3-play-{{podcast.uid}}" class="listen-btn clicked"><span
                                     class="vid-icon-span"><i
                                     class="fas fa-play"></i></span>Listen
                                 Now</a>
@@ -239,12 +239,7 @@
 
     <div class="heading-section">
         <h5>Podcasts Archive</h5>
-
-        <ol id="playlistLinks">
-        </ol>
-
-
-    </div><!-- /.heading -->
+    </div>
 
 
     <div class="container-fluid">
@@ -310,9 +305,9 @@
                                             <div class="controls-episode">
                                                 <ul>
                                                     <li class="control-ep">
-                                                        <a href="">
+                                                        <a id="episode-play-{{ podcast.uid }}" href="#">
                                                             <div class="icon"><i
-                                                                    class="fas fa-pause"></i>
+                                                                                 class="fas fa-play"></i>
                                                             </div>
                                                             <span>Listening now</span>
                                                         </a>
@@ -483,11 +478,14 @@
 
         function renderPodcast(value) {
             var p = value;
-            var uri = p.uri;
-            $('#top3PlayFor' + value.id).click(function () {
+
+            $('#top3-play-' + value.uid).click(function () {
                 p.play();
             });
-            $('#playlistLinks').append(a);
+            $('#episode-play-' + value.uid).click(function () {
+                p.play();
+            })
+            // $('#playlistLinks').append(a);
         }
 
         //todo turn each of these podcasts into handlers on links in the various parts of the screen:
