@@ -397,7 +397,8 @@
 
 
     var playerId = '#globalPlayerDataSource';
-    var container = jQuery('#containerOfDataSources');
+    var containerId = '#containerOfDataSources';
+    var container = jQuery(containerId);
 
     function buildMetaArtistHtml(title) {
         return "<span class=\"meta-artist\"><span class=\"the-artist\"> " + title + "</span></span>";
