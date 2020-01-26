@@ -127,8 +127,16 @@ public class GeneratorJob {
 		});
 		years.sort(Comparator.comparing(YearRollup::getYear).reversed());
 		var pageChromeTemplate = this.properties.getTemplates().getPageChromeTemplate();
-		var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate,
-				Map.of("top3", top3, "years", years, "currentYear", DateUtils.getYearFor(new Date())));
+
+		var context = new HashMap<String, Object>();
+		context.put("top3", top3);
+		context.put("years", years);
+		context.put("currentYear", DateUtils.getYearFor(new Date()));
+		/*
+		 * allPodcasts.stream().max(this.reversed.reversed()).ifPresent(latest -> {
+		 * context.put("latest", latest); log.debug("latest: " + latest.toString()); });
+		 */
+		var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate, context);
 		var page = new File(this.properties.getOutput().getPages(), "index.html");
 		FileCopyUtils.copy(html, new FileWriter(page));
 		log.info("wrote the template to " + page.getAbsolutePath());
@@ -144,6 +152,7 @@ public class GeneratorJob {
 		objectNode.put("episodePhotoUri", pr.getPodcast().getPodbeanPhotoUri());
 		objectNode.put("dataAndTime", pr.getDateAndTime());
 		objectNode.put("episodeUri", pr.getPodcast().getPodbeanMediaUri());
+		objectNode.put("date", pr.getPodcast().getDate().getTime());
 		return objectNode;
 	}
 
