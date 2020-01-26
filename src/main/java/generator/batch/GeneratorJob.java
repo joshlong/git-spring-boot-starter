@@ -1,5 +1,7 @@
 package generator.batch;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import generator.DateUtils;
 import generator.FileUtils;
 import generator.SiteGeneratorProperties;
@@ -16,6 +18,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.ReflectionUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,16 +44,19 @@ public class GeneratorJob {
 
 	private final GitTemplate gitTemplate;
 
+	private final ObjectMapper objectMapper;
+
 	private final Resource staticAssets;
 
 	private final Comparator<PodcastRecord> reversed = Comparator
 			.comparing((Function<PodcastRecord, Date>) podcastRecord -> podcastRecord.getPodcast().getDate())
 			.reversed();
 
-	GeneratorJob(JdbcTemplate template, PodcastRowMapper podcastRowMapper, SiteGeneratorProperties properties,
-			MustacheService mustacheService, GitTemplate gitTemplate,
+	GeneratorJob(JdbcTemplate template, ObjectMapper om, PodcastRowMapper podcastRowMapper,
+			SiteGeneratorProperties properties, MustacheService mustacheService, GitTemplate gitTemplate,
 			@Value("classpath:/static") Resource staticAssets) {
 		this.template = template;
+		this.objectMapper = om;
 		this.staticAssets = staticAssets;
 		this.podcastRowMapper = podcastRowMapper;
 		this.properties = properties;
@@ -101,6 +107,12 @@ public class GeneratorJob {
 		var allPodcasts = podcastList.stream()
 				.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg", dateFormat.format(p.getDate())))
 				.collect(Collectors.toList());
+
+		var json = buildJsonForAllPodcasts(allPodcasts);
+		var jsonFile = new File(this.properties.getOutput().getPages(), "podcasts.json");
+		FileCopyUtils.copy(json, new FileWriter(jsonFile));
+		Assert.isTrue(jsonFile.exists(), "the json file '" + jsonFile.getAbsolutePath() + "' could not be created");
+
 		allPodcasts.forEach(this::downloadImageFor);
 		allPodcasts.sort(this.reversed);
 		var top3 = new ArrayList<PodcastRecord>();
@@ -122,6 +134,35 @@ public class GeneratorJob {
 		log.info("wrote the template to " + page.getAbsolutePath());
 		copyPagesIntoPlace();
 		commit();
+	}
+
+	private JsonNode jsonNodeForPodcast(PodcastRecord pr) {
+		var objectNode = objectMapper.createObjectNode();
+		objectNode.put("id", Long.toString(pr.getPodcast().getId()));
+		objectNode.put("uid", pr.getPodcast().getUid());
+		objectNode.put("title", pr.getPodcast().getTitle());
+		objectNode.put("episodePhotoUri", pr.getPodcast().getPodbeanPhotoUri());
+		objectNode.put("dataAndTime", pr.getDateAndTime());
+		objectNode.put("episodeUri", pr.getPodcast().getPodbeanMediaUri());
+		return objectNode;
+	}
+
+	private String printJsonString(JsonNode jsonNode) {
+		try {
+			var json = this.objectMapper.readValue(jsonNode.toString(), Object.class);
+			var objectWriter = this.objectMapper.writerWithDefaultPrettyPrinter();
+			return objectWriter.writeValueAsString(json);
+		}
+		catch (Exception e) {
+			ReflectionUtils.rethrowRuntimeException(e);
+		}
+		return null;
+	}
+
+	private String buildJsonForAllPodcasts(List<PodcastRecord> allPodcasts) {
+		var collect = allPodcasts.stream().map(this::jsonNodeForPodcast).collect(Collectors.toList());
+		var arrayNode = this.objectMapper.createArrayNode().addAll(collect);
+		return printJsonString(arrayNode);
 	}
 
 	@SneakyThrows

@@ -179,7 +179,7 @@
                             <h4><a href="#"> {{podcast.title}} </a></h4>
                             <P><strong> {{ dateAndTime }}</strong></P>
                             <p> {{podcast.description}} </p>
-                            <a href="#" class="listen-btn clicked"><span
+                            <a href="#" id="top3PlayFor{{podcast.id}}" class="listen-btn clicked"><span
                                     class="vid-icon-span"><i
                                     class="fas fa-play"></i></span>Listen
                                 Now</a>
@@ -421,22 +421,16 @@
 
     var playerId = '#globalPlayerDataSource';
 
-    function Podcast(uid, title, artist, uri, photo) {
-        function uuidv4() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-        }
+    function Podcast(id, uid, title, uri, photo) {
 
         var container = jQuery('#containerOfDataSources');
-        this.uid = (uid != null && uid !== '' && uid) ? uid : 'data-source-' + uuidv4();
+        this.uid = (uid != null && uid !== '' && uid) ? uid : 'data-source-' + uid;
         this.title = title;
-        this.artist = artist;
         this.uri = uri;
+        this.id = id;
         this.episodePhotoUri = photo;
 
-        var e = $("<span><span class=\"meta-artist\"><span class=\"the-artist\"> " + artist + "</span></span></span>");
+        var e = $("<span><span class=\"meta-artist\"><span class=\"the-artist\"> " + title + "</span></span></span>");
         e.attr('data-source', this.uri);
         e.attr('id', this.uid);
         e.attr('data-type', 'audio');
@@ -487,21 +481,31 @@
             , failsafe_repair_media_element: 500 // == light or full
         });
 
+        function renderPodcast(value) {
+            var p = value;
+            var uri = p.uri;
+            $('#top3PlayFor' + value.id).click(function () {
+                p.play();
+            });
+            $('#playlistLinks').append(a);
+        }
 
-        [
-            // new Podcast(null, 'Title 1', 'Artist 1', 'audiosampletest.mp3', 'assets/episode-photos/art-1.jpg'),
-            new Podcast(null, 'Title 1', 'Artist 1', 'http://Joshuas-MacBook-Pro-2019.local:8080/podcasts/2866caf8-1836-4661-9613-681ace4a6432/produced-audio', 'assets/episode-photos/art-1.jpg'),
-            new Podcast(null, 'Title 2', 'Artist 2', 'http://bootifulpodcast.fm/assets/audio/itsabeautifulday.mp3', 'assets/episode-photos/art-2.jpg')
-        ]
+        //todo turn each of these podcasts into handlers on links in the various parts of the screen:
+        // - top3
+        // - archives
+        // - most recent episode
 
-                .forEach(function (value) {
-                    var p = value;
-                    var uri = p.uri;
-                    var a = $('<LI><a>Click to play ' + p.title + ' ' + ' by ' + p.artist + '</a></li>');
-                    a.click(function () {
-                        p.play();
-                    });
-                    $('#playlistLinks').append(a);
+        fetch('/podcasts.json')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (podcasts) {
+                    console.log(podcasts);
+                    for (var i = 0; i < podcasts.length; i++) {
+                        var p = podcasts [i];
+                        var podcast = new Podcast(p.id, p.uid, p.title, p.episodeUri, p.episodePhotoUri);
+                        renderPodcast(podcast);
+                    }
                 });
     });
 
