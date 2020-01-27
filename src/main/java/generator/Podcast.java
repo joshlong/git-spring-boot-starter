@@ -1,4 +1,4 @@
-package generator.batch;
+package generator;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

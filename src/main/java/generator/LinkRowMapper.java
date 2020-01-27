@@ -1,4 +1,4 @@
-package generator.batch;
+package generator;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package generator.batch;
+package generator;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;

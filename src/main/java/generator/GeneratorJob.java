@@ -1,10 +1,7 @@
-package generator.batch;
+package generator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import generator.DateUtils;
-import generator.FileUtils;
-import generator.SiteGeneratorProperties;
 import generator.git.GitTemplate;
 import generator.templates.MustacheService;
 import lombok.Data;

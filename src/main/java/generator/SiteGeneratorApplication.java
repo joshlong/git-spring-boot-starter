@@ -1,7 +1,6 @@
 package generator;
 
 import fm.bootifulpodcast.rabbitmq.RabbitMqHelper;
-import generator.batch.GeneratorJob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
