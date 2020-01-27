@@ -578,11 +578,9 @@ nav.navbar {
 }
 
 .latest-ep-item .photo img {
-    /*width: 100%;*/
     background-color: #0a883f;
     min-height: 300px;
     max-height: 300px;
-    /*border: 1px solid red ;*/
 }
 
 .latest-ep-item .content {
