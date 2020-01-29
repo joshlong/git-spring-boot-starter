@@ -918,8 +918,8 @@ nav.navbar {
     text-transform: uppercase;
     color: #fff;
     vertical-align: middle;
-
-
+    border-radius: 100px;
+    width: 125px;
 }
 
 #newsletter .input-wrapper .submit-btn i {
