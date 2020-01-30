@@ -20,6 +20,7 @@ import org.springframework.util.ReflectionUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.net.URI;
 import java.net.URL;
 import java.time.Instant;
 import java.util.*;
@@ -148,8 +149,8 @@ public class GeneratorJob {
 		objectNode.put("title", pr.getPodcast().getTitle());
 		objectNode.put("episodePhotoUri", pr.getPodcast().getPodbeanPhotoUri());
 		objectNode.put("dataAndTime", pr.getDateAndTime());
-		objectNode.put("episodeUri", pr.getPodcast().getPodbeanMediaUri());
-		objectNode.put("date", pr.getPodcast().getDate().getTime());
+		objectNode.put("episodeUri",
+				this.properties.getApiServerUrl() + "/podcasts/" + pr.getPodcast().getUid() + "/produced-audio");
 		return objectNode;
 	}
 
