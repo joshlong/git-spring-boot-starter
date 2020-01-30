@@ -34,7 +34,7 @@ public class SiteGeneratorApplication {
 	}
 
 	// todo
-	// @Bean
+	@Bean
 	@ConditionalOnProperty(name = "online", havingValue = "true", matchIfMissing = true)
 	IntegrationFlow launchRequestHandlerIntegrationFlow(ConnectionFactory cf, SiteGeneratorProperties properties,
 			RabbitMqHelper rabbitMqHelper) {
