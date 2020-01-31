@@ -10,6 +10,8 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.eclipse.jgit.api.Git;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.NestedExceptionUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ import org.springframework.util.ReflectionUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.time.Instant;
@@ -44,6 +47,9 @@ public class GeneratorJob {
 
 	private final ObjectMapper objectMapper;
 
+	private final Resource defaultEpisodePhoto = new ClassPathResource(
+			"/static/assets/images/a-bootiful-podcast-default-square.jpg");
+
 	private final Resource staticAssets;
 
 	private final Comparator<PodcastRecord> reversed = Comparator
@@ -66,13 +72,26 @@ public class GeneratorJob {
 	private void downloadImageFor(PodcastRecord podcast) {
 		var uid = podcast.getPodcast().getUid();
 		var imagesDirectory = new File(this.properties.getOutput().getPages(), "episode-photos");
-		Assert.isTrue(imagesDirectory.mkdirs() || imagesDirectory.exists(), "the imagesDirectory ('"
-				+ imagesDirectory.getAbsolutePath() + "') does not exist and could not be created");
-		var profilePhotoUrl = new URL(
-				this.properties.getApiServerUrl().toString() + "/podcasts/" + uid + "/profile-photo");
 		var file = new File(imagesDirectory, uid + ".jpg");
+		try {
+			Assert.isTrue(imagesDirectory.mkdirs() || imagesDirectory.exists(), "the imagesDirectory ('"
+					+ imagesDirectory.getAbsolutePath() + "') does not exist and could not be created");
+			var profilePhotoUrl = new URL(
+					this.properties.getApiServerUrl().toString() + "/podcasts/" + uid + "/profile-photo");
+			this.copyInputStreamToImage(profilePhotoUrl.openStream(), file);
+		}
+		catch (Exception e) {
+			// we can't get a photo for this podcast, so we need to provide a default one.
+			log.warn(NestedExceptionUtils
+					.buildMessage("couldn't find a podcast with the UID " + podcast.getPodcast().getUid() + ".", e));
+			this.copyInputStreamToImage(this.defaultEpisodePhoto.getInputStream(), file);
+		}
+	}
+
+	@SneakyThrows
+	private void copyInputStreamToImage(InputStream in, File file) {
 		if (!file.exists()) {
-			try (var fin = profilePhotoUrl.openStream(); var fout = new FileOutputStream(file)) {
+			try (var fin = in; var fout = new FileOutputStream(file)) {
 				FileCopyUtils.copy(fin, fout);
 				log.info("the image file lives in " + file.getAbsolutePath());
 			}
