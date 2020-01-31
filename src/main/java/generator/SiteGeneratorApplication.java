@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.integration.amqp.dsl.Amqp;
 import org.springframework.integration.dsl.IntegrationFlow;
@@ -33,8 +34,8 @@ public class SiteGeneratorApplication {
 		this.generatorJob.build();
 	}
 
-	// todo
 	@Bean
+	@Profile("!ci") // this is activated _only_ if we're _not_ in the `ci` profile!
 	@ConditionalOnProperty(name = "online", havingValue = "true", matchIfMissing = true)
 	IntegrationFlow launchRequestHandlerIntegrationFlow(ConnectionFactory cf, SiteGeneratorProperties properties,
 			RabbitMqHelper rabbitMqHelper) {
