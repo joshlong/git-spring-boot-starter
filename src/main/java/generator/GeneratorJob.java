@@ -19,10 +19,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.ReflectionUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.time.Instant;
 import java.util.*;
@@ -112,8 +109,13 @@ public class GeneratorJob {
 			log.info(this.getClass().getName() + " is not enabled. Skipping...");
 			return;
 		}
+
 		var dateFormat = DateUtils.date();
 		log.info("starting the site generation @ " + dateFormat.format(new Date()));
+
+		Stream.of(Objects.requireNonNull(
+				this.properties.getOutput().getGitClone().listFiles(pathname -> !pathname.getName().equals(".git"))))
+				.forEach(FileUtils::delete);
 		Stream.of(this.properties.getOutput().getItems(), properties.getOutput().getPages()).forEach(this::reset);
 		var podcastList = this.template.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper);
 		var maxYear = podcastList.stream()//
@@ -210,7 +212,7 @@ public class GeneratorJob {
 		Arrays.asList(Objects.requireNonNull(this.staticAssets.getFile().listFiles())) //
 				.forEach(file -> {
 					FileUtils.ensureDirectoryExists(pagesFile);
-					FileUtils.copy(file, new File(pagesFile, file.getName())) ;
+					FileUtils.copy(file, new File(pagesFile, file.getName()));
 				});
 	}
 

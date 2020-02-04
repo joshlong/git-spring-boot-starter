@@ -142,16 +142,19 @@
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-12 col-12">
                 <div class="tab-nav-archieve">
-                    <ul class="nav nav-tabs" role="tablist"> {{#years}}
-                        <li><a id="{{year}}-tab" data-toggle="tab" href="#{{{year}}}-content"
-                               class="tab-pane-toggle {{yearTabClassName}}" role="tab">{{{ year }}} Episodes</a>
-                        </li> {{/years}} </ul>
+                    <ul class="nav nav-tabs" role="tablist">
+
+                        {{#years}}
+                        <li>
+                            <a id="year-{{year}}-tab" data-toggle="tab" class="tab-pane-toggle {{yearTabClassName}}" role="tab">{{{ year }}} Episodes</a>
+                        </li>
+                        {{/years}}
+
+                    </ul>
                 </div>
                 <div class="tab-content">
                     {{#years}}
-
-                        <div class="tab-pane fade show tab-pane-content {{yearTabClassName}}" id="{{year}}-content"
-                             role="tabpanel" aria-labelledby="{{year}} tab">
+                        <div class="tab-pane fade show tab-pane-content {{yearTabClassName}}" id="year-{{year}}-content" role="tabpanel" aria-labelledby="{{year}} tab">
                             {{#episodes}}
                                 <div class="podcast-episode">
                                     <div class="row">
