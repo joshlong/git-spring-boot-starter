@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
 import java.time.Instant;
 import java.util.*;
@@ -124,7 +123,6 @@ public class GeneratorJob {
 		var allPodcasts = podcastList.stream()
 				.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg", dateFormat.format(p.getDate())))
 				.collect(Collectors.toList());
-
 		var json = buildJsonForAllPodcasts(allPodcasts);
 		var jsonFile = new File(this.properties.getOutput().getPages(), "podcasts.json");
 		FileCopyUtils.copy(json, new FileWriter(jsonFile));
@@ -149,10 +147,6 @@ public class GeneratorJob {
 		context.put("top3", top3);
 		context.put("years", years);
 		context.put("currentYear", DateUtils.getYearFor(new Date()));
-		/*
-		 * allPodcasts.stream().max(this.reversed.reversed()).ifPresent(latest -> {
-		 * context.put("latest", latest); log.debug("latest: " + latest.toString()); });
-		 */
 		var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate, context);
 		var page = new File(this.properties.getOutput().getPages(), "index.html");
 		FileCopyUtils.copy(html, new FileWriter(page));
@@ -166,6 +160,7 @@ public class GeneratorJob {
 		objectNode.put("id", Long.toString(pr.getPodcast().getId()));
 		objectNode.put("uid", pr.getPodcast().getUid());
 		objectNode.put("title", pr.getPodcast().getTitle());
+		objectNode.put("date", pr.getPodcast().getDate().getTime());
 		objectNode.put("episodePhotoUri", pr.getPodcast().getPodbeanPhotoUri());
 		objectNode.put("dataAndTime", pr.getDateAndTime());
 		objectNode.put("episodeUri",
@@ -213,7 +208,10 @@ public class GeneratorJob {
 	private void copyPagesIntoPlace() {
 		var pagesFile = this.properties.getOutput().getPages();
 		Arrays.asList(Objects.requireNonNull(this.staticAssets.getFile().listFiles())) //
-				.forEach(file -> FileUtils.copy(file, new File(pagesFile, file.getName())));
+				.forEach(file -> {
+					FileUtils.ensureDirectoryExists(pagesFile);
+					FileUtils.copy(file, new File(pagesFile, file.getName())) ;
+				});
 	}
 
 	private Map<Integer, List<PodcastRecord>> getPodcastsByYear(List<PodcastRecord> podcasts) {
