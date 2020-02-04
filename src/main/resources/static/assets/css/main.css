@@ -446,29 +446,37 @@ nav.navbar {
 
 .search-nav {
     display: inline-block;
+    position: relative;
+ 
+
 }
 
 .search-btn {
     font-size: 1.25rem;
-    color: #3f444b;
-    transition: all .4 ease-in-out;
-    -webkit-transition: all .4 ease-in-out;
-    transform: scale(1);
-    -webkit-transform: scale(1);
+    color:#3f444b;
+    transition:all .4 ease-in-out;
+    -webkit-transition:all .4 ease-in-out;
+    transform:scale(1);
+    -webkit-transform:scale(1);
+    position: absolute;
+    right: 0;
+    
 }
 
 .search-btn:hover {
-    transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-    transition: all .5 ease-in-out;
-    -webkit-transition: all .5 ease-in-out;
+    color:#2b2f34;
+    
 }
 
 .search-nav input {
-    background: transparent;
+    background:transparent;
     font-size: 13px;
-    color: rgba(255, 255, 255, .5);
-    display: none;
+    color:rgba(255,255,255,.5);
+    left: 0;
+    float: left;
+    width: 200px;
+    padding:0 15px;
+    margin-top:8px; 
 }
 
 .cover-decoration-bottom {
