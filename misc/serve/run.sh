@@ -1,3 +1,2 @@
 #!/bin/bash
-
-pipenv run serve.py
+cd `dirname $0` && pipenv run serve.py 

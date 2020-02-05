@@ -14543,7 +14543,6 @@ if (window.jQuery) {
 
 window.dzsap_init = function (selector, settings) {
 
-    //console.log(selector);
     if (typeof (settings) != "undefined" && typeof (settings.init_each) != "undefined" && settings.init_each == true) {
         var element_count = 0;
         for (var e in settings) {

@@ -36,11 +36,12 @@
         <div class="row">
             <div class="col-md-9">
                 <div id="containerOfDataSources">
-                    <div id="globalPlayerDataSource"
-                         class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir"
+                    <!--<div id="globalPlayerDataSource"
+                         class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir data-source-container"
                          data-type="audio" data-scrubbg="assets/soundplugin/audioplayer/img/dzsplugins.png"
                          data-scrubprog="assets/soundplugin/audioplayer/img/bgminion.jpg"><span
                             class="meta-artist"><span class="the-artist"></span></span></div>
+                            -->
                 </div>
             </div>
             <div class="col-md-3">
@@ -70,9 +71,9 @@
             <div class="logo"><a href="index.html"><img
                     srcset='assets/images/logo-ne.png 1x, assets/images/logo-ne@2x.png 2x' alt="Josh Long"></a></div>
             <ul class="nav-menu">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Latest Episodes</a></li>
+                <li class="active"><a  href="/">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#latest-episodes">Latest Episodes</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
             <div class="search-nav">
@@ -89,7 +90,7 @@
                                                  alt="josh Long"></div>
                 </div>
                 <div class="right-cover-part">
-                    <div class="caption"><h1> Hi, I'm <a style="color: greenyellow ; text-shadow: none"
+                    <div class="caption"><a name="about"></a><h1> Hi, I'm <a style="color: greenyellow ; text-shadow: none"
                                                          href="http://twitter.com/starbuxman">Josh Long</a>,<br> a
                         humble Spring developer advocate, and this is <EM>A&nbsp;Bootiful&nbsp;Podcast</EM>, a
                         celebration of the real heroes that drive ecosystems. </h1> <a href="#latest-podcasts"
@@ -102,7 +103,7 @@
     <div class="cover-decoration-bottom"></div>
 </header>
 <section class="section" id="latest-podcasts">
-    <div class="heading-section"><h5>Latest Podcasts</h5></div>
+    <div class="heading-section"><h5> Latest Podcasts</h5><a name="latest-episodes"></a></div>
     <div class="container-fluid">
         <div class="row"> {{#top3}}
             <div class="col-md-4 col-sm-12">
@@ -118,6 +119,7 @@
     </div>
 </section>
 <section class="about">
+    <a name="about"></a>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-10 col-12"><p>Josh Long (<a target="_blank" href="http://twitter.com/starbuxman"><span

@@ -45,8 +45,7 @@ body {
 
 }
 
-.active-tab {
-    ;
+.active-tab {;
 }
 
 
@@ -283,6 +282,15 @@ header.top-bar .navbar-collapse > ul > li > a {
     margin-bottom: 5px;
 }
 
+#containerOfDataSources {
+    height: 100px;
+}
+
+.data-source-container {
+    /*display: none;*/
+    border: 1px solid red;
+}
+
 header.top-bar .navbar-collapse > ul > li > a:hover {
 
     border-bottom: 1px solid #0dac50;
@@ -447,36 +455,36 @@ nav.navbar {
 .search-nav {
     display: inline-block;
     position: relative;
- 
+
 
 }
 
 .search-btn {
     font-size: 1.25rem;
-    color:#3f444b;
-    transition:all .4 ease-in-out;
-    -webkit-transition:all .4 ease-in-out;
-    transform:scale(1);
-    -webkit-transform:scale(1);
+    color: #3f444b;
+    transition: all .4 ease-in-out;
+    -webkit-transition: all .4 ease-in-out;
+    transform: scale(1);
+    -webkit-transform: scale(1);
     position: absolute;
     right: 0;
-    
+
 }
 
 .search-btn:hover {
-    color:#2b2f34;
-    
+    color: #2b2f34;
+
 }
 
 .search-nav input {
-    background:transparent;
+    background: transparent;
     font-size: 13px;
-    color:rgba(255,255,255,.5);
+    color: rgba(255, 255, 255, .5);
     left: 0;
     float: left;
     width: 200px;
-    padding:0 15px;
-    margin-top:8px; 
+    padding: 0 15px;
+    margin-top: 8px;
 }
 
 .cover-decoration-bottom {
@@ -1025,7 +1033,8 @@ header.header-page {
 
 }
 
-.tab-pane-content {}
+.tab-pane-content {
+}
 
 header.header-page .logo {
     display: inline-block;

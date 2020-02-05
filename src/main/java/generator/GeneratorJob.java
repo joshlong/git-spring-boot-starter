@@ -98,7 +98,6 @@ public class GeneratorJob {
 	}
 
 	private void reset(File file) {
-		log.info("resetting the directory " + file.getAbsolutePath());
 		FileUtils.delete(file);
 		FileUtils.ensureDirectoryExists(file);
 	}
