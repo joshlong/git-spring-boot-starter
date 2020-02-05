@@ -288,7 +288,7 @@ header.top-bar .navbar-collapse > ul > li > a {
 
 .data-source-container {
     /*display: none;*/
-    border: 1px solid red;
+    /*border: 1px solid red;*/
 }
 
 header.top-bar .navbar-collapse > ul > li > a:hover {
