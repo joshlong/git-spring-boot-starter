@@ -108,10 +108,8 @@ public class GeneratorJob {
 			log.info(this.getClass().getName() + " is not enabled. Skipping...");
 			return;
 		}
-
 		var dateFormat = DateUtils.date();
 		log.info("starting the site generation @ " + dateFormat.format(new Date()));
-
 		Stream.of(Objects.requireNonNull(
 				this.properties.getOutput().getGitClone().listFiles(pathname -> !pathname.getName().equals(".git"))))
 				.forEach(FileUtils::delete);
@@ -128,7 +126,6 @@ public class GeneratorJob {
 		var jsonFile = new File(this.properties.getOutput().getPages(), "podcasts.json");
 		FileCopyUtils.copy(json, new FileWriter(jsonFile));
 		Assert.isTrue(jsonFile.exists(), "the json file '" + jsonFile.getAbsolutePath() + "' could not be created");
-
 		allPodcasts.forEach(this::downloadImageFor);
 		allPodcasts.sort(this.reversed);
 		var top3 = new ArrayList<PodcastRecord>();
@@ -143,7 +140,6 @@ public class GeneratorJob {
 		});
 		years.sort(Comparator.comparing(YearRollup::getYear).reversed());
 		var pageChromeTemplate = this.properties.getTemplates().getPageChromeTemplate();
-
 		var context = new HashMap<String, Object>();
 		context.put("top3", top3);
 		context.put("years", years);
