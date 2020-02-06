@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,800,900|Open+Sans:300,400,600&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="scss/framework.css">
@@ -98,9 +97,9 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#latest-podcasts">Latest Episodes</a></li>
                 <li><a href="#all-podcasts">All Episodes</a></li>
-                <!--
-                <li><a href="#">Contact</a></li>
-                -->
+                <li><a href="#podcatchers">iTunes/Google Play/Spotify</a></li>
+                <li><a href="https://www.patreon.com/joshlong">Support Us On
+                    Patreon</a></li>
             </ul>
             <div class="search-nav">
                 <!--
@@ -139,7 +138,8 @@
     <div class="cover-decoration-bottom"></div>
 </header>
 <section class="section" id="latest-podcasts">
-    <div class="heading-section"><h5> Latest Podcasts</h5><a name="latest-episodes"></a></div>
+    <div class="heading-section"><h5> Latest Podcasts</h5><a
+            name="latest-episodes"></a></div>
     <div class="container-fluid">
         <div class="row">
             {{#top3}}
@@ -198,7 +198,8 @@
 </section>
 <section class="section" id="podcasts-archive">
 
-    <div class="heading-section"><h5>All Podcasts</h5><a name="all-podcasts"></a></div>
+    <div class="heading-section"><h5>All Podcasts</h5><a
+            name="all-podcasts"></a></div>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-12 col-12">
@@ -228,21 +229,20 @@
                                                 <div class="photo-ep"><img
                                                         src="{{{ imageSrc }}}"
                                                         alt=""></div>
-                                                <div class="content-ep"><span
-                                                        class="cat-ep">Development</span>
+                                                <div class="content-ep">
+                                                    <span class="cat-ep">Development</span>
                                                     <div class="heading-episode">
                                                         <h4><a href="#"
                                                                class="active">{{{ podcast.title }}}</a>
                                                         </h4>
                                                         <button type="button"
                                                                 class="btn-light-green">
-                                                            <i
-                                                                    class="fas fa-share"></i>
-                                                            share this
+                                                            <i class="fas fa-share"></i>share
+                                                            this
                                                         </button>
                                                     </div>
-                                                    <P> {{ dateAndTime }} </P>
-                                                    <p> {{{ podcast.description }}} </p>
+                                                    <P>{{ dateAndTime }}</P>
+                                                    <p>{{{ podcast.description }}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -280,6 +280,37 @@
             </div>
         </div>
     </div>
+</section>
+<section class="section">
+
+    <div class="heading-section">
+        <h5>Listen On Your Favorite Podcatcher Platform</h5><a
+            name="podcatchers"></a>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+
+            <P>
+                You can listen to the podcast on all the usual podcast platforms including:
+            </P>
+            <ul>
+                <LI>
+                    <a href="https://podcasts.apple.com/us/podcast/a-bootiful-podcast/id1438691771?mt=2">iTunes</a>
+                </LI>
+                <LI>
+                    <a href="https://play.google.com/music/listen?u=0#/ps/I5qmmensglu6q5iwourdl2a2hcm">Google Play</a>
+                </LI>
+                <LI>
+                    <a href="https://open.spotify.com/show/5eyimRNrvZStATQk8by82A?si=iq0BzQVrSrO6XvARMiVSPg">Spotify</a>
+                </LI>
+            </ul>
+
+
+        </div>
+    </div>
+
+
 </section>
 <!--<section class="section" id="newsletter">
     <div class="container-fluid">
