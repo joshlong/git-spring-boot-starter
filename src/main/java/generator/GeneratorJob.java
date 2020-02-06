@@ -74,6 +74,7 @@ public class GeneratorJob {
 					+ imagesDirectory.getAbsolutePath() + "') does not exist and could not be created");
 			var profilePhotoUrl = new URL(
 					this.properties.getApiServerUrl().toString() + "/podcasts/" + uid + "/profile-photo");
+			log.info("downloading the image from " + profilePhotoUrl.toExternalForm());
 			this.copyInputStreamToImage(profilePhotoUrl.openStream(), file);
 		}
 		catch (Exception e) {

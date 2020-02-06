@@ -5,16 +5,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-
     $('.tab-pane-toggle').each((index, element) => {
         const id = $(element).attr('id');
         const contentDiv = id.split('-tab')[0] + '-content';
-        console.log('the id is', id, 'and the contentDiv is', contentDiv);
         $('#' + id).click(() => {
-            console.log('clicked ', id);
-        })
-        $('#' + id).click(() => {
-            console.log('clicking ', id);
             $('.tab-pane-content').hide();
             $('#' + contentDiv).show();
         });
@@ -46,7 +40,6 @@ function Podcast(id, uid, title, uri, photo) {
 
 const bootiful = {latestPodcast: null, podcasts: {}};
 
-// init the player
 $(document).ready(() => {
 
     function resetEpisodePlayStatus() {
@@ -83,21 +76,25 @@ $(document).ready(() => {
                 $('#top3-play-' + uid).click(playFunction);
                 $('#episode-play-' + uid).click(playFunction);
             });
-            console.log('there are', podcasts.length, 'podcasts')
+            console.log('there are', podcasts.length, 'podcasts');
             if (podcasts.length > 0) {
                 initializePlayerForLatest(podcasts[0]);
             }
         });
 });
 
-
-/// the following controls the playing of podcasts
-
 function getMainPlayerDataSourceId() {
     return getDataSourceElementIdFor(bootiful.latestPodcast.podcast.uid);
 }
 
 function initializePlayerForLatest(podcast) {
+    /*
+        We need ONE main data source container.
+        So, the latest one ends up being the first
+        to be initialized, and thus the one that
+        we reuse later. We note the main one in
+        the `bootiful.latestPodcast` variable.
+     */
     $('.data-source-container').hide();
     const latestTuple = bootiful.podcasts [podcast.uid];
     bootiful.latestPodcast = latestTuple;
@@ -109,22 +106,22 @@ function initializePlayerForLatest(podcast) {
         , init_each: "on"
         , disable_volume: "on"
         , skinwave_mode: 'normal'
-        , settings_backup_type: 'light' // == light or full
-        , skinwave_: 'light' // == light or full
+        , settings_backup_type: 'light'
+        , skinwave_: 'light'
         , skinwave_enableSpectrum: "off"
-        , embed_code: 'light' // == light or full
+        , embed_code: 'light'
         , skinwave_wave_mode: "canvas"
         , skinwave_wave_mode_canvas_waves_number: "3"
         , skinwave_wave_mode_canvas_waves_padding: "1"
-        , skinwave_wave_mode_canvas_reflection_size: '0' // == light or full
-        , design_color_bg: '999999,ffffff' // --  light or full
-        , skinwave_wave_mode_canvas_mode: 'reflecto' // --  light or full
-        , preview_on_hover: 'off' // --  light or full
-        , design_wave_color_progress: 'ff657a,ffffff' // -- light or full
+        , skinwave_wave_mode_canvas_reflection_size: '0'
+        , design_color_bg: '999999,ffffff'
+        , skinwave_wave_mode_canvas_mode: 'reflecto'
+        , preview_on_hover: 'off'
+        , design_wave_color_progress: 'ff657a,ffffff'
         , pcm_data_try_to_generate: 'on'
-        , skinwave_comments_enable: 'off' // -- enable the comments, publisher.php must be in the same folder as this html, also if you want the comments to automatically be taken from the database remember to set skinwave_comments_retrievefromajax to ON
-        , skinwave_comments_retrievefromajax: 'off'// --- retrieve the comment form ajax
-        , failsafe_repair_media_element: 500 // == light or full
+        , skinwave_comments_enable: 'off'
+        , skinwave_comments_retrievefromajax: 'off'
+        , failsafe_repair_media_element: 500
     });
 
     latestTuple.view.show();
@@ -152,18 +149,14 @@ function PodcastPlayerView(p) {
         return e;
     }
 
-    const containerId = 'containerOfDataSources';
-    this.container = $('#' + containerId);
+    this.container = $('#containerOfDataSources');
     this.podcast = p;
     this.uid = this.podcast.uid;
     this.dataSourceElement = buildDataSourceForPodcast(this.podcast);
     this.container.append(this.dataSourceElement);
 
-
     this.play = function () {
-        const mainPlayerDataSourceId = getMainPlayerDataSourceId();
-        // this.dataSourceElement.show();
-        document.getElementById(mainPlayerDataSourceId).api_change_media(this.dataSourceElement, {
+        document.getElementById(getMainPlayerDataSourceId()).api_change_media(this.dataSourceElement, {
             type: "audio",
             fakeplayer_is_feeder: "off"
         });
