@@ -2,28 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,800,900|Open+Sans:300,400,600&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="scss/framework.css">
     <link href="assets/icongraphy/awesomefont/css/all.min.css" rel="stylesheet">
-<!--    <link rel="stylesheet" href="assets/css/animate.css">-->
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" type="text/css" href="assets/soundplugin/audioplayer/audioplayer.css"/>
-    <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-icon-57x57.png"/>
-    <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/apple-icon-60x60.png"/>
-    <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicons/apple-icon-72x72.png"/>
-    <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/apple-icon-76x76.png"/>
-    <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicons/apple-icon-114x114.png"/>
-    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/apple-icon-120x120.png"/>
-    <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicons/apple-icon-144x144.png"/>
-    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/apple-icon-152x152.png"/>
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/apple-icon-180x180.png"/>
-    <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicons/android-icon-192x192.png"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicons/favicon-32x32.png"/>
-    <link rel="icon" type="image/png" sizes="96x96" href="/assets/images/favicons/favicon-96x96.png"/>
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicons/favicon-16x16.png"/>
+    <link rel="stylesheet" type="text/css"
+          href="assets/soundplugin/audioplayer/audioplayer.css"/>
+    <link rel="apple-touch-icon" sizes="57x57"
+          href="/assets/images/favicons/apple-icon-57x57.png"/>
+    <link rel="apple-touch-icon" sizes="60x60"
+          href="/assets/images/favicons/apple-icon-60x60.png"/>
+    <link rel="apple-touch-icon" sizes="72x72"
+          href="/assets/images/favicons/apple-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="76x76"
+          href="/assets/images/favicons/apple-icon-76x76.png"/>
+    <link rel="apple-touch-icon" sizes="114x114"
+          href="/assets/images/favicons/apple-icon-114x114.png"/>
+    <link rel="apple-touch-icon" sizes="120x120"
+          href="/assets/images/favicons/apple-icon-120x120.png"/>
+    <link rel="apple-touch-icon" sizes="144x144"
+          href="/assets/images/favicons/apple-icon-144x144.png"/>
+    <link rel="apple-touch-icon" sizes="152x152"
+          href="/assets/images/favicons/apple-icon-152x152.png"/>
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="/assets/images/favicons/apple-icon-180x180.png"/>
+    <link rel="icon" type="image/png" sizes="192x192"
+          href="/assets/images/favicons/android-icon-192x192.png"/>
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="/assets/images/favicons/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="96x96"
+          href="/assets/images/favicons/favicon-96x96.png"/>
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="/assets/images/favicons/favicon-16x16.png"/>
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
@@ -36,29 +50,37 @@
         <div class="row">
             <div class="col-md-9">
                 <div id="containerOfDataSources">
-                    <!--<div id="globalPlayerDataSource"
-                         class="aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir data-source-container"
-                         data-type="audio" data-scrubbg="assets/soundplugin/audioplayer/img/dzsplugins.png"
-                         data-scrubprog="assets/soundplugin/audioplayer/img/bgminion.jpg"><span
-                            class="meta-artist"><span class="the-artist"></span></span></div>
-                            -->
+                    <!--
+                    This container stores all the data sources for the music player which,
+                    for reasons i will never understand, need to be in DIV elements in the DOM.
+                    We dynamically create those elements using JavaScript.
+                    -->
                 </div>
             </div>
             <div class="col-md-3">
-                <button class="navbar-toggler mobile-nav-btn" type="button" data-toggle="collapse"
-                        data-target="#mobile-menu" aria-controls="mobile menu" aria-expanded="false"
+                <button class="navbar-toggler mobile-nav-btn" type="button"
+                        data-toggle="collapse"
+                        data-target="#mobile-menu" aria-controls="mobile menu"
+                        aria-expanded="false"
                         aria-label="Toggle navigation">
-                    <div class="hamburger-menu"><span></span><span></span><span></span></div>
+                    <div class="hamburger-menu">
+                        <span></span><span></span><span></span></div>
                 </button>
-                <div class="collapse navbar-collapse mobile-menu-collapse" id="mobile-menu">
+                <div class="collapse navbar-collapse mobile-menu-collapse"
+                     id="mobile-menu">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="http://twitter.com/starbuxman">Twitter
+                        <li class="nav-item"><a class="nav-link"
+                                                href="http://twitter.com/starbuxman">Twitter
                             (@starbuxman)</a></li>
-                        <li class="nav-item"><a class="nav-link" href="http://twitter.com/BootifulPodcast">Twitter
+                        <li class="nav-item"><a class="nav-link"
+                                                href="http://twitter.com/BootifulPodcast">Twitter
                             (@BootifulPodcast)</a></li>
-                        <li class="nav-item"><a class="nav-link" href="http://joshlong.com">Josh's blog </a></li>
-                        <li class="nav-item"><a class="nav-link" href="http://start.Spring.io">My second favorite place
-                            on the internet </a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="http://joshlong.com">Josh's
+                            blog</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="http://start.Spring.io">My
+                            second favorite place on the internet </a></li>
                     </ul>
                 </div>
             </div>
@@ -68,17 +90,23 @@
 <header class="header" id="header">
     <nav class="navbar">
         <div class="container-fluid">
-            <div class="logo"><a href="index.html"><img
-                    srcset='assets/images/logo-ne.png 1x, assets/images/logo-ne@2x.png 2x' alt="Josh Long"></a></div>
+            <div class="logo"><a href="/"><img
+                    srcset="assets/images/logo-ne.png 1x, assets/images/logo-ne@2x.png 2x"
+                    alt="Josh Long"></a></div>
             <ul class="nav-menu">
-                <li class="active"><a  href="/">Home</a></li>
+                <li class="active"><a href="/">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#latest-episodes">Latest Episodes</a></li>
+                <li><a href="#latest-podcasts">Latest Episodes</a></li>
+                <li><a href="#all-podcasts">All Episodes</a></li>
+                <!--
                 <li><a href="#">Contact</a></li>
+                -->
             </ul>
             <div class="search-nav">
-                <form action=""><input type="text" placeholder="type your search .."></form>
-                <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+                <!--
+                     <form action=""><input type="text" placeholder="type your search .."></form>
+                     <button type="button" class="search-btn"><i class="fas fa-search"></i></button>
+                 -->
             </div>
         </div>
     </nav>
@@ -86,16 +114,24 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="left-cover-part">
-                    <div class="josh-photo"><img srcset='assets/images/josh.png 1x, assets/images/josh@2x.png 2x'
-                                                 alt="josh Long"></div>
+                    <div class="josh-photo"><img
+                            srcset='assets/images/josh.png 1x, assets/images/josh@2x.png 2x'
+                            alt="josh Long"></div>
                 </div>
                 <div class="right-cover-part">
-                    <div class="caption"><a name="about"></a><h1> Hi, I'm <a style="color: greenyellow ; text-shadow: none"
-                                                         href="http://twitter.com/starbuxman">Josh Long</a>,<br> a
-                        humble Spring developer advocate, and this is <EM>A&nbsp;Bootiful&nbsp;Podcast</EM>, a
-                        celebration of the real heroes that drive ecosystems. </h1> <a href="#latest-podcasts"
-                                                                                       class="btn-slide minimal-btn"><i
-                            class="fas fa-angle-down"></i> view podcasts </a></div>
+                    <div class="caption"><a name="about"></a>
+                        <h1> Hi, I'm <a
+                                style="color: greenyellow ; text-shadow: none"
+                                href="http://twitter.com/starbuxman">Josh
+                            Long</a>,<br/>
+                            a humble Spring developer advocate, and this is <EM>A&nbsp;Bootiful&nbsp;Podcast</EM>,
+                            a celebration of the real heroes that drive
+                            ecosystems.
+                        </h1>
+                        <a href="#latest-podcasts"
+                           class="btn-slide minimal-btn"><i
+                                class="fas fa-angle-down"></i>view podcasts</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,88 +141,133 @@
 <section class="section" id="latest-podcasts">
     <div class="heading-section"><h5> Latest Podcasts</h5><a name="latest-episodes"></a></div>
     <div class="container-fluid">
-        <div class="row"> {{#top3}}
-            <div class="col-md-4 col-sm-12">
-                <div class="latest-ep-item">
-                    <div class="photo"><img src="{{ imageSrc}}" alt=""></div>
-                    <div class="content"><h4><a href="#"> {{podcast.title}} </a></h4>
-                        <P><strong> {{ dateAndTime }}</strong></P>
-                        <p> {{podcast.description}} </p> <a href="#" id="top3-play-{{podcast.uid}}"
-                                                            class="listen-btn clicked"><span class="vid-icon-span"><i
-                                class="fas fa-play"></i></span>Listen Now</a></div>
+        <div class="row">
+            {{#top3}}
+                <div class="col-md-4 col-sm-12">
+                    <div class="latest-ep-item">
+                        <div class="photo"><img src="{{ imageSrc}}" alt="">
+                        </div>
+                        <div class="content"><h4><a
+                                href="#"> {{podcast.title}} </a>
+                        </h4>
+                            <P><strong> {{ dateAndTime }}</strong></P>
+                            <p> {{podcast.description}} </p>
+                            <a href="#" id="top3-play-{{podcast.uid}}"
+                               class="listen-btn clicked"><span
+                                    class="vid-icon-span"><i
+                                    class="fas fa-play"></i></span>Listen
+                                Now</a>
+                        </div>
+                    </div>
                 </div>
-            </div> {{/top3}} </div>
+            {{/top3}}
+        </div>
     </div>
 </section>
 <section class="about">
     <a name="about"></a>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-10 col-12"><p>Josh Long (<a target="_blank" href="http://twitter.com/starbuxman"><span
-                    class="text-primary">@starbuxman</span></a>), the host of <EM>A Bootiful Podcast</EM>, is a Spring
+            <div class="col-md-10 col-12"><p>Josh Long (<a target="_blank"
+                                                           href="http://twitter.com/starbuxman"><span
+                    class="text-primary">@starbuxman</span></a>), the host of
+                <EM>A Bootiful Podcast</EM>, is a Spring
                 Developer Advocate at VMWare. Josh is a
-                <a target="_blank" href="https://community.oracle.com/docs/DOC-922857">Java Champion</a>, author of 6 books including <a target="_blank" href="http://CloudNativeJava.io"> <span
+                <a target="_blank"
+                   href="https://community.oracle.com/docs/DOC-922857">Java
+                    Champion</a>, author of 6 books including <a target="_blank"
+                                                                 href="http://CloudNativeJava.io"> <span
                         class="text-underline">O'Reilly's Cloud Native Java: Designing Resilient Systems with Spring Boot, Spring Cloud , and Cloud Foundry</span>
-                </a> and the upcoming <a href="http://ReactiveSpring.io" target="_blank"><span class="text-underline">Reactive Spring</span></a>)
-                and numerous best-selling video trainings (including <a target="_blank"
-                                                                        href="http://joshlong.com/livelessons.html"><span
-                        class="text-underline">Building Microservices with Spring Boot Livelessons</span></a> with
-                Spring Boot co-founder Phil Webb), and an open-source contributor (Spring Boot, Spring Integration,
+                </a> and the upcoming <a href="http://ReactiveSpring.io"
+                                         target="_blank"><span
+                        class="text-underline">Reactive Spring</span></a>)
+                and numerous best-selling video trainings (including <a
+                        target="_blank"
+                        href="http://joshlong.com/livelessons.html"><span
+                        class="text-underline">Building Microservices with Spring Boot Livelessons</span></a>
+                with
+                Spring Boot co-founder Phil Webb), and an open-source
+                contributor (Spring Boot, Spring Integration,
                 Spring Cloud, Activiti and Vaadin), a podcaster and a <a
-                        target="_blank" href="http://bit.ly/spring-tips-playlist"><span class="text-underline">screencaster</span></a>
+                        target="_blank"
+                        href="http://bit.ly/spring-tips-playlist"><span
+                        class="text-underline">screencaster</span></a>
                 .</p></div>
         </div>
     </div>
 </section>
-<section class="section" id="podcasts-archieve">
-    <div class="heading-section"><h5>Podcasts Archive</h5></div>
+<section class="section" id="podcasts-archive">
+
+    <div class="heading-section"><h5>All Podcasts</h5><a name="all-podcasts"></a></div>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-12 col-12">
-                <div class="tab-nav-archieve">
+                <div class="tab-nav-archive">
                     <ul class="nav nav-tabs" role="tablist">
 
                         {{#years}}
-                        <li>
-                            <a id="year-{{year}}-tab" data-toggle="tab" class="tab-pane-toggle {{yearTabClassName}}" role="tab">{{{ year }}} Episodes</a>
-                        </li>
+                            <li>
+                                <a id="year-{{year}}-tab" data-toggle="tab"
+                                   class="tab-pane-toggle {{yearTabClassName}}"
+                                   role="tab">{{{ year }}} Episodes</a>
+                            </li>
                         {{/years}}
 
                     </ul>
                 </div>
                 <div class="tab-content">
                     {{#years}}
-                        <div class="tab-pane fade show tab-pane-content {{yearTabClassName}}" id="year-{{year}}-content" role="tabpanel" aria-labelledby="{{year}} tab">
+                        <div class="tab-pane fade show tab-pane-content {{yearTabClassName}}"
+                             id="year-{{year}}-content" role="tabpanel"
+                             aria-labelledby="{{year}} tab">
                             {{#episodes}}
                                 <div class="podcast-episode">
                                     <div class="row">
                                         <div class="col-lg-9 col-md-8">
                                             <div class="episode-item">
-                                                <div class="photo-ep"><img src="{{{ imageSrc }}}" alt=""></div>
-                                                <div class="content-ep"><span class="cat-ep">Development</span>
-                                                    <div class="heading-episode"><h4><a href="#"
-                                                                                        class="active">{{{ podcast.title }}}</a>
-                                                    </h4>
-                                                        <button type="button" class="btn-light-green"><i
-                                                                class="fas fa-share"></i> share this
+                                                <div class="photo-ep"><img
+                                                        src="{{{ imageSrc }}}"
+                                                        alt=""></div>
+                                                <div class="content-ep"><span
+                                                        class="cat-ep">Development</span>
+                                                    <div class="heading-episode">
+                                                        <h4><a href="#"
+                                                               class="active">{{{ podcast.title }}}</a>
+                                                        </h4>
+                                                        <button type="button"
+                                                                class="btn-light-green">
+                                                            <i
+                                                                    class="fas fa-share"></i>
+                                                            share this
                                                         </button>
                                                     </div>
                                                     <P> {{ dateAndTime }} </P>
-                                                    <p> {{{ podcast.description }}} </p></div>
+                                                    <p> {{{ podcast.description }}} </p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-md-4">
                                             <div class="controls-episode">
                                                 <ul>
-                                                    <li class="control-ep"><a id="episode-play-{{ podcast.uid }}"
-                                                                              href="#">
-                                                        <div class="icon"><i class="fas fa-play"></i></div>
+                                                    <li class="control-ep"><a
+                                                            id="episode-play-{{ podcast.uid }}"
+                                                            href="#">
+                                                        <div class="icon"><i
+                                                                class="fas fa-play"></i>
+                                                        </div>
                                                         <span class="play-status"
-                                                              id="episode-play-{{ podcast.uid }}-status"></span> </a>
+                                                              id="episode-play-{{ podcast.uid }}-status"></span>
+                                                    </a>
                                                     </li>
-                                                    <li class="control-ep"><a href="">
-                                                        <div class="icon"><i class="fas fa-arrow-down"></i></div>
-                                                        <span>Download</span> </a></li>
+                                                    <!--
+                                                    <li class="control-ep"><a
+                                                              href="">
+                                                          <div class="icon"><i
+                                                                  class="fas fa-arrow-down"></i>
+                                                          </div>
+                                                          <span>Download</span>
+                                                      </a></li>
+                                                      -->
                                                 </ul>
                                             </div>
                                         </div>
@@ -200,40 +281,43 @@
         </div>
     </div>
 </section>
-<section class="section" id="newsletter">
+<!--<section class="section" id="newsletter">
     <div class="container-fluid">
         <div class="row">
             <div class="offset-lg-1 col-lg-5 col-sm-8 col-12">
-                <div class="heading-newsletter"><h3>Get notifications <br> about my next podcast</h3></div>
+                <div class="heading-newsletter"><h3>Get notifications <br> about
+                    my next podcast</h3></div>
                 <form action="">
-                    <div class="input-wrapper"><input type="email" class="form-control" id="newsletter-input"
+                    <div class="input-wrapper"><input type="email"
+                                                      class="form-control"
+                                                      id="newsletter-input"
                                                       placeholder="Email@website.com">
-                        <button class="submit-btn btn btn-primary" type="submit"><i class="far fa-paper-plane"></i> Send
+                        <button class="submit-btn btn btn-primary"
+                                type="submit"><i class="far fa-paper-plane"></i>
+                            Send
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</section>
+</section>-->
 <footer class="footer">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-4 col-sm-6"><p class="copyrights"> All rights reserved for <EM> A Bootiful Podcast </EM>
-                2019-{{currentYear}} </p></div>
-            <!--  <div class="col-md-4 col-sm-6">
-                  <ul class="social-icons">
-                      <li><a href="http://twitter.com/BootifulPodcast"><i class="fab fa-twitter"></i></a></li>
-                      <li><a href="#"><i class="fas fa-play"></i></a></li>
-                  </ul>
-              </div>-->
-            <div class="col-md-4 col-hide"><a href="#top" id="scrollTop" class="button-scroll-top"> <img
+            <div class="col-md-4 col-sm-6">
+                <p class="copyrights"> All rights reserved for <EM>A Bootiful
+                    Podcast</EM> 2019-{{currentYear}} </p>
+            </div>
+            <div class="col-md-4 col-hide"><a href="#top" id="scrollTop"
+                                              class="button-scroll-top"> <img
                     src="assets/images/scrollTop.png" alt=""> </a></div>
         </div>
     </div>
 </footer>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 <script src="assets/soundplugin/audioplayer/wavesurfer.js"></script>
 <script src="assets/soundplugin/audioplayer/audioplayer.dev.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

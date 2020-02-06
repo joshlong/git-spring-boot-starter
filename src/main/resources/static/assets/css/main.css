@@ -20,7 +20,7 @@
 2. Header
 3. Latest Podcasts
 4. About
-5. Episodes Archieve
+5. Episodes archive
 6. Newsletter
 7. Footer
 8. Secondary page template
@@ -685,33 +685,33 @@ nav.navbar {
 
 
 /* ---------------------------------------------------
-     5. Podcast Archieve
+     5. Podcast archive
 ----------------------------------------------------- */
 
-#podcasts-archieve {
+#podcasts-archive {
     padding: 100px 0;
 }
 
-#podcasts-archieve .heading-section {
+#podcasts-archive .heading-section {
     margin-bottom: 100px;
 }
 
-.tab-nav-archieve {
+.tab-nav-archive {
     margin-bottom: 50px;
 }
 
-.tab-nav-archieve ul {
+.tab-nav-archive ul {
     border-bottom: 1px solid #dddddd;
     padding-bottom: 20px;
 }
 
-.tab-nav-archieve ul li {
+.tab-nav-archive ul li {
     display: inline-block;
     margin-right: 40px;
 
 }
 
-.tab-nav-archieve ul li a {
+.tab-nav-archive ul li a {
     font-size: 14px;
     font-weight: 400;
     text-transform: uppercase;
@@ -719,15 +719,15 @@ nav.navbar {
     position: relative;
 }
 
-.tab-nav-archieve ul li a:hover {
+.tab-nav-archive ul li a:hover {
     color: #272d35;
 }
 
-.tab-nav-archieve ul li a.active {
+.tab-nav-archive ul li a.active {
     color: #0dac50;
 }
 
-.tab-nav-archieve ul li a.active:after {
+.tab-nav-archive ul li a.active:after {
     content: '';
     position: absolute;
     display: block;

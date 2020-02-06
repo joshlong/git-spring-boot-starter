@@ -25,16 +25,14 @@ $(document).ready(function () {
 
 $(document).ready(() => {
     $('.nav-link').attr('target', '_blank')
-})
+});
 
 $(document).ready(() => {
-
     $("#scrollTop, .btn-slide").click(() => {
         const destination = $(this).attr('href');
         $('html, body').stop().animate({scrollTop: $(destination).offset().top}, 700);
         return false;
     });
-
 });
 
 
@@ -47,7 +45,6 @@ function Podcast(id, uid, title, uri, photo) {
 }
 
 const bootiful = {latestPodcast: null, podcasts: {}};
-
 
 // init the player
 $(document).ready(() => {
