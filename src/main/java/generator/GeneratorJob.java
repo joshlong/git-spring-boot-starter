@@ -133,11 +133,7 @@ public class GeneratorJob {
 					.orElse(DateUtils.getYearFor(new Date()));
 			var allPodcasts = podcastList.stream()
 					.peek(pr -> this.mapOfRenderedMarkdown.put(pr.getUid(),
-							markdownService.convertMarkdownToHtml(pr.getDescription()))) // we
-																							// compute
-																							// the
-																							// HTML
-																							// once
+							markdownService.convertMarkdownToHtml(pr.getDescription()).trim()))
 					.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg",
 							dateFormat.format(p.getDate()), this.mapOfRenderedMarkdown.get(p.getUid())))
 					.collect(Collectors.toList());
