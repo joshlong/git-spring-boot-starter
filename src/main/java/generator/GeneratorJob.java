@@ -3,14 +3,17 @@ package generator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import generator.git.GitTemplate;
+import generator.templates.MarkdownService;
 import generator.templates.MustacheService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.eclipse.jetty.server.RequestLog;
 import org.eclipse.jgit.api.Git;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.NestedExceptionUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.*;
 import java.net.URL;
@@ -46,17 +50,23 @@ public class GeneratorJob {
 	private final Resource defaultEpisodePhoto = new ClassPathResource(
 			"/static/assets/images/a-bootiful-podcast-default-square.jpg");
 
+	private final Environment environment;
+
 	private final Resource staticAssets;
+
+	private final MarkdownService markdownService;
 
 	private final Comparator<PodcastRecord> reversed = Comparator
 			.comparing((Function<PodcastRecord, Date>) podcastRecord -> podcastRecord.getPodcast().getDate())
 			.reversed();
 
-	GeneratorJob(JdbcTemplate template, ObjectMapper om, PodcastRowMapper podcastRowMapper,
-			SiteGeneratorProperties properties, MustacheService mustacheService, GitTemplate gitTemplate,
-			@Value("classpath:/static") Resource staticAssets) {
+	GeneratorJob(JdbcTemplate template, MarkdownService markdownService, Environment env, ObjectMapper om,
+			PodcastRowMapper podcastRowMapper, SiteGeneratorProperties properties, MustacheService mustacheService,
+			GitTemplate gitTemplate, @Value("classpath:/static") Resource staticAssets) {
 		this.template = template;
+		this.markdownService = markdownService;
 		this.objectMapper = om;
+		this.environment = env;
 		this.staticAssets = staticAssets;
 		this.podcastRowMapper = podcastRowMapper;
 		this.properties = properties;
@@ -120,14 +130,16 @@ public class GeneratorJob {
 				.max(Comparator.comparing(Podcast::getDate))//
 				.map(podcast -> DateUtils.getYearFor(podcast.getDate()))//
 				.orElse(DateUtils.getYearFor(new Date()));
-		var allPodcasts = podcastList.stream()
-				.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg", dateFormat.format(p.getDate())))
+		var allPodcasts = podcastList
+				.stream().map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg",
+						dateFormat.format(p.getDate()), markdownService.convertMarkdownToHtml(p.getDescription())))
 				.collect(Collectors.toList());
 		var json = buildJsonForAllPodcasts(allPodcasts);
 		var jsonFile = new File(this.properties.getOutput().getPages(), "podcasts.json");
 		FileCopyUtils.copy(json, new FileWriter(jsonFile));
 		Assert.isTrue(jsonFile.exists(), "the json file '" + jsonFile.getAbsolutePath() + "' could not be created");
-		allPodcasts.forEach(this::downloadImageFor);
+		allPodcasts.parallelStream().forEach(this::downloadImageFor);
+		log.info("finished downloading...");
 		allPodcasts.sort(this.reversed);
 		var top3 = new ArrayList<PodcastRecord>();
 		for (var i = 0; i < 3 && i < allPodcasts.size(); i++) {
@@ -153,6 +165,25 @@ public class GeneratorJob {
 		commit();
 	}
 
+	private void commit() {
+		Stream//
+				.of(this.environment.getActiveProfiles())//
+				.filter(p -> p.equalsIgnoreCase("cloud"))//
+				.forEach(x -> this.gitTemplate.executeAndPush(
+						git -> Stream.of(Objects.requireNonNull(properties.getOutput().getGitClone().listFiles()))
+								.forEach(file -> add(git, file))));
+	}
+
+	@SneakyThrows
+	private void copyPagesIntoPlace() {
+		var toCopy = new ArrayList<Map<File, File>>();
+		toCopy.add(Collections.singletonMap(this.staticAssets.getFile(), this.properties.getOutput().getPages()));
+		toCopy.add(
+				Collections.singletonMap(this.properties.getOutput().getPages(), properties.getOutput().getGitClone()));
+		toCopy.forEach(it -> it.forEach((k, v) -> Stream.of(Objects.requireNonNull(k.listFiles()))
+				.forEach(f -> FileUtils.copy(f, new File(v, f.getName())))));
+	}
+
 	private JsonNode jsonNodeForPodcast(PodcastRecord pr) {
 		var objectNode = objectMapper.createObjectNode();
 		objectNode.put("id", Long.toString(pr.getPodcast().getId()));
@@ -160,6 +191,7 @@ public class GeneratorJob {
 		objectNode.put("title", pr.getPodcast().getTitle());
 		objectNode.put("date", pr.getPodcast().getDate().getTime());
 		objectNode.put("episodePhotoUri", pr.getPodcast().getPodbeanPhotoUri());
+		objectNode.put("description", pr.getPodcast().getDescription());
 		objectNode.put("dataAndTime", pr.getDateAndTime());
 		objectNode.put("episodeUri",
 				this.properties.getApiServerUrl() + "/podcasts/" + pr.getPodcast().getUid() + "/produced-audio");
@@ -185,32 +217,10 @@ public class GeneratorJob {
 	}
 
 	@SneakyThrows
-	private void commit() {
-		var gitCloneDirectory = properties.getOutput().getGitClone();
-		var pagesDirectory = properties.getOutput().getPages();
-		this.gitTemplate //
-				.executeAndPush(git -> Stream.of(Objects.requireNonNull(pagesDirectory.listFiles()))//
-						.map(fileToCopyToGitRepo -> FileUtils.copy(fileToCopyToGitRepo,
-								new File(gitCloneDirectory, fileToCopyToGitRepo.getName()))) //
-						.forEach(file -> add(git, file)));
-		log.info("committed everything");
-	}
-
-	@SneakyThrows
 	private void add(Git git, File f) {
 		git.add().addFilepattern(f.getName()).call();
 		git.commit().setMessage("adding " + f.getName() + " @ " + Instant.now().toString()).call();
 		log.info("added " + f.getAbsolutePath());
-	}
-
-	@SneakyThrows
-	private void copyPagesIntoPlace() {
-		var pagesFile = this.properties.getOutput().getPages();
-		Arrays.asList(Objects.requireNonNull(this.staticAssets.getFile().listFiles())) //
-				.forEach(file -> {
-					FileUtils.ensureDirectoryExists(pagesFile);
-					FileUtils.copy(file, new File(pagesFile, file.getName()));
-				});
 	}
 
 	private Map<Integer, List<PodcastRecord>> getPodcastsByYear(List<PodcastRecord> podcasts) {
@@ -248,5 +258,7 @@ class PodcastRecord {
 	private final Podcast podcast;
 
 	private final String imageSrc, dateAndTime;
+
+	private final String htmlDescription; // the HTML rendered from the Markdown
 
 }
