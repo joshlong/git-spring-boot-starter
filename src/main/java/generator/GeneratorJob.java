@@ -246,27 +246,3 @@ public class GeneratorJob {
 	}
 
 }
-
-@Data
-@RequiredArgsConstructor
-class YearRollup {
-
-	private final int year;
-
-	private final Collection<PodcastRecord> episodes;
-
-	private final String yearTabClassName;
-
-}
-
-@RequiredArgsConstructor
-@Data
-class PodcastRecord {
-
-	private final Podcast podcast;
-
-	private final String imageSrc, dateAndTime;
-
-	private final String htmlDescription; // the HTML rendered from the Markdown
-
-}
