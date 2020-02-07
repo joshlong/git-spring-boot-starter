@@ -188,10 +188,11 @@ public class GeneratorJob {
 	private void commit() {
 		var gitCloneDirectory = properties.getOutput().getGitClone();
 		var pagesDirectory = properties.getOutput().getPages();
-		this.gitTemplate.executeAndPush(git -> Stream
-				.of(Objects.requireNonNull(pagesDirectory.listFiles())).map(fileToCopyToGitRepo -> FileUtils
-						.copy(fileToCopyToGitRepo, new File(gitCloneDirectory, fileToCopyToGitRepo.getName())))
-				.forEach(file -> add(git, file)));
+		this.gitTemplate //
+				.executeAndPush(git -> Stream.of(Objects.requireNonNull(pagesDirectory.listFiles()))//
+						.map(fileToCopyToGitRepo -> FileUtils.copy(fileToCopyToGitRepo,
+								new File(gitCloneDirectory, fileToCopyToGitRepo.getName()))) //
+						.forEach(file -> add(git, file)));
 		log.info("committed everything");
 	}
 
