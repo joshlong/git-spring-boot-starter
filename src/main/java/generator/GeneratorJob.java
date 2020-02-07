@@ -27,6 +27,7 @@ import java.io.*;
 import java.net.URL;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -115,54 +116,63 @@ public class GeneratorJob {
 
 	@SneakyThrows
 	public void build() {
-		if (this.properties.isDisabled()) {
-			log.info(this.getClass().getName() + " is not enabled. Skipping...");
-			return;
+		try {
+			if (this.properties.isDisabled()) {
+				log.info(this.getClass().getName() + " is not enabled. Skipping...");
+				return;
+			}
+			var dateFormat = DateUtils.date();
+			log.info("starting the site generation @ " + dateFormat.format(new Date()));
+			Stream.of(Objects.requireNonNull(this.properties.getOutput().getGitClone()
+					.listFiles(pathname -> !pathname.getName().equals(".git")))).forEach(FileUtils::delete);
+			Stream.of(this.properties.getOutput().getItems(), properties.getOutput().getPages()).forEach(this::reset);
+			var podcastList = this.template.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper);
+			var maxYear = podcastList.stream()//
+					.max(Comparator.comparing(Podcast::getDate))//
+					.map(podcast -> DateUtils.getYearFor(podcast.getDate()))//
+					.orElse(DateUtils.getYearFor(new Date()));
+			var allPodcasts = podcastList.stream()
+					.peek(pr -> this.mapOfRenderedMarkdown.put(pr.getUid(),
+							markdownService.convertMarkdownToHtml(pr.getDescription()))) // we
+																							// compute
+																							// the
+																							// HTML
+																							// once
+					.map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg",
+							dateFormat.format(p.getDate()), this.mapOfRenderedMarkdown.get(p.getUid())))
+					.collect(Collectors.toList());
+			var json = buildJsonForAllPodcasts(allPodcasts);
+			var jsonFile = new File(this.properties.getOutput().getPages(), "podcasts.json");
+			FileCopyUtils.copy(json, new FileWriter(jsonFile));
+			Assert.isTrue(jsonFile.exists(), "the json file '" + jsonFile.getAbsolutePath() + "' could not be created");
+			allPodcasts.forEach(this::downloadImageFor);
+			allPodcasts.sort(this.reversed);
+			var top3 = new ArrayList<PodcastRecord>();
+			for (var i = 0; i < 3 && i < allPodcasts.size(); i++) {
+				top3.add(allPodcasts.get(i));
+			}
+			var map = this.getPodcastsByYear(allPodcasts);
+			var years = new ArrayList<YearRollup>();
+			map.forEach((year, podcasts) -> {
+				podcasts.sort(this.reversed);
+				years.add(new YearRollup(year, podcasts, year.equals(maxYear) ? "active" : ""));
+			});
+			years.sort(Comparator.comparing(YearRollup::getYear).reversed());
+			var pageChromeTemplate = this.properties.getTemplates().getPageChromeTemplate();
+			var context = new HashMap<String, Object>();
+			context.put("top3", top3);
+			context.put("years", years);
+			context.put("currentYear", DateUtils.getYearFor(new Date()));
+			var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate, context);
+			var page = new File(this.properties.getOutput().getPages(), "index.html");
+			FileCopyUtils.copy(html, new FileWriter(page));
+			log.info("wrote the template to " + page.getAbsolutePath());
+			copyPagesIntoPlace();
+			commit();
 		}
-		var dateFormat = DateUtils.date();
-		log.info("starting the site generation @ " + dateFormat.format(new Date()));
-		Stream.of(Objects.requireNonNull(
-				this.properties.getOutput().getGitClone().listFiles(pathname -> !pathname.getName().equals(".git"))))
-				.forEach(FileUtils::delete);
-		Stream.of(this.properties.getOutput().getItems(), properties.getOutput().getPages()).forEach(this::reset);
-		var podcastList = this.template.query(this.properties.getSql().getLoadPodcasts(), this.podcastRowMapper);
-		var maxYear = podcastList.stream()//
-				.max(Comparator.comparing(Podcast::getDate))//
-				.map(podcast -> DateUtils.getYearFor(podcast.getDate()))//
-				.orElse(DateUtils.getYearFor(new Date()));
-		var allPodcasts = podcastList
-				.stream().map(p -> new PodcastRecord(p, "episode-photos/" + p.getUid() + ".jpg",
-						dateFormat.format(p.getDate()), markdownService.convertMarkdownToHtml(p.getDescription())))
-				.collect(Collectors.toList());
-		var json = buildJsonForAllPodcasts(allPodcasts);
-		var jsonFile = new File(this.properties.getOutput().getPages(), "podcasts.json");
-		FileCopyUtils.copy(json, new FileWriter(jsonFile));
-		Assert.isTrue(jsonFile.exists(), "the json file '" + jsonFile.getAbsolutePath() + "' could not be created");
-		allPodcasts.parallelStream().forEach(this::downloadImageFor);
-		log.info("finished downloading...");
-		allPodcasts.sort(this.reversed);
-		var top3 = new ArrayList<PodcastRecord>();
-		for (var i = 0; i < 3 && i < allPodcasts.size(); i++) {
-			top3.add(allPodcasts.get(i));
+		finally {
+			this.mapOfRenderedMarkdown.clear();
 		}
-		var map = this.getPodcastsByYear(allPodcasts);
-		var years = new ArrayList<YearRollup>();
-		map.forEach((year, podcasts) -> {
-			podcasts.sort(this.reversed);
-			years.add(new YearRollup(year, podcasts, year.equals(maxYear) ? "active" : ""));
-		});
-		years.sort(Comparator.comparing(YearRollup::getYear).reversed());
-		var pageChromeTemplate = this.properties.getTemplates().getPageChromeTemplate();
-		var context = new HashMap<String, Object>();
-		context.put("top3", top3);
-		context.put("years", years);
-		context.put("currentYear", DateUtils.getYearFor(new Date()));
-		var html = this.mustacheService.convertMustacheTemplateToHtml(pageChromeTemplate, context);
-		var page = new File(this.properties.getOutput().getPages(), "index.html");
-		FileCopyUtils.copy(html, new FileWriter(page));
-		log.info("wrote the template to " + page.getAbsolutePath());
-		copyPagesIntoPlace();
-		commit();
 	}
 
 	private void commit() {
@@ -191,12 +201,14 @@ public class GeneratorJob {
 		objectNode.put("title", pr.getPodcast().getTitle());
 		objectNode.put("date", pr.getPodcast().getDate().getTime());
 		objectNode.put("episodePhotoUri", pr.getPodcast().getPodbeanPhotoUri());
-		objectNode.put("description", pr.getPodcast().getDescription());
+		objectNode.put("description", mapOfRenderedMarkdown.get(pr.getPodcast().getUid()));
 		objectNode.put("dataAndTime", pr.getDateAndTime());
 		objectNode.put("episodeUri",
 				this.properties.getApiServerUrl() + "/podcasts/" + pr.getPodcast().getUid() + "/produced-audio");
 		return objectNode;
 	}
+
+	private final Map<String, String> mapOfRenderedMarkdown = new ConcurrentHashMap<>();
 
 	private String printJsonString(JsonNode jsonNode) {
 		try {
