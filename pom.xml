@@ -196,4 +196,5 @@
             <url>https://cloudnativejava.jfrog.io/cloudnativejava/plugins-release</url>
         </pluginRepository>
     </pluginRepositories>
+    
 </project>
