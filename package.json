@@ -1,0 +1,27 @@
+{
+  "name": "site-generator",
+  "version": "1.0.0",
+  "description": "This generates the static site that hosts my Podcast website. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bootiful-podcast/site-generator.git"
+  },
+  "author": "Josh Long",
+  "bugs": {
+    "url": "https://github.com/bootiful-podcast/site-generator/issues"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-qunit": "*",
+    "grunt-contrib-uglify": "*",
+    "matchdep": "*"
+  },
+  "homepage": "http://BootifulPodcast.fm"
+}

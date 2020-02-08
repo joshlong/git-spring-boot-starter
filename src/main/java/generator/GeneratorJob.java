@@ -141,7 +141,7 @@ public class GeneratorJob {
 			var jsonFile = new File(this.properties.getOutput().getPages(), "podcasts.json");
 			FileCopyUtils.copy(json, new FileWriter(jsonFile));
 			Assert.isTrue(jsonFile.exists(), "the json file '" + jsonFile.getAbsolutePath() + "' could not be created");
-			allPodcasts.forEach(this::downloadImageFor);
+			allPodcasts.parallelStream().forEach(this::downloadImageFor);
 			allPodcasts.sort(this.reversed);
 			var top3 = new ArrayList<PodcastRecord>();
 			for (var i = 0; i < 3 && i < allPodcasts.size(); i++) {

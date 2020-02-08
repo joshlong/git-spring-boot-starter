@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.mobile-nav-btn').on('click', function () {
+    $('.mobile-nav-btn').on('click', () => {
         $('.hamburger-menu').toggleClass('open');
     });
 });
@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 
 $(document).ready(() => {
-    $('.nav-link').attr('target', '_blank')
+    $('.nav-link').attr('target', '_blank');
 });
 
 $(document).ready(() => {
@@ -56,7 +56,6 @@ $(document).ready(() => {
                 return b.date - a.date;
             });
             podcasts.forEach((p) => {
-
                 const uid = p.uid;
                 const podcastObj = new Podcast(p.id, p.uid, p.title, p.episodeUri, p.episodePhotoUri);
                 bootiful.podcasts[p.uid] = {
@@ -64,7 +63,6 @@ $(document).ready(() => {
                     view: new PodcastPlayerView(podcastObj)
                 };
                 const it = bootiful.podcasts[uid];
-
                 const playFunction = (e) => {
                     const theViewForPodcast = it.view;
                     theViewForPodcast.show();
@@ -96,7 +94,7 @@ function initializePlayerForLatest(podcast) {
         the `bootiful.latestPodcast` variable.
      */
     $('.data-source-container').hide();
-    const latestTuple = bootiful.podcasts [podcast.uid];
+    const latestTuple = bootiful.podcasts[podcast.uid];
     bootiful.latestPodcast = latestTuple;
     const mainPlayerDataSourceId = getMainPlayerDataSourceId();
     console.log('the main player ID is', mainPlayerDataSourceId, 'for podcast title', bootiful.latestPodcast.podcast.title);
@@ -143,7 +141,7 @@ function PodcastPlayerView(p) {
         e.attr('data-scrubbg', 'assets/soundplugin/audioplayer/img/dzsplugins.png');
         e.attr('data-scrubprog', 'assets/soundplugin/audioplayer/img/bgminion.jpg');
         e.attr('data-thumb', podcast.episodePhotoUri);
-        'aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir data-source-container'.split(' ').forEach(function (clz) {
+        'aptest-with-play skin-wave-mode-small audioplayer-tobe skin-wave button-aspect-noir data-source-container'.split(' ').forEach((clz) => {
             e.addClass(clz.trim());
         });
         return e;
@@ -166,5 +164,4 @@ function PodcastPlayerView(p) {
         console.log('showing (' + this.uid + ')');
         this.dataSourceElement.show();
     };
-
 }
