@@ -4,19 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,800,900|Open+Sans:300,400,600&display=swap" rel="stylesheet">
-<!--
-    <link rel="stylesheet" href="grunt/css/framework.css" type="text/css">
-    <link rel="stylesheet" href="grunt/css/all.css" type="text/css">
-    <link rel="stylesheet" href="grunt/css/main.css" type="text/css">
-    <link rel="stylesheet" href="grunt/css/responsive.css" type="text/css">
-    <link rel="stylesheet" href="grunt/css/audioplayer.css" type="text/css"/>
-
--->
-    <link rel="stylesheet" href="grunt/site.min.css" type="text/css"/>
-
-
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,800,900|Open+Sans:300,400,600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/grunt/css/site.min.css" type="text/css"/>
     <link rel="apple-touch-icon" sizes="57x57"
           href="/assets/images/favicons/apple-icon-57x57.png"/>
     <link rel="apple-touch-icon" sizes="60x60"
@@ -57,8 +47,8 @@
                 <div id="containerOfDataSources">
                     <!--
                     This container stores all the data sources for the music player which,
-                    for reasons i will never understand, need to be in DIV elements in the DOM.
-                    We dynamically create those elements using JavaScript.
+                    for reasons I will never understand, need to be in DIV elements in the DOM.
+                    I dynamically create those elements using JavaScript based on loaded data.
                     -->
                 </div>
             </div>
@@ -349,12 +339,15 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-<script src="assets/soundplugin/audioplayer/wavesurfer.js"></script>
-<script src="assets/soundplugin/audioplayer/audioplayer.dev.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
+
+<script src="assets/soundplugin/audioplayer/wavesurfer.js"></script>
+<script src="assets/soundplugin/audioplayer/audioplayer.dev.js"></script>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/custom.js"></script>
+
 </body>
 </html>

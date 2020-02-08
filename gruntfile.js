@@ -1,12 +1,9 @@
 module.exports = function (grunt) {
 
-    var cssRoot = 'src/main/resources/static/grunt/css';
-    var cssFiles = ['framework.css', 'all.css', 'main.css', 'responsive.css', 'audioplayer.css'];
-    for (let i = 0; i < cssFiles.length; i++) {
-        cssFiles [i] = cssRoot + '/' + cssFiles [i];
-    }
-    console.log(cssFiles);
-
+    var cssFiles = ['framework.css', 'all.css', 'main.css', 'responsive.css', 'audioplayer.css'].map((fileName) => {
+        return 'src/main/resources/static/grunt/css' + '/' + fileName;
+    });
+    console.log ('going to minify the following .CSS files', cssFiles);
 
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
@@ -16,11 +13,8 @@ module.exports = function (grunt) {
         ),
         cssmin: {
             sitecss: {
-                // options: {
-                //     banner: '/* My minified css file */'
-                // },
                 files: {
-                    'target/css/site.min.css': cssFiles
+                    'src/main/resources/static/grunt/css/site.min.css': cssFiles
                 }
             }
         },
@@ -61,8 +55,6 @@ module.exports = function (grunt) {
             }
         }*/
     });
-
-
 
 
     grunt.registerTask('default', [/*'uglify', */'cssmin']);
