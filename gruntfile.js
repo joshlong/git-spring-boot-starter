@@ -13,7 +13,7 @@ module.exports = function (grunt) {
 
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
-    let buildRoot = 'src/main/resources/static/processed/';
+    let buildRoot = 'src/main/resources/static/assets/';
     let cssBuild = buildRoot + '/css/site.min.css';
     let jsBuild = buildRoot + '/js/site.min.js';
 
