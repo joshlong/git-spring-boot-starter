@@ -5,7 +5,7 @@ module.exports = function (grunt) {
         return 'src/main/resources/static/' + fileName;
     });
     let cssFiles = ['framework.css', 'all.css', 'main.css', 'responsive.css', 'audioplayer.css'].map((fileName) => {
-        return 'src/main/resources/static/grunt/css/' + fileName;
+        return 'src/main/resources/static/assets/css/' + fileName;
     });
 
     console.log('going to minify the following .CSS files', cssFiles);
@@ -13,19 +13,24 @@ module.exports = function (grunt) {
 
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
+    let buildRoot = 'src/main/resources/static/processed/';
+    let cssBuild = buildRoot + '/css/site.min.css';
+    let jsBuild = buildRoot + '/js/site.min.js';
+
+    let cssConfig = {};
+    cssConfig [cssBuild] = cssFiles;
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         cssmin: {
             sitecss: {
-                files: {
-                    'src/main/resources/static/grunt/css/site.min.css': cssFiles
-                }
+                files: cssConfig
             }
         },
         concat: {
             dev: {
                 src: jsFiles,
-                dest: 'src/main/resources/static/grunt/js/site.min.js'
+                dest: jsBuild
             },
         }
     });
