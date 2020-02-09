@@ -1,8 +1,7 @@
 module.exports = function (grunt) {
 
-    let jsFiles = ['/assets/soundplugin/audioplayer/wavesurfer.js', '/assets/soundplugin/audioplayer/audioplayer.dev.js',
-        '/bootstrap/dist/js/bootstrap.min.js', '/assets/js/custom.js'].map((fileName) => {
-        return 'src/main/resources/static/' + fileName;
+    let jsFiles = ['wavesurfer.js', 'audioplayer.dev.js', 'bootstrap.js', 'custom.js'].map((fileName) => {
+        return 'src/main/resources/static/assets/js/' + fileName;
     });
     let cssFiles = ['framework.css', 'all.css', 'main.css', 'responsive.css', 'audioplayer.css'].map((fileName) => {
         return 'src/main/resources/static/assets/css/' + fileName;
