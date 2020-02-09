@@ -109,9 +109,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="left-cover-part">
-                    <div class="josh-photo"><img
-                            srcset='assets/images/josh.webp 1x, assets/images/josh@2x.webp 2x'
-                            alt="josh Long"></div>
+                    <div class="josh-photo">
+                        <img srcset="assets/images/josh.webp 1x, assets/images/josh@2x.webp 2x"
+                             alt="josh Long"
+                        />
+                    </div>
                 </div>
                 <div class="right-cover-part">
                     <div class="caption"><a name="about"></a>
@@ -223,9 +225,11 @@
                                     <div class="row">
                                         <div class="col-lg-9 col-md-8">
                                             <div class="episode-item">
-                                                <div class="photo-ep"><img
-                                                        src="{{{ imageSrc }}}"
-                                                        alt=""></div>
+                                                <div class="photo-ep" id="delayed-image-{{ podcast.uid }}">
+                                                <!--
+                                                    <img src="{{{ imageSrc }}}" alt="" />
+                                                -->
+                                                </div>
                                                 <div class="content-ep">
                                                     <span class="cat-ep">Development</span>
                                                     <div class="heading-episode">

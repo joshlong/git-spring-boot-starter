@@ -73,6 +73,10 @@ $(document).ready(() => {
                 };
                 $('#top3-play-' + uid).click(playFunction);
                 $('#episode-play-' + uid).click(playFunction);
+
+                // let's setup the images asynchronously
+                $('#delayed-image-' + uid).append($('<img src="' + podcastObj.episodePhotoUri + '"/>'));
+                console.log('render delayed image: ' + podcastObj.episodePhotoUri);
             });
             console.log('there are', podcasts.length, 'podcasts');
             if (podcasts.length > 0) {
