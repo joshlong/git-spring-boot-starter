@@ -55,6 +55,8 @@ public class GeneratorJob {
 
 	private final Resource staticAssets;
 
+	private final Map<String, String> mapOfRenderedMarkdown = new ConcurrentHashMap<>();
+
 	private final MarkdownService markdownService;
 
 	private final Comparator<PodcastRecord> reversed = Comparator
@@ -186,8 +188,8 @@ public class GeneratorJob {
 		toCopy.add(Collections.singletonMap(this.staticAssets.getFile(), this.properties.getOutput().getPages()));
 		toCopy.add(
 				Collections.singletonMap(this.properties.getOutput().getPages(), properties.getOutput().getGitClone()));
-		toCopy.forEach(it -> it.forEach((k, v) -> Stream.of(Objects.requireNonNull(k.listFiles()))
-				.forEach(f -> FileUtils.copy(f, new File(v, f.getName())))));
+		toCopy.forEach(it -> it.forEach((from, to) -> Stream.of(Objects.requireNonNull(from.listFiles()))
+				.forEach(f -> FileUtils.copy(f, new File(to, f.getName())))));
 	}
 
 	private JsonNode jsonNodeForPodcast(PodcastRecord pr) {
@@ -203,8 +205,6 @@ public class GeneratorJob {
 				this.properties.getApiServerUrl() + "/podcasts/" + pr.getPodcast().getUid() + "/produced-audio");
 		return objectNode;
 	}
-
-	private final Map<String, String> mapOfRenderedMarkdown = new ConcurrentHashMap<>();
 
 	private String printJsonString(JsonNode jsonNode) {
 		try {
