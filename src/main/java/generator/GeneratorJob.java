@@ -177,6 +177,7 @@ public class GeneratorJob {
 		Stream//
 				.of(this.environment.getActiveProfiles())//
 				.filter(p -> p.equalsIgnoreCase("cloud"))//
+				.peek(profile -> log.info("running with " + profile + " active. Going to commit everything to Github"))
 				.forEach(x -> this.gitTemplate.executeAndPush(
 						git -> Stream.of(Objects.requireNonNull(properties.getOutput().getGitClone().listFiles()))
 								.forEach(file -> add(git, file))));
