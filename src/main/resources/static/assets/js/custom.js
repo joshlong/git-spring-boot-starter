@@ -16,6 +16,12 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(() => {
+    $('#scrollTop').click(() => {
+        window.scrollTo(window.scrollX, 0);
+        return false;
+    });
+});
 
 $(document).ready(() => {
     $('.nav-link').attr('target', '_blank');
@@ -133,7 +139,6 @@ function getDataSourceElementIdFor(uid) {
 
 function PodcastPlayerView(p) {
 
-
     function buildDataSourceForPodcast(podcast) {
         var e = $("<div><span class=\"meta-artist\"><span class=\"the-artist\"> " + podcast.title + "</span></span></div>");
         e.attr('data-source', podcast.uri);
@@ -166,3 +171,4 @@ function PodcastPlayerView(p) {
         this.dataSourceElement.show();
     };
 }
+
