@@ -14,26 +14,32 @@ module.exports = function (grunt) {
 
     let buildRoot = 'src/main/resources/static/assets/';
     let cssBuild = buildRoot + '/css/site.min.css';
-    let jsBuild = buildRoot + '/js/site.min.js';
+    let concatJsBuild = 'target/concat.js';
+    let finalJsBuild = buildRoot + '/js/site.min.js';
 
     let cssConfig = {};
     cssConfig [cssBuild] = cssFiles;
 
+    let terserConfig = {};
+    terserConfig[finalJsBuild] = [concatJsBuild];
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         cssmin: {
-            sitecss: {
-                files: cssConfig
-            }
+            sitecss: {files: cssConfig}
         },
         concat: {
             dev: {
                 src: jsFiles,
-                dest: jsBuild
+                dest: concatJsBuild
             },
-        }
+        },
+        terser: {
+            options: {},
+            main: {files: terserConfig}
+        },
     });
 
 
-    grunt.registerTask('default', ['concat:dev', 'cssmin']);
+    grunt.registerTask('default', ['concat:dev', 'terser:main', 'cssmin']);
 };

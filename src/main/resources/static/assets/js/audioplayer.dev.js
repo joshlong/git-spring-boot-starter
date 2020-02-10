@@ -244,115 +244,207 @@ function register_dzsap_plugin() {
         $.fn.audioplayer = function (o) {
             var defaults = {
                 design_skin: 'skin-default' // -- the skin of the player - can be set from the html as well
-                , autoplay: 'off' // -- autoplay the track ( only works is cue is set to "on"
-                , call_from: 'default' // -- call from a specific api
-                , autoplay_on_scrub_click: 'off' // -- autoplay the track ( only works is cue is set to "on"
-                , cue: 'on' // this chooses wheter "on" or not "off" a part .. what part is decided by the preload_method below
-                , preload_method: 'metadata' // -- "none" or "metadata" or "auto" ( whole track )
-                , loop: 'off' // -- loop the track
-                , pause_method: 'pause' // -- loop the track
+                ,
+                autoplay: 'off' // -- autoplay the track ( only works is cue is set to "on"
+                ,
+                call_from: 'default' // -- call from a specific api
+                ,
+                autoplay_on_scrub_click: 'off' // -- autoplay the track ( only works is cue is set to "on"
+                ,
+                cue: 'on' // this chooses wheter "on" or not "off" a part .. what part is decided by the preload_method below
+                ,
+                preload_method: 'metadata' // -- "none" or "metadata" or "auto" ( whole track )
+                ,
+                loop: 'off' // -- loop the track
+                ,
+                pause_method: 'pause' // -- loop the track
 
 
-                , settings_extrahtml: '' // -- some extra html - can be rates, plays, likes
-                , settings_extrahtml_after_artist: '' // -- some extra html after the artist
-                , settings_extrahtml_in_float_left: '' // -- some extra html that you may want to add inside the player, to the right
-                , settings_extrahtml_in_float_right: '' // -- some extra html that you may want to add inside the player, to the right -- .extra-html-in-controls-right
-                , settings_extrahtml_before_play_pause: '' // -- some extra html that you may want before play button
-                , settings_extrahtml_after_play_pause: '' // -- some extra html that you may want after play button
+                ,
+                settings_extrahtml: '' // -- some extra html - can be rates, plays, likes
+                ,
+                settings_extrahtml_after_artist: '' // -- some extra html after the artist
+                ,
+                settings_extrahtml_in_float_left: '' // -- some extra html that you may want to add inside the player, to the right
+                ,
+                settings_extrahtml_in_float_right: '' // -- some extra html that you may want to add inside the player, to the right -- .extra-html-in-controls-right
+                ,
+                settings_extrahtml_before_play_pause: '' // -- some extra html that you may want before play button
+                ,
+                settings_extrahtml_after_play_pause: '' // -- some extra html that you may want after play button
 
-                , settings_trigger_resize: '0' // -- check the player dimensions every x milli seconds
-                , design_thumbh: "default" //thumbnail size
-                , extra_classes_player: ''
-                , disable_volume: 'default'
-                , disable_scrub: 'default'
-                , disable_timer: 'default' // -- disable timer display
-                , disable_player_navigation: 'off'
-                , scrub_show_scrub_time: 'on'
-                , player_navigation: 'default' // -- auto decide if we need player navigation
-                , type: 'audio'
-                , enable_embed_button: 'off' // -- enable the embed button
-                , embed_code: '' // -- embed code
-                , skinwave_dynamicwaves: 'off' // -- dynamic scale based on volume for no spectrum wave
-                , soundcloud_apikey: '' // -- set the sound cloud api key
-                , parentgallery: null // -- the parent gallery of the player
-                , skinwave_enableSpectrum: 'off' // off or on
-                , skinwave_enableReflect: 'on'  // -- (deprecated)
-                , skinwave_place_thumb_after_volume: 'off' // -- place the thumbnail after volume button
-                , skinwave_place_metaartist_after_volume: 'off' // -- place metaartist after volume button
-                , settings_useflashplayer: 'auto' // off or on or auto
-                , skinwave_spectrummultiplier: '1' // -- (deprecated) number
-                , settings_php_handler: '' // -- the path of the publisher.php file, this is used to handle comments, likes etc.
-                , php_retriever: 'soundcloudretriever.php' // -- the soundcloud php file used to render soundcloud files
-                , skinwave_mode: 'normal' // --- "normal" or "small" or "alternate"
-                , skinwave_wave_mode: 'canvas' // --- "normal" or "canvas" or "line"
-                , skinwave_wave_mode_canvas_mode: 'normal' // --- "normal" or "reflecto"
-                , skinwave_wave_mode_canvas_normalize: 'on' // --- normalize wave to look more natural
-                , skinwave_wave_mode_canvas_waves_number: '3' // --- the number of waves in the canvas
-                , skinwave_wave_mode_canvas_waves_padding: '1' // --- padding between waves
-                , skinwave_wave_mode_canvas_reflection_size: '0.25' // --- the reflection size
+                ,
+                settings_trigger_resize: '0' // -- check the player dimensions every x milli seconds
+                ,
+                design_thumbh: "default" //thumbnail size
+                ,
+                extra_classes_player: ''
+                ,
+                disable_volume: 'default'
+                ,
+                disable_scrub: 'default'
+                ,
+                disable_timer: 'default' // -- disable timer display
+                ,
+                disable_player_navigation: 'off'
+                ,
+                scrub_show_scrub_time: 'on'
+                ,
+                player_navigation: 'default' // -- auto decide if we need player navigation
+                ,
+                type: 'audio'
+                ,
+                enable_embed_button: 'off' // -- enable the embed button
+                ,
+                embed_code: '' // -- embed code
+                ,
+                skinwave_dynamicwaves: 'off' // -- dynamic scale based on volume for no spectrum wave
+                ,
+                soundcloud_apikey: '' // -- set the sound cloud api key
+                ,
+                parentgallery: null // -- the parent gallery of the player
+                ,
+                skinwave_enableSpectrum: 'off' // off or on
+                ,
+                skinwave_enableReflect: 'on'  // -- (deprecated)
+                ,
+                skinwave_place_thumb_after_volume: 'off' // -- place the thumbnail after volume button
+                ,
+                skinwave_place_metaartist_after_volume: 'off' // -- place metaartist after volume button
+                ,
+                settings_useflashplayer: 'auto' // off or on or auto
+                ,
+                skinwave_spectrummultiplier: '1' // -- (deprecated) number
+                ,
+                settings_php_handler: '' // -- the path of the publisher.php file, this is used to handle comments, likes etc.
+                ,
+                php_retriever: 'soundcloudretriever.php' // -- the soundcloud php file used to render soundcloud files
+                ,
+                skinwave_mode: 'normal' // --- "normal" or "small" or "alternate"
+                ,
+                skinwave_wave_mode: 'canvas' // --- "normal" or "canvas" or "line"
+                ,
+                skinwave_wave_mode_canvas_mode: 'normal' // --- "normal" or "reflecto"
+                ,
+                skinwave_wave_mode_canvas_normalize: 'on' // --- normalize wave to look more natural
+                ,
+                skinwave_wave_mode_canvas_waves_number: '3' // --- the number of waves in the canvas
+                ,
+                skinwave_wave_mode_canvas_waves_padding: '1' // --- padding between waves
+                ,
+                skinwave_wave_mode_canvas_reflection_size: '0.25' // --- the reflection size
 
-                , pcm_data_try_to_generate: 'off' // --- try to find out the pcm data and sent it via ajax ( maybe send it via php_handler
-                , pcm_data_try_to_generate_wait_for_real_pcm: 'off' // -- if set to on, the fake pcm data will not be generated
-                , pcm_notice: 'off' // --- show a notice for pcm
-                , notice_no_media: 'on' // --- show a notice for pcm
+                ,
+                pcm_data_try_to_generate: 'off' // --- try to find out the pcm data and sent it via ajax ( maybe send it via php_handler
+                ,
+                pcm_data_try_to_generate_wait_for_real_pcm: 'off' // -- if set to on, the fake pcm data will not be generated
+                ,
+                pcm_notice: 'off' // --- show a notice for pcm
+                ,
+                notice_no_media: 'on' // --- show a notice for pcm
 
-                , skinwave_comments_links_to: '' // -- clicking the comments bar will lead to this link ( optional )
-                , skinwave_comments_enable: 'off' // -- enable the comments, publisher.php must be in the same folder as this html
+                ,
+                skinwave_comments_links_to: '' // -- clicking the comments bar will lead to this link ( optional )
+                ,
+                skinwave_comments_enable: 'off' // -- enable the comments, publisher.php must be in the same folder as this html
                 // ,skinwave_comments_mode: 'inner-field' // -- inner-field or outer-field ( no use right now )
-                , skinwave_comments_mode_outer_selector: '' // -- the outer selector if it has one
-                , skinwave_comments_playerid: '',
+                ,
+                skinwave_comments_mode_outer_selector: '' // -- the outer selector if it has one
+                ,
+                skinwave_comments_playerid: '',
                 skinwave_comments_account: 'none',
                 skinwave_comments_process_in_php: 'on' // -- select wheter the comment text should be processed in javascript "off" / or in php, later "on"
-                , mobile_delete: "off" // -- delete the whole player on mobile, useful for unwanted footer players in mobile
-                , footer_btn_playlist: "off" // -- disable feeding to other players on mobile
-                , mobile_disable_fakeplayer: "off" // -- disable feeding to other players on mobile
-                , skinwave_comments_retrievefromajax: 'off' // --- retrieve the comment form ajax
-                , skinwave_preloader_code: 'default' // --- retrieve the comment form ajax
-                , skinwave_comments_displayontime: 'on' // --- display the comment when the scrub header is over it
-                , skinwave_comments_avatar: 'http://www.gravatar.com/avatar/00000000000000000000000000000000?s=20' // -- default image
-                , skinwave_comments_allow_post_if_not_logged_in: 'on' // -- allow posting in comments section if not looged in, to be logged in, skinwave_comments_account must be an account id
+                ,
+                mobile_delete: "off" // -- delete the whole player on mobile, useful for unwanted footer players in mobile
+                ,
+                footer_btn_playlist: "off" // -- disable feeding to other players on mobile
+                ,
+                mobile_disable_fakeplayer: "off" // -- disable feeding to other players on mobile
+                ,
+                skinwave_comments_retrievefromajax: 'off' // --- retrieve the comment form ajax
+                ,
+                skinwave_preloader_code: 'default' // --- retrieve the comment form ajax
+                ,
+                skinwave_comments_displayontime: 'on' // --- display the comment when the scrub header is over it
+                ,
+                skinwave_comments_avatar: 'http://www.gravatar.com/avatar/00000000000000000000000000000000?s=20' // -- default image
+                ,
+                skinwave_comments_allow_post_if_not_logged_in: 'on' // -- allow posting in comments section if not looged in, to be logged in, skinwave_comments_account must be an account id
 
-                , skinwave_timer_static: 'off'
-                , default_volume: 'default' // -- number / set the default volume 0-1 or "last" for the last known volume
-                , volume_from_gallery: '' // -- the volume set from the gallery item select, leave blank if the player is not called from the gallery
-                , design_menu_show_player_state_button: 'off' // -- show a button that allows to hide or show the menu
+                ,
+                skinwave_timer_static: 'off'
+                ,
+                default_volume: 'default' // -- number / set the default volume 0-1 or "last" for the last known volume
+                ,
+                volume_from_gallery: '' // -- the volume set from the gallery item select, leave blank if the player is not called from the gallery
+                ,
+                design_menu_show_player_state_button: 'off' // -- show a button that allows to hide or show the menu
                 ,
                 playfrom: 'off' //off or specific number of settings or set to "last"
-                , design_animateplaypause: 'default'
-                , embedded: 'off' // // -- if embedded in a iframe
-                , embedded_iframe_id: '' // // -- if embedded in a iframe, specify the iframe id here
-                , sample_time_start: '' // --- if this is a sample to a complete song, you can write here start times, if not, leave to 0.
-                , sample_time_end: '' // -- if this is a sample to a complete song, you can write here start times, if not, leave to 0.
-                , sample_time_total: '' // -- if this is a sample to a complete song, you can write here start times, if not, leave to 0.
+                ,
+                design_animateplaypause: 'default'
+                ,
+                embedded: 'off' // // -- if embedded in a iframe
+                ,
+                embedded_iframe_id: '' // // -- if embedded in a iframe, specify the iframe id here
+                ,
+                sample_time_start: '' // --- if this is a sample to a complete song, you can write here start times, if not, leave to 0.
+                ,
+                sample_time_end: '' // -- if this is a sample to a complete song, you can write here start times, if not, leave to 0.
+                ,
+                sample_time_total: '' // -- if this is a sample to a complete song, you can write here start times, if not, leave to 0.
                 ,
                 google_analytics_send_play_event: 'off' // -- send the play event to google analytics, you need to have google analytics script already on your page
-                , fakeplayer: null // -- if this is a fake player, it will feed
-                , failsafe_repair_media_element: '' // -- some scripts might effect the media element used by zoomsounds, this is how we replace the media element in a certain time
-                , action_audio_play: null // -- set a outer play function ( for example for tracking your analytics )
-                , action_audio_play2: null // -- set a outer play function ( for example for tracking your analytics )
-                , action_audio_pause: null // -- set a outer play function ( for example for tracking your analytics )
-                , action_audio_end: null // -- set a outer ended function ( for example for tracking your analytics )
-                , action_audio_comment: null // -- set a outer commented function ( for example for tracking your analytics )
-                , action_received_time_total: null // -- event triggers at receiving time total
-                , action_audio_change_media: null // -- set a outer on change track function
-                , action_audio_loaded_metadata: null // -- set a outer commented function ( for example for tracking your analytics )
-                , action_video_contor_60secs: null // -- fire every 30s
-                , type_audio_stop_buffer_on_unfocus: 'off' // -- if set to on, when the audio player goes out of focus, it will unbuffer the file so that it will not load anymore, useful if you want to stop buffer on large files
-                , construct_player_list_for_sync: 'off' // -- construct a player list from the page that features single players playing one after another. searches for the .is-single-player class in the DOM
+                ,
+                fakeplayer: null // -- if this is a fake player, it will feed
+                ,
+                failsafe_repair_media_element: '' // -- some scripts might effect the media element used by zoomsounds, this is how we replace the media element in a certain time
+                ,
+                action_audio_play: null // -- set a outer play function ( for example for tracking your analytics )
+                ,
+                action_audio_play2: null // -- set a outer play function ( for example for tracking your analytics )
+                ,
+                action_audio_pause: null // -- set a outer play function ( for example for tracking your analytics )
+                ,
+                action_audio_end: null // -- set a outer ended function ( for example for tracking your analytics )
+                ,
+                action_audio_comment: null // -- set a outer commented function ( for example for tracking your analytics )
+                ,
+                action_received_time_total: null // -- event triggers at receiving time total
+                ,
+                action_audio_change_media: null // -- set a outer on change track function
+                ,
+                action_audio_loaded_metadata: null // -- set a outer commented function ( for example for tracking your analytics )
+                ,
+                action_video_contor_60secs: null // -- fire every 30s
+                ,
+                type_audio_stop_buffer_on_unfocus: 'off' // -- if set to on, when the audio player goes out of focus, it will unbuffer the file so that it will not load anymore, useful if you want to stop buffer on large files
+                ,
+                construct_player_list_for_sync: 'off' // -- construct a player list from the page that features single players playing one after another. searches for the .is-single-player class in the DOM
 
 
-                , settings_exclude_from_list: 'off' // -- a audioplayer list is formed at runtime so that when
-                , design_wave_color_bg: '222222' // -- waveform background color..  000000,ffffff gradient is allowed
-                , design_wave_color_progress: 'ea8c52' // -- waveform progress color
+                ,
+                settings_exclude_from_list: 'off' // -- a audioplayer list is formed at runtime so that when
+                ,
+                design_wave_color_bg: '222222' // -- waveform background color..  000000,ffffff gradient is allowed
+                ,
+                design_wave_color_progress: 'ea8c52' // -- waveform progress color
 
 
-                , skin_minimal_button_size: '100'
-                , gallery_gapless_play: 'off'
-                , preview_on_hover: 'off' // -- on mouseenter autoplay the track
-                , watermark_volume: '1' // -- on mouseenter autoplay the track
-                , controls_external_scrubbar: '' // -- on mouseenter autoplay the track
-                , scrubbar_type: 'auto' // -- wave or spectrum or bar
-                , wavesurfer_pcm_length: '200' // -- wave or spectrum or bar
+                ,
+                skin_minimal_button_size: '100'
+                ,
+                gallery_gapless_play: 'off'
+                ,
+                preview_on_hover: 'off' // -- on mouseenter autoplay the track
+                ,
+                watermark_volume: '1' // -- on mouseenter autoplay the track
+                ,
+                controls_external_scrubbar: '' // -- on mouseenter autoplay the track
+                ,
+                scrubbar_type: 'auto' // -- wave or spectrum or bar
+                ,
+                wavesurfer_pcm_length: '200' // -- wave or spectrum or bar
             };
 
 
@@ -397,7 +489,8 @@ function register_dzsap_plugin() {
                     _conControls,
                     _conPlayPause = null
                     , _conPlayPauseCon = null
-                    , _controlsVolume, _scrubbar, _scrubbarbg_canvas, __scrubbProg, _scrubbarhover_canvas,
+                    , _controlsVolume, _scrubbar, _scrubbarbg_canvas,
+                    __scrubbProg, _scrubbarhover_canvas,
                     _scrubbarprog_canvas, _theMedia
                     , _cmedia = null
                     , _cwatermark = null
@@ -3846,7 +3939,7 @@ function register_dzsap_plugin() {
 
                     try {
                         var s = src_real_mp3 instanceof String ? src_real_mp3 : src_real_mp3.attr('data-source');
-                        wavesurfer.load(s );
+                        wavesurfer.load(s);
                     } catch (err) {
                         console.log("WAVE SURFER NO LOAD");
                     }
@@ -14637,60 +14730,11 @@ window.dzsap_init = function (selector, settings) {
 
 window.dzsap_init_multisharer = function () {
     var $ = jQuery;
-    setTimeout(function () {
-        // console.log("LOAD MULTISHARER");
-
-
-        // console.log('window.dzsap_multisharer_assets_loaded - ',window.dzsap_multisharer_assets_loaded);
-        if (window.dzsap_multisharer_assets_loaded) {
-
-        } else {
-            if (window.dzsap_multisharer_assets_loaded != true && window.loading_multi_sharer != true) {
-
-                // -- only if settings_php_handler is set
-
-
-                // - -load script for lightbox
-                window.loading_multi_sharer = true;
-                var head = document.getElementsByTagName('head')[0];
-                var link = document.createElement('link');
-                link.id = 'dzsap-load-multi-sharer';
-                link.rel = 'stylesheet';
-                link.type = 'text/css';
-                link.href = add_query_arg(window.dzsap_settings.dzsap_site_url, 'load-lightbox-css', 'on');
-                link.media = 'all';
-                head.appendChild(link);
-
-                // console.log('script for lightbox - ',add_query_arg(window.dzsap_settings.dzsap_site_url,'load-lightbox-css','on'));
-
-                // console.warn("APPEND MULTISHARER STYLE");
-
-                setTimeout(function () {
-
-                    if (window.dzsap_box_main_con == null) {
-
-                        $('body').append('<div class="dzsap-main-con skin-default gallery-skin-default transition-slideup "> <div class="overlay-background"></div> <div class="box-mains-con"> <div class="box-main box-main-for-share" style=""> <div class="box-main-media-con transition-target"> <div class="close-btn-con"> <svg enable-background="new 0 0 40 40" id="" version="1.1" viewBox="0 0 40 40" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M28.1,26.8c0.4,0.4,0.4,1,0,1.4c-0.2,0.2-0.5,0.3-0.7,0.3s-0.5-0.1-0.7-0.3l-6.8-6.8l-6.8,6.8c-0.2,0.2-0.5,0.3-0.7,0.3 s-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l6.8-6.8l-6.8-6.8c-0.4-0.4-0.4-1,0-1.4c0.4-0.4,1-0.4,1.4,0l6.8,6.8l6.8-6.8 c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4L21.3,20L28.1,26.8z"></path></g><g><path d="M19.9,40c-11,0-20-9-20-20s9-20,20-20c4.5,0,8.7,1.5,12.3,4.2c0.4,0.3,0.5,1,0.2,1.4c-0.3,0.4-1,0.5-1.4,0.2 c-3.2-2.5-7-3.8-11-3.8c-9.9,0-18,8.1-18,18s8.1,18,18,18s18-8.1,18-18c0-3.2-0.9-6.4-2.5-9.2c-0.3-0.5-0.1-1.1,0.3-1.4 c0.5-0.3,1.1-0.1,1.4,0.3c1.8,3.1,2.8,6.6,2.8,10.2C39.9,31,30.9,40,19.9,40z"></path></g></svg></div> <div class="box-main-media type-inlinecontent" style="width: 530px; height: 280px;"><div class=" real-media" style=""><div class="hidden-content share-content" > <div class="social-networks-con"></div> <div class="share-link-con"></div> <div class="embed-link-con"></div> </div> </div> </div> <div class="box-main-under"></div> </div> </div> </div><!-- end .box-mains-con--> </div>');
-
-
-                        window.dzsap_box_main_con = $('.dzsap-main-con').eq(0);
-
-                        // console.log('dzsap_box_main_con - ', window.dzsap_box_main_con);
-                    }
-
-                }, 1000);
-
-
-            }
-        }
-
-        // -- remove main con function
+    setTimeout(() => {
         $(document).on('click.dzsap_global_sharer', '.dzsap-main-con .close-btn-con,.dzsap-main-con .overlay-background', function () {
-
-
             var _c = $('.dzsap-main-con').eq(0);
-
             _c.removeClass('loading-item loaded-item');
         })
 
-    }, 2000)
+    }, 2000);
 }
