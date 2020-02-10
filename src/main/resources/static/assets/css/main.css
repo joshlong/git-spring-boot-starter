@@ -896,7 +896,7 @@ nav.navbar {
 ----------------------------------------------------- */
 
 #newsletter {
-    background: #ebebed url('/assets/images/newsletter-bg.jpg') no-repeat center center;
+    background: #ebebed url('/assets/images/newsletter-bg.webp') no-repeat center center;
     padding: 100px 0 120px 0;
     clear: both;
     overflow: hidden;
@@ -1154,7 +1154,7 @@ header.top-bar .navbar-collapse > ul > li:last-child a:hover {
 
 
 .cover-page {
-    background: url('/assets/images/page-cover-regular-sm.jpg') no-repeat center center;
+    background: url('/assets/images/page-cover-regular-sm.webp') no-repeat center center;
     position: relative;
     height: 50vh;
     max-height: 580px;
@@ -1348,7 +1348,7 @@ header.top-bar .navbar-collapse > ul > li:last-child a:hover {
 /* === newsletter page section === */
 
 #newsletter.newsletter-page {
-    background: url('/assets/images/newsletter-bg-page.jpg') no-repeat center center;
+    background: url('/assets/images/newsletter-bg-page.webp') no-repeat center center;
     padding: 100px 0 120px 0;
     clear: both;
     overflow: hidden;
