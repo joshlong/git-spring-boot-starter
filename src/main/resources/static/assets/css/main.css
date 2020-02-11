@@ -1363,6 +1363,11 @@ header.top-bar .navbar-collapse > ul > li:last-child a:hover {
      9. Contact us
 ----------------------------------------------------- */
 
+.podcast-app-image {
+    height: 100px;
+    padding: 10px ;
+}
+
 #contact-section {
     background: #fff;
     padding: 100px 0;
