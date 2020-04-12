@@ -16,7 +16,6 @@ public class GitProperties {
 	private String uri;
 	private final Ssh ssh = new Ssh();
 	private final Http http = new Http();
-
 	private boolean online = true;
 
 	@Data
