@@ -11,6 +11,7 @@ on:
     branches: [ master ]
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -30,4 +31,4 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven
-        run: mvnw -B deploy --file pom.xml
+        run: mvn -B deploy --file pom.xml

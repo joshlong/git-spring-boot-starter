@@ -6,7 +6,7 @@ import org.eclipse.jgit.api.Git;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
-class DefaultGitTemplate implements GitTemplate {
+public class DefaultGitTemplate implements GitTemplate {
 
 	private final Git git;
 
@@ -14,7 +14,7 @@ class DefaultGitTemplate implements GitTemplate {
 
 	private final Log log = LogFactory.getLog(getClass());
 
-	DefaultGitTemplate(Git git, PushCommandCreator commandCreator) {
+	public DefaultGitTemplate(Git git, PushCommandCreator commandCreator) {
 		this.git = git;
 		this.commandCreator = commandCreator;
 		Assert.notNull(this.git, "the " + Git.class.getName() + " reference can't be null");

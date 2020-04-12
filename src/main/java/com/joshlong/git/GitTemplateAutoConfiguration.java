@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
-
 @Log4j2
 @Configuration
 @EnableConfigurationProperties(GitProperties.class)
@@ -71,7 +70,7 @@ public class GitTemplateAutoConfiguration {
 			TransportConfigCallback transportConfigCallback(SshSessionFactory sshSessionFactory) {
 				return transport -> {
 					Assert.isTrue(transport instanceof SshTransport, "the " + Transport.class.getName()
-						+ " must be an instance of " + SshTransport.class.getName());
+							+ " must be an instance of " + SshTransport.class.getName());
 					SshTransport ssh = SshTransport.class.cast(transport);
 					ssh.setSshSessionFactory(sshSessionFactory);
 				};
@@ -125,22 +124,21 @@ public class GitTemplateAutoConfiguration {
 
 			@Bean
 			@ConditionalOnMissingBean(Git.class)
-			Git git(GitProperties gsp, TransportConfigCallback transportConfigCallback)
-				throws GitAPIException {
+			Git git(GitProperties gsp, TransportConfigCallback transportConfigCallback) throws GitAPIException {
 				return Git//
-					.cloneRepository()//
-					.setTransportConfigCallback(transportConfigCallback)//
-					.setURI(gsp.getGit().getUri())//
-					.setDirectory(gsp.getGit().getLocalCloneDirectory())//
-					.call();
+						.cloneRepository()//
+						.setTransportConfigCallback(transportConfigCallback)//
+						.setURI(gsp.getGit().getUri())//
+						.setDirectory(gsp.getGit().getLocalCloneDirectory())//
+						.call();
 			}
 
 			@Bean
 			PushCommandCreator commandCreator(TransportConfigCallback transportConfigCallback) {
 				return git -> git//
-					.push()//
-					.setRemote("origin")//
-					.setTransportConfigCallback(transportConfigCallback);
+						.push()//
+						.setRemote("origin")//
+						.setTransportConfigCallback(transportConfigCallback);
 			}
 
 		}
@@ -158,12 +156,12 @@ public class GitTemplateAutoConfiguration {
 				var uri = gsp.getGit().getUri();
 				FileUtils.delete(cloneDirectory);
 				log.info("going to clone the Git repo " + uri + " into directory "
-					+ gsp.getGit().getLocalCloneDirectory() + ".");
+						+ gsp.getGit().getLocalCloneDirectory() + ".");
 				return Git//
-					.cloneRepository()//
-					.setURI(uri)//
-					.setDirectory(cloneDirectory)//
-					.call();
+						.cloneRepository()//
+						.setURI(uri)//
+						.setDirectory(cloneDirectory)//
+						.call();
 			}
 
 			@Bean
@@ -175,8 +173,11 @@ public class GitTemplateAutoConfiguration {
 				Assert.notNull(user, "http.username can't be null");
 				Assert.notNull(pw, "http.password can't be null");
 				return git -> git.push().setRemote("origin")
-					.setCredentialsProvider(new UsernamePasswordCredentialsProvider(user, pw));
+						.setCredentialsProvider(new UsernamePasswordCredentialsProvider(user, pw));
 			}
+
 		}
+
 	}
+
 }

@@ -1,8 +1,6 @@
 package com.joshlong.git;
 
-
 import lombok.Data;
-
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
@@ -10,9 +8,8 @@ import org.springframework.core.io.Resource;
 import java.io.File;
 import java.net.URI;
 
-
 @Data
-@ConfigurationProperties (GitProperties.GIT_PROPERTIES_ROOT)
+@ConfigurationProperties(GitProperties.GIT_PROPERTIES_ROOT)
 public class GitProperties {
 
 	public static final String GIT_PROPERTIES_ROOT = "git";
