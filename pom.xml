@@ -16,7 +16,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <artifactory-maven-plugin.version>2.4.0</artifactory-maven-plugin.version>
-        <commonmark.version>0.11.0</commonmark.version>
         <jgit.version>4.11.0.201803080745-r</jgit.version>
         <java.version>11</java.version>
         <jsch.version>0.1.54</jsch.version>
