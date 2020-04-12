@@ -20,7 +20,7 @@ public class GitProperties {
 	@Data
 	public static class Git {
 
-		private File localCloneDirectory = new File(System.getProperty("user.home"), "blog-clone");
+		private File localCloneDirectory = new File(System.getProperty("user.home"), "git-clone");
 
 		private String uri;
 
