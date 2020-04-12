@@ -14,9 +14,9 @@ public class GitProperties {
 	private String charset;
 	private File localCloneDirectory = new File(System.getProperty("user.home"), "git-clone");
 	private String uri;
+	private boolean online = true;
 	private final Ssh ssh = new Ssh();
 	private final Http http = new Http();
-	private boolean online = true;
 
 	@Data
 	public static class Ssh {
