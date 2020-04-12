@@ -80,9 +80,9 @@ public class GitTemplateAutoConfiguration {
 			@ConditionalOnMissingBean
 			SshSessionFactory sshSessionFactory(GitProperties properties) {
 
-				String pw = properties.getGit().getSsh().getPassword();
+				var pw = properties.getSsh().getPassword();
 
-				UserInfo userinfo = new UserInfo() {
+				var userinfo = new UserInfo() {
 
 					@Override
 					public String getPassphrase() {
@@ -128,8 +128,8 @@ public class GitTemplateAutoConfiguration {
 				return Git//
 						.cloneRepository()//
 						.setTransportConfigCallback(transportConfigCallback)//
-						.setURI(gsp.getGit().getUri())//
-						.setDirectory(gsp.getGit().getLocalCloneDirectory())//
+						.setURI(gsp.getUri())//
+						.setDirectory(gsp.getLocalCloneDirectory())//
 						.call();
 			}
 
@@ -152,11 +152,13 @@ public class GitTemplateAutoConfiguration {
 			@SneakyThrows
 			@ConditionalOnMissingBean
 			Git git(GitProperties gsp) throws GitAPIException {
-				var cloneDirectory = gsp.getGit().getLocalCloneDirectory();
-				var uri = gsp.getGit().getUri();
-				FileUtils.delete(cloneDirectory);
-				log.info("going to clone the Git repo " + uri + " into directory "
-						+ gsp.getGit().getLocalCloneDirectory() + ".");
+				var cloneDirectory = gsp.getLocalCloneDirectory();
+				var uri = gsp.getUri();
+				if (cloneDirectory.exists()) {
+					FileUtils.delete(cloneDirectory);
+				}
+				log.info(
+						"going to clone the Git repo " + uri + " into directory " + gsp.getLocalCloneDirectory() + ".");
 				return Git//
 						.cloneRepository()//
 						.setURI(uri)//
@@ -167,7 +169,7 @@ public class GitTemplateAutoConfiguration {
 			@Bean
 			@ConditionalOnMissingBean
 			PushCommandCreator httpPushCommandCreator(GitProperties gsp) {
-				var http = gsp.getGit().getHttp();
+				var http = gsp.getHttp();
 				var user = http.getUsername();
 				var pw = http.getPassword();
 				Assert.notNull(user, "http.username can't be null");
