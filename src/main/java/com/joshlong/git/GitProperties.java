@@ -10,23 +10,37 @@ import java.io.File;
 public class GitProperties {
 
 	public static final String GIT_PROPERTIES_ROOT = "git";
+
 	private boolean disabled;
+
 	private String charset;
+
 	private File localCloneDirectory = new File(System.getProperty("user.home"), "git-clone");
+
 	private String uri;
+
 	private boolean online = true;
+
 	private final Ssh ssh = new Ssh();
+
 	private final Http http = new Http();
 
 	@Data
 	public static class Ssh {
+
 		private boolean enabled;
+
 		private String password;
+
 	}
 
 	@Data
 	public static class Http {
+
 		private String username = null, password = "";
+
 		private boolean enabled;
+
 	}
+
 }
