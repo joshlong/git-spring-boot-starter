@@ -16,6 +16,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
+import org.springframework.util.FileSystemUtils;
 
 @Log4j2
 @Configuration
@@ -155,7 +156,7 @@ public class GitTemplateAutoConfiguration {
 				var cloneDirectory = gsp.getLocalCloneDirectory();
 				var uri = gsp.getUri();
 				if (cloneDirectory.exists()) {
-					FileUtils.delete(cloneDirectory);
+					FileSystemUtils.deleteRecursively(cloneDirectory);
 				}
 				log.info(
 						"going to clone the Git repo " + uri + " into directory " + gsp.getLocalCloneDirectory() + ".");
