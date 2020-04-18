@@ -8,7 +8,6 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.TransportConfigCallback;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.transport.*;
-import org.eclipse.jgit.util.FileUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,6 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 import org.springframework.util.FileSystemUtils;
+
+import java.io.File;
 
 @Log4j2
 @Configuration
@@ -126,11 +127,13 @@ public class GitTemplateAutoConfiguration {
 			@Bean
 			@ConditionalOnMissingBean(Git.class)
 			Git git(GitProperties gsp, TransportConfigCallback transportConfigCallback) throws GitAPIException {
+				var localCloneDirectory = gsp.getLocalCloneDirectory();
+				reset(localCloneDirectory);
 				return Git//
 						.cloneRepository()//
 						.setTransportConfigCallback(transportConfigCallback)//
 						.setURI(gsp.getUri())//
-						.setDirectory(gsp.getLocalCloneDirectory())//
+						.setDirectory(localCloneDirectory)//
 						.call();
 			}
 
@@ -144,6 +147,12 @@ public class GitTemplateAutoConfiguration {
 
 		}
 
+		private static void reset(File file) {
+			if (file.exists()) {
+				FileSystemUtils.deleteRecursively(file);
+			}
+		}
+
 		@Log4j2
 		@Configuration
 		@ConditionalOnProperty(name = GitProperties.GIT_PROPERTIES_ROOT + ".http.enabled", havingValue = "true")
@@ -152,18 +161,13 @@ public class GitTemplateAutoConfiguration {
 			@Bean
 			@SneakyThrows
 			@ConditionalOnMissingBean
-			Git git(GitProperties gsp) throws GitAPIException {
-				var cloneDirectory = gsp.getLocalCloneDirectory();
-				var uri = gsp.getUri();
-				if (cloneDirectory.exists()) {
-					FileSystemUtils.deleteRecursively(cloneDirectory);
-				}
-				log.info(
-						"going to clone the Git repo " + uri + " into directory " + gsp.getLocalCloneDirectory() + ".");
+			Git git(GitProperties gsp) {
+				var localCloneDirectory = gsp.getLocalCloneDirectory();
+				reset(localCloneDirectory);
 				return Git//
 						.cloneRepository()//
-						.setURI(uri)//
-						.setDirectory(cloneDirectory)//
+						.setURI(gsp.getUri())//
+						.setDirectory(localCloneDirectory)//
 						.call();
 			}
 
