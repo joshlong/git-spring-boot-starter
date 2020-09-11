@@ -11,7 +11,7 @@ public class GitProperties {
 
 	public static final String GIT_PROPERTIES_ROOT = "git";
 
-	private boolean disabled;
+	private boolean enabled;
 
 	private String charset;
 

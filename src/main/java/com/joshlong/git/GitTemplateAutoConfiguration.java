@@ -1,31 +1,31 @@
 package com.joshlong.git;
 
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.UserInfo;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.TransportConfigCallback;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.transport.*;
+import org.eclipse.jgit.transport.SshSessionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.Assert;
 import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
+import java.net.URI;
 
 @Log4j2
 @Configuration
 @EnableConfigurationProperties(GitProperties.class)
+@ConditionalOnProperty(name = GitProperties.GIT_PROPERTIES_ROOT + ".enabled", havingValue = "true",
+		matchIfMissing = true)
 public class GitTemplateAutoConfiguration {
 
 	@Configuration
-	@ConditionalOnProperty(name = "git.online", havingValue = "false")
+	@ConditionalOnProperty(name = GitProperties.GIT_PROPERTIES_ROOT + ".online", havingValue = "false")
 	public static class OfflineGitConfiguration {
 
 		@Log4j2
@@ -63,6 +63,12 @@ public class GitTemplateAutoConfiguration {
 			return new DefaultGitTemplate(git, commandCreator);
 		}
 
+		private static void reset(File directory) {
+			if (directory.exists()) {
+				FileSystemUtils.deleteRecursively(directory);
+			}
+		}
+
 		@Configuration
 		@ConditionalOnProperty(name = "git.ssh.enabled", havingValue = "true")
 		public static class SshConfig {
@@ -70,87 +76,28 @@ public class GitTemplateAutoConfiguration {
 			@Bean
 			@ConditionalOnMissingBean
 			TransportConfigCallback transportConfigCallback(SshSessionFactory sshSessionFactory) {
-				return transport -> {
-					Assert.isTrue(transport instanceof SshTransport, "the " + Transport.class.getName()
-							+ " must be an instance of " + SshTransport.class.getName());
-					SshTransport ssh = SshTransport.class.cast(transport);
-					ssh.setSshSessionFactory(sshSessionFactory);
-				};
+				return GitUtils.createSshTransportConfigCallback(sshSessionFactory);
 			}
 
 			@Bean
 			@ConditionalOnMissingBean
 			SshSessionFactory sshSessionFactory(GitProperties properties) {
-
 				var pw = properties.getSsh().getPassword();
-
-				var userinfo = new UserInfo() {
-
-					@Override
-					public String getPassphrase() {
-						return pw;
-					}
-
-					@Override
-					public String getPassword() {
-						return null;
-					}
-
-					@Override
-					public boolean promptPassword(String s) {
-						return false;
-					}
-
-					@Override
-					public boolean promptPassphrase(String s) {
-						return false;
-					}
-
-					@Override
-					public boolean promptYesNo(String s) {
-						return false;
-					}
-
-					@Override
-					public void showMessage(String s) {
-					}
-				};
-
-				return new JschConfigSessionFactory() {
-					@Override
-					protected void configure(OpenSshConfig.Host host, Session session) {
-						session.setUserInfo(userinfo);
-					}
-				};
+				return GitUtils.createSshSessionFactory(pw);
 			}
 
 			@Bean
 			@ConditionalOnMissingBean(Git.class)
 			Git git(GitProperties gsp, TransportConfigCallback transportConfigCallback) throws GitAPIException {
-				var localCloneDirectory = gsp.getLocalCloneDirectory();
-				reset(localCloneDirectory);
-				return Git//
-						.cloneRepository()//
-						.setTransportConfigCallback(transportConfigCallback)//
-						.setURI(gsp.getUri())//
-						.setDirectory(localCloneDirectory)//
-						.call();
+				return GitUtils.createLocalSshGitRepository(URI.create(gsp.getUri()), gsp.getLocalCloneDirectory(),
+						transportConfigCallback);
 			}
 
 			@Bean
 			PushCommandCreator commandCreator(TransportConfigCallback transportConfigCallback) {
-				return git -> git//
-						.push()//
-						.setRemote("origin")//
-						.setTransportConfigCallback(transportConfigCallback);
+				return GitUtils.createSshPushCommandCreator(transportConfigCallback);
 			}
 
-		}
-
-		private static void reset(File file) {
-			if (file.exists()) {
-				FileSystemUtils.deleteRecursively(file);
-			}
 		}
 
 		@Log4j2
@@ -162,25 +109,14 @@ public class GitTemplateAutoConfiguration {
 			@SneakyThrows
 			@ConditionalOnMissingBean
 			Git git(GitProperties gsp) {
-				var localCloneDirectory = gsp.getLocalCloneDirectory();
-				reset(localCloneDirectory);
-				return Git//
-						.cloneRepository()//
-						.setURI(gsp.getUri())//
-						.setDirectory(localCloneDirectory)//
-						.call();
+				return GitUtils.createLocalHttpGitRepository(URI.create(gsp.getUri()), gsp.getLocalCloneDirectory());
 			}
 
 			@Bean
 			@ConditionalOnMissingBean
 			PushCommandCreator httpPushCommandCreator(GitProperties gsp) {
 				var http = gsp.getHttp();
-				var user = http.getUsername();
-				var pw = http.getPassword();
-				Assert.notNull(user, "http.username can't be null");
-				Assert.notNull(pw, "http.password can't be null");
-				return git -> git.push().setRemote("origin")
-						.setCredentialsProvider(new UsernamePasswordCredentialsProvider(user, pw));
+				return GitUtils.createHttpPushCommandCreator(http.getUsername(), http.getPassword());
 			}
 
 		}
