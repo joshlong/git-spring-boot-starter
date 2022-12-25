@@ -108,7 +108,11 @@
                             </publisher>
                             <buildInfo>
                                 <agentName>Github Actions</agentName>
-                                <buildNumber>{{GITHUB_RUN_ID}}</buildNumber>
+                                <buildNumber>{{GITHUB_RUN_ID}}
+                                </buildNumber>
+                                <buildUrl>
+                                    http://travis-ci.org/{{GITHUB_REPOSITORY}}/builds/{{GITHUB_RUN_ID}}
+                                </buildUrl>
                                 <principal>{{USER}}</principal>
                                 <vcsRevision>{{GITHUB_SHA}}</vcsRevision>
                             </buildInfo>
