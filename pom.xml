@@ -96,7 +96,6 @@
                                 </build.vcsRevision>
                             </deployProperties>
                             <publisher>
-
                                 <contextUrl>
                                     https://cloudnativejava.jfrog.io/cloudnativejava
                                 </contextUrl>
@@ -108,10 +107,11 @@
                             </publisher>
                             <buildInfo>
                                 <agentName>Github Actions</agentName>
-                                <buildNumber>{{GITHUB_RUN_ID}}
+                                <buildNumber>
+                                    {{GITHUB_RUN_ID}}
                                 </buildNumber>
                                 <buildUrl>
-                                    http://travis-ci.org/{{GITHUB_REPOSITORY}}/builds/{{GITHUB_RUN_ID}}
+                                    https://cloudnativejava.jfrog.io/cloudnativejava
                                 </buildUrl>
                                 <principal>{{USER}}</principal>
                                 <vcsRevision>{{GITHUB_SHA}}</vcsRevision>
