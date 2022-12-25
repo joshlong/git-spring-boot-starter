@@ -1,12 +1,13 @@
 package com.joshlong.git;
 
-import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
 import lombok.SneakyThrows;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.TransportConfigCallback;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.transport.*;
+import org.eclipse.jgit.util.FS;
 import org.springframework.util.Assert;
 import org.springframework.util.FileSystemUtils;
 
@@ -34,6 +35,7 @@ public abstract class GitUtils {
 		};
 	}
 
+	@Deprecated
 	static SshSessionFactory createSshSessionFactory(String pw) {
 
 		var userinfo = new UserInfo() {
@@ -68,10 +70,16 @@ public abstract class GitUtils {
 			}
 		};
 
-		return new JschConfigSessionFactory() {
+		return new SshSessionFactory() {
 			@Override
-			protected void configure(OpenSshConfig.Host host, Session session) {
-				session.setUserInfo(userinfo);
+			public RemoteSession getSession(URIish urIish, CredentialsProvider credentialsProvider, FS fs, int i)
+					throws TransportException {
+				return null;
+			}
+
+			@Override
+			public String getType() {
+				return null;
 			}
 		};
 	}
