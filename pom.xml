@@ -79,8 +79,7 @@
                 </executions>
             </plugin>
 
-
-            <plugin>
+         <!--   <plugin>
                 <groupId>org.jfrog.buildinfo</groupId>
                 <artifactId>artifactory-maven-plugin</artifactId>
                 <version>3.4.0</version>
@@ -107,25 +106,58 @@
                                 <snapshotRepoKey>libs-snapshot-local
                                 </snapshotRepoKey>
                             </publisher>
-                            <buildInfo>
-                                <agentName>Github Actions</agentName>
-                                <buildNumber>{{GITHUB_RUN_ID}}
-                                </buildNumber>
-                                <buildUrl>
-                                    http://travis-ci.org/{{GITHUB_REPOSITORY}}/builds/{{GITHUB_RUN_ID}}
-                                </buildUrl>
-                                <principal>{{USER}}</principal>
-                                <vcsRevision>{{GITHUB_SHA}}</vcsRevision>
-                            </buildInfo>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
+            <!-- <plugin>
+                 <groupId>org.jfrog.buildinfo</groupId>
+                 <artifactId>artifactory-maven-plugin</artifactId>
+                 <version>3.4.0</version>
+                 <executions>
+                     <execution>
+                         <id>build-info</id>
+                         <goals>
+                             <goal>publish</goal>
+                         </goals>
+                         <configuration>
+                             <deployProperties>
+                                 <build.vcsRevision>
+                                     {{GITHUB_SHA}}
+                                 </build.vcsRevision>
+                             </deployProperties>
+                             <publisher>
+                                 <contextUrl>
+                                     https://cloudnativejava.jfrog.io/cloudnativejava
+                                 </contextUrl>
+                                 <username>${env.ARTIFACTORY_USERNAME}</username>
+                                 <password>${env.ARTIFACTORY_PASSWORD}</password>
+                                 <repoKey>libs-release-local</repoKey>
+                                 <snapshotRepoKey>libs-snapshot-local
+                                 </snapshotRepoKey>
+                             </publisher>
+                             <buildInfo>
+                                 <agentName>Github Actions</agentName>
+                                 <buildNumber>{{GITHUB_RUN_ID}}
+                                 </buildNumber>
+                                 <principal>{{USER}}</principal>
+                                 <vcsRevision>{{GITHUB_SHA}}</vcsRevision>
+                             </buildInfo>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin>-->
 
         </plugins>
     </build>
 
-
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>cloudnativejava-snapshots</name>
+            <url>https://cloudnativejava.jfrog.io/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
     <repositories>
         <repository>
             <snapshots>
@@ -133,17 +165,13 @@
             </snapshots>
             <id>central</id>
             <name>libs-release</name>
-            <url>
-                https://cloudnativejava.jfrog.io/cloudnativejava/libs-release
-            </url>
+            <url>https://cloudnativejava.jfrog.io/artifactory/libs-release</url>
         </repository>
         <repository>
             <snapshots/>
             <id>snapshots</id>
             <name>libs-snapshot</name>
-            <url>
-                https://cloudnativejava.jfrog.io/cloudnativejava/libs-snapshot
-            </url>
+            <url>https://cloudnativejava.jfrog.io/artifactory/libs-snapshot</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -153,17 +181,13 @@
             </snapshots>
             <id>central</id>
             <name>plugins-release</name>
-            <url>
-                https://cloudnativejava.jfrog.io/cloudnativejava/plugins-release
-            </url>
+            <url>https://cloudnativejava.jfrog.io/artifactory/plugins-release</url>
         </pluginRepository>
         <pluginRepository>
             <snapshots/>
             <id>snapshots</id>
-            <name>plugins-snapshot</name>
-            <url>
-                https://cloudnativejava.jfrog.io/cloudnativejava/plugins-snapshot
-            </url>
+            <name>plugins-release</name>
+            <url>https://cloudnativejava.jfrog.io/artifactory/plugins-release</url>
         </pluginRepository>
     </pluginRepositories>
 
