@@ -111,7 +111,7 @@
                                     {{GITHUB_RUN_ID}}
                                 </buildNumber>
                                 <buildUrl>
-                                    https://cloudnativejava.jfrog.io/cloudnativejava
+                                    https://github.com/{{GITHUB_REPOSITORY}}/actions/runs/{{GITHUB_RUN_ID}}
                                 </buildUrl>
                                 <principal>{{USER}}</principal>
                                 <vcsRevision>{{GITHUB_SHA}}</vcsRevision>
