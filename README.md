@@ -10,7 +10,7 @@ Some utilities to make working with Git a little easier from within my Spring ap
 Assuming the code is `mvn clean install`-ed into your Maven repository, add the following dependency to your project: 
 
 ```xml
-</dependency>
+<dependency>
     <groupId>com.joshlong</groupId>
     <artifactId>
      git-spring-boot-starter
