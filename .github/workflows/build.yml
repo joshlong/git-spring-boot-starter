@@ -1,4 +1,4 @@
-name: Build Git Spring Boot Starter
+name: CI
 
 env:
   ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME  }}
