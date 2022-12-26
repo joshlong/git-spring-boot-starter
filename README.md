@@ -7,7 +7,7 @@ Some utilities to make working with Git a little easier from within my Spring ap
 
 ## Usage: 
 
-Add the following dependency to your project: 
+Assuming the code is `mvn clean install`-ed into your Maven repository, add the following dependency to your project: 
 
 ```xml
 </dependency>
@@ -18,6 +18,8 @@ Add the following dependency to your project:
     <version>0.0.3-SNAPSHOT</version>
 </dependency>
 ```
+
+
 
 This module provides a Spring Boot autoconfiguration that does most of the work, though you'll need to account for somethings. 
 
