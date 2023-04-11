@@ -13,7 +13,7 @@
     <artifactId>
         git-spring-boot-starter
     </artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
     <developers>
         <developer>
             <name>Josh Long</name>
