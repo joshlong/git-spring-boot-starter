@@ -1,7 +1,7 @@
 package com.joshlong.git;
 
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.TransportConfigCallback;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -17,7 +17,10 @@ import org.springframework.util.FileSystemUtils;
 import java.io.File;
 import java.net.URI;
 
-@Log4j2
+/**
+ * @author Josh Long
+ */
+@Slf4j
 @Configuration
 @EnableConfigurationProperties(GitProperties.class)
 @ConditionalOnProperty(name = GitProperties.GIT_PROPERTIES_ROOT + ".enabled", havingValue = "true",
@@ -28,7 +31,7 @@ public class GitTemplateAutoConfiguration {
 	@ConditionalOnProperty(name = GitProperties.GIT_PROPERTIES_ROOT + ".online", havingValue = "false")
 	public static class OfflineGitConfiguration {
 
-		@Log4j2
+		@Slf4j
 		private static class NoOpGitTemplate implements GitTemplate {
 
 			private String name = NoOpGitTemplate.class.getName();
@@ -63,12 +66,6 @@ public class GitTemplateAutoConfiguration {
 			return new DefaultGitTemplate(git, commandCreator);
 		}
 
-		private static void reset(File directory) {
-			if (directory.exists()) {
-				FileSystemUtils.deleteRecursively(directory);
-			}
-		}
-
 		@Configuration
 		@ConditionalOnProperty(name = "git.ssh.enabled", havingValue = "true")
 		public static class SshConfig {
@@ -100,7 +97,7 @@ public class GitTemplateAutoConfiguration {
 
 		}
 
-		@Log4j2
+		@Slf4j
 		@Configuration
 		@ConditionalOnProperty(name = GitProperties.GIT_PROPERTIES_ROOT + ".http.enabled", havingValue = "true")
 		public static class HttpConfig {

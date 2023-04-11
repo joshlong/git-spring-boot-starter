@@ -6,6 +6,12 @@ import org.eclipse.jgit.api.Git;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
+/**
+ *
+ * Default implementation delegating to JGit's {@link Git}
+ *
+ * @author Josh Long
+ */
 public class DefaultGitTemplate implements GitTemplate {
 
 	private final Git git;
