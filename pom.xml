@@ -45,7 +45,7 @@
         <url>https://github.com/joshlong/git-spring-boot-starter/tree/main</url>
     </scm>
     <properties>
-        <jgit.version>6.3.0.202209071007-r</jgit.version>
+        <jgit.version>6.6.1.202309021850-r</jgit.version>
         <java.version>17</java.version>
         <jsch.version>0.1.55</jsch.version>
     </properties>
